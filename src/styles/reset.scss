@@ -88,7 +88,9 @@ video {
   padding: 0;
   border: 0;
   font-size: inherit;
-  font: inherit;
+  font-weight: inherit;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */

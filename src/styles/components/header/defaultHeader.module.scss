@@ -11,7 +11,10 @@
 
   .leftArea {
     .logo {
-      font-size: 28px;
+      h1 {
+        font-size: 28px;
+        font-family: inherit;
+      }
     }
   }
 
