@@ -2,7 +2,7 @@ import styles from "@/styles/components/header/loginPopup.module.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import I_kakao from "@/asset/icon/I_kakao.svg";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import { ILoginVar, usernameLogin } from "@/api/Auth";
+import { ILoginVar, usernameLogin } from "@/api/auth";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -14,11 +14,11 @@ export default function LoginPopup() {
     reset,
   } = useForm<ILoginVar>();
 
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const mutation = useMutation(usernameLogin, {
     onSuccess: () => {
-      // queryClient.refetchQueries(["me"]);
+      queryClient.refetchQueries(["me"]);
       alert("lgoin");
       reset();
     },

@@ -5,12 +5,16 @@ import { useState } from "react";
 import PopupBg from "../common/PopupBg";
 import SignInPopup from "./JoinPopup";
 import LoginPopup from "./LoginPopup";
+import useUser, { stringAvatar } from "@/lib/useUser";
+import Avatar from "@mui/material/Avatar";
 
 const itim = Itim({ weight: "400", preload: false });
 
 export default function DefaultHeader() {
   const [loginPopup, setLoginPopup] = useState<Boolean>(false);
   const [signInPopup, setSignInPopup] = useState<Boolean>(false);
+
+  const { userLoading, user, isLoggedIn } = useUser();
 
   return (
     <>
@@ -22,21 +26,33 @@ export default function DefaultHeader() {
         </article>
 
         <article className={styles.rightArea}>
-          <div className={styles.authBox}>
-            <button
-              className={styles.signInBtn}
-              onClick={() => setSignInPopup(true)}
-            >
-              회원가입
-            </button>
+          {isLoggedIn ? (
+            <div className={styles.profBox}>
+              {user?.avatar ? (
+                <Avatar alt={user?.name} src={user?.avatar} />
+              ) : (
+                <Avatar
+                  {...stringAvatar(user?.name || user?.usernmae || "aaasdsd")}
+                />
+              )}
+            </div>
+          ) : (
+            <div className={styles.authBox}>
+              <button
+                className={styles.signInBtn}
+                onClick={() => setSignInPopup(true)}
+              >
+                회원가입
+              </button>
 
-            <button
-              className={styles.loginBtn}
-              onClick={() => setLoginPopup(true)}
-            >
-              로그인
-            </button>
-          </div>
+              <button
+                className={styles.loginBtn}
+                onClick={() => setLoginPopup(true)}
+              >
+                로그인
+              </button>
+            </div>
+          )}
         </article>
       </header>
 

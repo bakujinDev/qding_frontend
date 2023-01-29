@@ -1,5 +1,4 @@
-import axios from "axios";
-import { baseURL, instance } from "./Common";
+import { apiInstance, tokenInstance } from "./common";
 
 export interface ILoginVar {
   username: string;
@@ -7,6 +6,26 @@ export interface ILoginVar {
 }
 
 export const usernameLogin = ({ username, password }: ILoginVar) =>
-  axios
-    .post(`${baseURL}/api/token/`, { username, password })
-    .then((res) => res.data);
+  tokenInstance.post("/", { username, password }).then((res) => {
+    const { access, refresh } = res.data;
+
+    localStorage.setItem("refresh_token", refresh);
+    apiInstance.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+
+    return res.data;
+  });
+
+export const getMe = () => apiInstance.get("users/me").then((res) => res.data);
+
+export const refreshToken = () =>
+  tokenInstance
+    .post("refresh/", {
+      refresh: localStorage.getItem("refresh_token") || "",
+    })
+    .then((res) => {
+      const { access } = res.data;
+
+      apiInstance.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+      return access;
+    })
+    
