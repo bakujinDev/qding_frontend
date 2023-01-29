@@ -1,0 +1,40 @@
+@import "@/styles/colors.scss";
+
+.defaultHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 0 24px;
+  background: #fff;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+
+  .leftArea {
+    .logo {
+      font-size: 28px;
+    }
+  }
+
+  .rightArea {
+    .authBox {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      button {
+        font-weight: 500;
+
+        &.signInBtn {
+          color: $Gray1;
+        }
+
+        &.loginBtn {
+          padding: 10px 16px;
+          color: #fff;
+          background: $Primary1;
+          border-radius: 8px;
+        }
+      }
+    }
+  }
+}
