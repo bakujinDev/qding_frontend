@@ -1,3 +1,4 @@
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactElement } from "react";
 import DefaultHeader from "./header/DefaultHeader";
 
@@ -10,6 +11,7 @@ export default function Layout({ children }: IProps) {
     <>
       <DefaultHeader />
       <div>{children}</div>
+      <ReactQueryDevtools />
     </>
   );
 }

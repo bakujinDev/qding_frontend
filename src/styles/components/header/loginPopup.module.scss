@@ -1,0 +1,123 @@
+@import "@/styles/colors.scss";
+
+.loginPopup {
+  width: 420px;
+
+  .topBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px;
+    border-bottom: 1px solid $White2;
+
+    .title {
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+
+  .contArea {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 20px;
+
+    .hrBox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: $Gray1;
+
+      hr {
+        flex: 1;
+        height: 1px;
+        background: $White2;
+        border: none;
+      }
+    }
+
+    .formBox {
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        .inputList {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+
+          li {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .key {
+            }
+
+            .inputBox {
+              display: flex;
+              align-items: center;
+              height: 40px;
+              border: 2px solid $White2;
+              border-radius: 4px;
+
+              &:focus-within {
+                border-color: $Blue1;
+              }
+
+              input {
+                flex: 1;
+                height: 100%;
+                padding: 0 12px;
+              }
+            }
+          }
+        }
+      }
+
+      .loginBtn {
+        height: 40px;
+        font-weight: 500;
+        color: #fff;
+        background: $Primary1;
+        border-radius: 8px;
+      }
+    }
+
+    .socialBox {
+      .socialList {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        li {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          height: 40px;
+          border-radius: 8px;
+
+          &.kakao {
+            color: rgba(0, 0, 0, 0.85);
+            background: #fee500;
+          }
+
+          &.github {
+            color: #fff;
+            background: #333;
+          }
+
+          svg {
+            width: 22px;
+            height: 22px;
+          }
+        }
+      }
+    }
+  }
+}

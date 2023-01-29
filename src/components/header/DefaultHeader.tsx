@@ -3,11 +3,13 @@ import Link from "next/link";
 import { Itim } from "@next/font/google";
 import { useState } from "react";
 import PopupBg from "../common/PopupBg";
-import SignInPopup from "./SignInPopup";
+import SignInPopup from "./JoinPopup";
+import LoginPopup from "./LoginPopup";
 
 const itim = Itim({ weight: "400", preload: false });
 
 export default function DefaultHeader() {
+  const [loginPopup, setLoginPopup] = useState<Boolean>(false);
   const [signInPopup, setSignInPopup] = useState<Boolean>(false);
 
   return (
@@ -28,7 +30,10 @@ export default function DefaultHeader() {
               회원가입
             </button>
 
-            <button className={styles.loginBtn} onClick={() => {}}>
+            <button
+              className={styles.loginBtn}
+              onClick={() => setLoginPopup(true)}
+            >
               로그인
             </button>
           </div>
@@ -39,6 +44,13 @@ export default function DefaultHeader() {
         <>
           <SignInPopup />
           <PopupBg bg off={() => setSignInPopup(false)} />
+        </>
+      ) : null}
+
+      {loginPopup ? (
+        <>
+          <LoginPopup />
+          <PopupBg bg off={() => setLoginPopup(false)} />
         </>
       ) : null}
     </>

@@ -1,13 +1,16 @@
-import styles from "@/styles/components/header/signInPopup.module.scss";
+import styles from "@/styles/components/header/joinPopup.module.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import I_kakao from "@/asset/icon/I_kakao.svg";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { useForm } from "react-hook-form";
 
-export default function LoginPopup() {
+export default function JoinPopup() {
+  
+
   return (
-    <section className={`${styles.loginPopup} defaultPopup`}>
+    <section className={`${styles.joinPopup} defaultPopup`}>
       <article className={styles.topBar}>
-        <h1 className={styles.title}>로그인</h1>
+        <h1 className={styles.title}>회원가입</h1>
         <CloseIcon />
       </article>
 
@@ -49,7 +52,7 @@ export default function LoginPopup() {
               </li>
             </ul>
 
-            <button className={styles.signupBtn} onClick={() => {}}>
+            <button className={styles.joinBtn} onClick={() => {}}>
               회원가입
             </button>
           </form>
