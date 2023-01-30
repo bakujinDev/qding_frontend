@@ -80,13 +80,13 @@ export default function DefaultHeader() {
       F
       {signInPopup ? (
         <>
-          <SignInPopup />
+          <SignInPopup off={() => setSignInPopup(false)} />
           <PopupBg bg off={() => setSignInPopup(false)} />
         </>
       ) : null}
       {loginPopup ? (
         <>
-          <LoginPopup />
+          <LoginPopup off={() => setLoginPopup(false)} />
           <PopupBg bg off={() => setLoginPopup(false)} />
         </>
       ) : null}

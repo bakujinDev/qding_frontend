@@ -15,6 +15,11 @@
       font-size: 20px;
       font-weight: 500;
     }
+
+    .closeBtn{
+      display: flex;
+      align-items: center;
+    }
   }
 
   .contArea {
@@ -40,6 +45,10 @@
     }
 
     .formBox {
+      .errorText {
+        color: $ErrorColor;
+      }
+
       form {
         display: flex;
         flex-direction: column;
@@ -79,12 +88,23 @@
         }
       }
 
-      .loginBtn {
-        height: 40px;
-        font-weight: 500;
-        color: #fff;
-        background: $Primary1;
-        border-radius: 8px;
+      .loginBox {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .errorText {
+          text-align: center;
+        }
+
+        .loginBtn {
+          width: 100%;
+          height: 40px;
+          font-weight: 500;
+          color: #fff;
+          background: $Primary1;
+          border-radius: 8px;
+        }
       }
     }
 

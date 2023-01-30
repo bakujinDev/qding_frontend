@@ -4,9 +4,11 @@ import I_kakao from "@/asset/icon/I_kakao.svg";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { useForm } from "react-hook-form";
 
-export default function JoinPopup() {
-  
+interface IProps {
+  off: Function;
+}
 
+export default function JoinPopup({ off }: IProps) {
   return (
     <section className={`${styles.joinPopup} defaultPopup`}>
       <article className={styles.topBar}>

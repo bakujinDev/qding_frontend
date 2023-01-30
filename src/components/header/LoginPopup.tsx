@@ -6,7 +6,11 @@ import { ILoginVar, usernameLogin } from "@/api/auth";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export default function LoginPopup() {
+interface IProps {
+  off: Function;
+}
+
+export default function LoginPopup({ off }: IProps) {
   const {
     register,
     handleSubmit,
@@ -19,8 +23,8 @@ export default function LoginPopup() {
   const mutation = useMutation(usernameLogin, {
     onSuccess: () => {
       queryClient.refetchQueries(["me"]);
-      alert("lgoin");
       reset();
+      off();
     },
     onError: () => {
       reset();
@@ -38,7 +42,10 @@ export default function LoginPopup() {
     <section className={`${styles.loginPopup} defaultPopup`}>
       <article className={styles.topBar}>
         <h1 className={styles.title}>로그인</h1>
-        <CloseIcon />
+
+        <button className={styles.closeBtn} onClick={() => off()}>
+          <CloseIcon />
+        </button>
       </article>
 
       <article className={styles.contArea}>
@@ -48,8 +55,17 @@ export default function LoginPopup() {
               <li>
                 <p className={styles.key}>아이디</p>
                 <div className={styles.inputBox}>
-                  <input {...register("username")} placeholder="" />
+                  <input
+                    {...register("username", {
+                      required: "아이디를 입력해주세요",
+                    })}
+                    placeholder="아이디를 입력해주세요"
+                  />
                 </div>
+
+                {errors.username?.message ? (
+                  <p className={styles.errorText}>{errors.username?.message}</p>
+                ) : null}
               </li>
 
               <li>
@@ -57,16 +73,30 @@ export default function LoginPopup() {
                 <div className={styles.inputBox}>
                   <input
                     type="password"
-                    {...register("password")}
-                    placeholder=""
+                    {...register("password", {
+                      required: "비밀번호를 입력해주세요",
+                    })}
+                    placeholder="비밀번호를 입력해주세요"
                   />
                 </div>
+
+                {errors.password?.message ? (
+                  <p className={styles.errorText}>{errors.password?.message}</p>
+                ) : null}
               </li>
             </ul>
 
-            <button className={styles.loginBtn} onClick={() => {}}>
-              로그인
-            </button>
+            <div className={styles.loginBox}>
+              {mutation.isError ? (
+                <p className={styles.errorText}>
+                  로그인 계정 정보가 잘못되었습니다
+                </p>
+              ) : null}
+
+              <button className={styles.loginBtn} onClick={() => {}}>
+                로그인
+              </button>
+            </div>
           </form>
         </div>
 

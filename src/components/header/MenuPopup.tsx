@@ -4,7 +4,7 @@ import styles from "@/styles/components/header/menuPopup.module.scss";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface IProps {
-  off: React.MouseEventHandler<HTMLButtonElement>;
+  off: Function;
 }
 
 export default function MenuPopup({ off }: IProps) {
@@ -14,6 +14,7 @@ export default function MenuPopup({ off }: IProps) {
     onSuccess: () => {
       apiInstance.defaults.headers.common["Authorization"] = null;
       queryClient.refetchQueries(["me"]);
+      off();
     },
   });
 
