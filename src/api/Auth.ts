@@ -27,5 +27,15 @@ export const refreshToken = () =>
 
       apiInstance.defaults.headers.common["Authorization"] = `Bearer ${access}`;
       return access;
+    });
+
+interface ILogoutVar {
+  refresh: string;
+}
+
+export const logout = ({ refresh }: ILogoutVar) =>
+  apiInstance
+    .post("users/log-out", {
+      refresh,
     })
-    
+    .then((res) => res.status);

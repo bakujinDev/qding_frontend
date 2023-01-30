@@ -1,7 +1,7 @@
 import styles from "@/styles/components/common/popupBg.module.scss";
 
 interface IProps {
-  bg: any;
+  bg?: any;
   off: React.MouseEventHandler<HTMLButtonElement>;
 }
 

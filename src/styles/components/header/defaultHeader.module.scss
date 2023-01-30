@@ -19,6 +19,19 @@
   }
 
   .rightArea {
+    .profBox {
+      .avatarBox {
+        position: relative;
+
+        .avatarBtn {
+          display: flex;
+          align-items: center;
+          font-size: 40px;
+          border-radius: 50%;
+        }
+      }
+    }
+
     .authBox {
       display: flex;
       align-items: center;

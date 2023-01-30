@@ -5,16 +5,21 @@ import { useState } from "react";
 import PopupBg from "../common/PopupBg";
 import SignInPopup from "./JoinPopup";
 import LoginPopup from "./LoginPopup";
-import useUser, { stringAvatar } from "@/lib/useUser";
-import Avatar from "@mui/material/Avatar";
+import useUser from "@/lib/useUser";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import MenuPopup from "./MenuPopup";
+import Image from "next/image";
 
 const itim = Itim({ weight: "400", preload: false });
 
 export default function DefaultHeader() {
   const [loginPopup, setLoginPopup] = useState<Boolean>(false);
   const [signInPopup, setSignInPopup] = useState<Boolean>(false);
+  const [menuPopup, setMenuPopup] = useState<Boolean>(false);
 
   const { userLoading, user, isLoggedIn } = useUser();
+
+  console.log(user);
 
   return (
     <>
@@ -28,13 +33,30 @@ export default function DefaultHeader() {
         <article className={styles.rightArea}>
           {isLoggedIn ? (
             <div className={styles.profBox}>
-              {user?.avatar ? (
-                <Avatar alt={user?.name} src={user?.avatar} />
-              ) : (
-                <Avatar
-                  {...stringAvatar(user?.name || user?.usernmae || "aaasdsd")}
-                />
-              )}
+              <span className={styles.avatarBox}>
+                <button
+                  className={styles.avatarBtn}
+                  onClick={() => setMenuPopup(true)}
+                >
+                  {user?.avatar ? (
+                    <Image
+                      src={user.avatar}
+                      alt="profile img"
+                      width={40}
+                      height={40}
+                    />
+                  ) : (
+                    <AccountCircleIcon fontSize="inherit" />
+                  )}
+                </button>
+
+                {menuPopup ? (
+                  <>
+                    <MenuPopup off={() => setMenuPopup(false)} />
+                    <PopupBg off={() => setMenuPopup(false)} />
+                  </>
+                ) : null}
+              </span>
             </div>
           ) : (
             <div className={styles.authBox}>
@@ -55,14 +77,13 @@ export default function DefaultHeader() {
           )}
         </article>
       </header>
-
+      F
       {signInPopup ? (
         <>
           <SignInPopup />
           <PopupBg bg off={() => setSignInPopup(false)} />
         </>
       ) : null}
-
       {loginPopup ? (
         <>
           <LoginPopup />
