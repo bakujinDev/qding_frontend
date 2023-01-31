@@ -58,6 +58,7 @@ export default function LoginPopup({ off }: IProps) {
                   <input
                     {...register("username", {
                       required: "아이디를 입력해주세요",
+                      minLength: { value: 8, message: "8자 이상 입력해주세요" },
                     })}
                     placeholder="아이디를 입력해주세요"
                   />
@@ -75,6 +76,7 @@ export default function LoginPopup({ off }: IProps) {
                     type="password"
                     {...register("password", {
                       required: "비밀번호를 입력해주세요",
+                      minLength: { value: 8, message: "8자 이상 입력해주세요" },
                     })}
                     placeholder="비밀번호를 입력해주세요"
                   />

@@ -2,7 +2,7 @@ import styles from "@/styles/components/header/joinPopup.module.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import I_kakao from "@/asset/icon/I_kakao.svg";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import { ILoginVar, usernameJoin, usernameLogin } from "@/api/auth";
+import { IJoinVar, ILoginVar, usernameLogin } from "@/api/auth";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { emailPattern } from "@/lib/useUser";
@@ -11,24 +11,24 @@ interface IProps {
   off: Function;
 }
 
-export default function JoinPopup({ off }: IProps) {
+export default function EmailAuthPopup({ off }: IProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<ILoginVar>();
+  } = useForm<IJoinVar>();
 
   const queryClient = useQueryClient();
 
-  const mutation = useMutation(usernameJoin, {
+  const mutation = useMutation(usernameLogin, {
     onSuccess: () => {
       queryClient.refetchQueries(["me"]);
       reset();
       off();
     },
     onError: () => {
-      // reset();
+      reset();
     },
   });
 
@@ -72,24 +72,6 @@ export default function JoinPopup({ off }: IProps) {
                   <p className={styles.errorText}>{errors.username?.message}</p>
                 ) : null}
               </li>
-
-              <li>
-                <p className={styles.key}>비밀번호</p>
-                <div className={styles.inputBox}>
-                  <input
-                    type="password"
-                    {...register("password", {
-                      required: "비밀번호를 입력해주세요",
-                      minLength: { value: 8, message: "8자 이상 입력해주세요" },
-                    })}
-                    placeholder="비밀번호를 입력해주세요"
-                  />
-                </div>
-
-                {errors.password?.message ? (
-                  <p className={styles.errorText}>{errors.password?.message}</p>
-                ) : null}
-              </li>
             </ul>
 
             <div className={styles.loginBox}>
@@ -100,7 +82,7 @@ export default function JoinPopup({ off }: IProps) {
               ) : null}
 
               <button className={styles.loginBtn} onClick={() => {}}>
-                회원가입
+                로그인
               </button>
             </div>
           </form>

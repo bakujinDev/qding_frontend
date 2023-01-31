@@ -39,3 +39,13 @@ export const logout = ({ refresh }: ILogoutVar) =>
       refresh,
     })
     .then((res) => res.status);
+
+export const usernameJoin = ({ username, password }: ILoginVar) =>
+  apiInstance.post("users/", { username, password }).then((res) => {
+    const { access, refresh } = res.data;
+
+    localStorage.setItem("refresh_token", refresh);
+    apiInstance.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+
+    return res.data;
+  });

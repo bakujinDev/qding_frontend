@@ -24,3 +24,5 @@ export default function useUser() {
     isLoggedIn: !isError,
   };
 }
+
+export const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
