@@ -6,12 +6,16 @@ import { ILoginVar, usernameJoin, usernameLogin } from "@/api/auth";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { emailPattern } from "@/lib/useUser";
+import { setEmailAuthPopup } from "@/store/reducer/commonReducer";
+import { useDispatch } from "react-redux";
 
 interface IProps {
   off: Function;
 }
 
 export default function JoinPopup({ off }: IProps) {
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -25,10 +29,8 @@ export default function JoinPopup({ off }: IProps) {
     onSuccess: () => {
       queryClient.refetchQueries(["me"]);
       reset();
+      dispatch(setEmailAuthPopup(true));
       off();
-    },
-    onError: () => {
-      // reset();
     },
   });
 

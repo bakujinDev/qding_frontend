@@ -1,7 +1,7 @@
 import styles from "@/styles/components/header/defaultHeader.module.scss";
 import Link from "next/link";
 import { Itim } from "@next/font/google";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PopupBg from "../common/PopupBg";
 import JoinPopup from "./JoinPopup";
 import LoginPopup from "./LoginPopup";
@@ -9,15 +9,24 @@ import useUser from "@/lib/useUser";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuPopup from "./MenuPopup";
 import Image from "next/image";
+import EmailAuthPopup from "./EmailAuthPopup";
+import { useDispatch, useSelector } from "react-redux";
+import { AppState } from "@/store/store";
+import { setEmailAuthPopup } from "@/store/reducer/commonReducer";
 
 const itim = Itim({ weight: "400", preload: false });
 
 export default function DefaultHeader() {
+  const dispatch = useDispatch();
+  const emailAuthPopup = useSelector(
+    (state: AppState) => state.common.emailAuthPopup
+    );
+    const { user, isLoggedIn } = useUser();
+
   const [loginPopup, setLoginPopup] = useState<Boolean>(false);
   const [joinPopup, setJoinPopup] = useState<Boolean>(false);
   const [menuPopup, setMenuPopup] = useState<Boolean>(false);
 
-  const { userLoading, user, isLoggedIn } = useUser();
 
   console.log(user);
 
@@ -77,17 +86,25 @@ export default function DefaultHeader() {
           )}
         </article>
       </header>
-      F
+
       {joinPopup ? (
         <>
           <JoinPopup off={() => setJoinPopup(false)} />
           <PopupBg bg off={() => setJoinPopup(false)} />
         </>
       ) : null}
+
       {loginPopup ? (
         <>
           <LoginPopup off={() => setLoginPopup(false)} />
           <PopupBg bg off={() => setLoginPopup(false)} />
+        </>
+      ) : null}
+
+      {emailAuthPopup ? (
+        <>
+          <EmailAuthPopup off={() => dispatch(setEmailAuthPopup(false))} />
+          <PopupBg bg off={() => dispatch(setEmailAuthPopup(false))} />
         </>
       ) : null}
     </>

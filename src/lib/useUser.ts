@@ -1,3 +1,4 @@
+import { apiInstance } from "@/api/common";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMe, refreshToken } from "../api/auth";
 
@@ -6,7 +7,9 @@ export default function useUser() {
 
   const { isLoading, data, isError } = useQuery(["me"], getMe, {
     retry: false,
-    onError: () => {
+    onError: (err: any) => {
+      if (err.response.data?.code === "user_inactive") return;
+
       if (localStorage.getItem("refresh_token")) refreshTokenMutation.mutate();
     },
   });
@@ -15,7 +18,10 @@ export default function useUser() {
     onSuccess: () => {
       queryClient.refetchQueries(["me"]);
     },
-    onError: () => localStorage.removeItem("refresh_token"),
+    onError: () => {
+      apiInstance.defaults.headers.common["Authorization"] = null;
+      localStorage.removeItem("refresh_token");
+    },
   });
 
   return {
