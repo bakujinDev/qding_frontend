@@ -8,7 +8,7 @@ export default function useUser() {
   const { isLoading, data, isError } = useQuery(["me"], getMe, {
     retry: false,
     onError: (err: any) => {
-      if (err.response.data?.code === "user_inactive") return;
+      if (err.response?.data?.code === "user_inactive") return;
 
       if (localStorage.getItem("refresh_token")) refreshTokenMutation.mutate();
     },

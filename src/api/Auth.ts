@@ -49,3 +49,9 @@ export const usernameJoin = ({ username, password }: ILoginVar) =>
 
     return res.data;
   });
+
+export const requestAuthEmail = () =>
+  apiInstance.post("users/email-auth").then((res) => res.data);
+
+export const getIsEmailAuth = () =>
+  apiInstance.get("users/email-auth").then((res) => res.data);

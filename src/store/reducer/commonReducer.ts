@@ -5,7 +5,7 @@ export interface ICommonState {
 }
 
 const initialState: ICommonState = {
-  emailAuthPopup: false,
+  emailAuthPopup: true,
 };
 
 export const commonSlice = createSlice({

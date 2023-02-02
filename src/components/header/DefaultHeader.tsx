@@ -20,13 +20,12 @@ export default function DefaultHeader() {
   const dispatch = useDispatch();
   const emailAuthPopup = useSelector(
     (state: AppState) => state.common.emailAuthPopup
-    );
-    const { user, isLoggedIn } = useUser();
+  );
+  const { user, isLoggedIn } = useUser();
 
   const [loginPopup, setLoginPopup] = useState<Boolean>(false);
   const [joinPopup, setJoinPopup] = useState<Boolean>(false);
   const [menuPopup, setMenuPopup] = useState<Boolean>(false);
-
 
   console.log(user);
 
