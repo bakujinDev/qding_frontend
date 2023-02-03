@@ -1,14 +1,13 @@
 import styles from "@/styles/components/header/defaultHeader.module.scss";
 import Link from "next/link";
 import { Itim } from "@next/font/google";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PopupBg from "../common/PopupBg";
 import JoinPopup from "./JoinPopup";
 import LoginPopup from "./LoginPopup";
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/user";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuPopup from "./MenuPopup";
-import Image from "next/image";
 import EmailAuthPopup from "./EmailAuthPopup";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "@/store/store";
@@ -47,13 +46,16 @@ export default function DefaultHeader() {
                   onClick={() => setMenuPopup(true)}
                 >
                   {user?.avatar ? (
-                    <Image
+                    <img
+                      className={styles.profImg}
                       src={user.avatar}
                       alt="profile img"
-                      width={40}
-                      height={40}
                     />
                   ) : (
+                    // <Image
+                    //   width={40}
+                    //   height={40}
+                    // />
                     <AccountCircleIcon fontSize="inherit" />
                   )}
                 </button>

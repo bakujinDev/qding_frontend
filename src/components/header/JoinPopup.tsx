@@ -5,7 +5,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import { ILoginVar, usernameJoin, usernameLogin } from "@/api/auth";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { emailPattern } from "@/lib/useUser";
+import { emailPattern } from "@/lib/user";
 import { setEmailAuthPopup } from "@/store/reducer/commonReducer";
 import { useDispatch } from "react-redux";
 

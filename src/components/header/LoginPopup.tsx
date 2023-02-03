@@ -5,6 +5,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import { ILoginVar, usernameLogin } from "@/api/auth";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { onClickSocialBtn } from "@/lib/user";
 
 interface IProps {
   off: Function;
@@ -25,9 +26,6 @@ export default function LoginPopup({ off }: IProps) {
       queryClient.refetchQueries(["me"]);
       reset();
       off();
-    },
-    onError: () => {
-      reset();
     },
   });
 
@@ -95,7 +93,7 @@ export default function LoginPopup({ off }: IProps) {
                 </p>
               ) : null}
 
-              <button className={styles.loginBtn} onClick={() => {}}>
+              <button className={styles.loginBtn} type="submit">
                 로그인
               </button>
             </div>
@@ -111,13 +109,21 @@ export default function LoginPopup({ off }: IProps) {
         <div className={styles.socialBox}>
           <ul className={styles.socialList}>
             <li className={styles.kakao}>
-              <I_kakao />
-              카카오 로그인
+              <button>
+                <I_kakao />
+                카카오 로그인
+              </button>
             </li>
 
             <li className={styles.github}>
-              <GitHubIcon />
-              깃허브 로그인
+              <button
+                onClick={() =>
+                  onClickSocialBtn({ type: "Github", off: () => off() })
+                }
+              >
+                <GitHubIcon />
+                깃허브 로그인
+              </button>
             </li>
           </ul>
         </div>

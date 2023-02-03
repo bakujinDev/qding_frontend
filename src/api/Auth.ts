@@ -62,3 +62,13 @@ interface ITurnEmailAuth {
 
 export const turnEmailAuh = ({ token }: ITurnEmailAuth) =>
   apiInstance.put("users/email-auth", { token }).then((res) => res.data);
+
+export const githubLogin = (code: string) =>
+  apiInstance.post(`users/github-login`, { code }).then((res) => {
+    const { access, refresh } = res.data;
+
+    localStorage.setItem("refresh_token", refresh);
+    apiInstance.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+
+    return res.data;
+  });

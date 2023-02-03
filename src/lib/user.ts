@@ -32,3 +32,26 @@ export default function useUser() {
 }
 
 export const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+const TSocialLogin = {
+  GITHUB: "Github",
+  KAKAO: "Kakao",
+} as const;
+type TSocialLogin = typeof TSocialLogin[keyof typeof TSocialLogin];
+
+interface IOnClickSocialBtn {
+  type: TSocialLogin;
+  off: Function;
+}
+
+export function onClickSocialBtn({ type, off }: IOnClickSocialBtn) {
+  switch (type) {
+    case "Github":
+      window.open(
+        "https://github.com/login/oauth/authorize?client_id=95bab3171f91c36f06cc&scope=read:user,user:email",
+        "_blank"
+      );
+      off();
+      break;
+  }
+}
