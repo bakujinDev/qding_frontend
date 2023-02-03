@@ -45,10 +45,30 @@ interface IOnClickSocialBtn {
 }
 
 export function onClickSocialBtn({ type, off }: IOnClickSocialBtn) {
+  let params;
   switch (type) {
-    case "Github":
+    case "Kakao":
+      const kakaoParams = {
+        client_id: "18dba6cfddc30770776200dda585923d",
+        redirect_uri: "http://127.0.0.1:3000/auth/kakao",
+        response_type: "code",
+      };
+      params = new URLSearchParams(kakaoParams).toString();
       window.open(
-        "https://github.com/login/oauth/authorize?client_id=95bab3171f91c36f06cc&scope=read:user,user:email",
+        `https://kauth.kakao.com/oauth/authorize?${params}`,
+        "_blank"
+      );
+      off();
+      break;
+
+    case "Github":
+      const githubParams = {
+        client_id: "95bab3171f91c36f06cc",
+        scope: "read:user,user:email",
+      };
+      params = new URLSearchParams(githubParams).toString();
+      window.open(
+        `https://github.com/login/oauth/authorize?${params}`,
         "_blank"
       );
       off();

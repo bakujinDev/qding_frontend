@@ -52,10 +52,6 @@ export default function DefaultHeader() {
                       alt="profile img"
                     />
                   ) : (
-                    // <Image
-                    //   width={40}
-                    //   height={40}
-                    // />
                     <AccountCircleIcon fontSize="inherit" />
                   )}
                 </button>

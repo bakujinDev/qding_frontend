@@ -72,3 +72,13 @@ export const githubLogin = (code: string) =>
 
     return res.data;
   });
+
+export const kakaoLogin = (code: string) =>
+  apiInstance.post(`users/kakao-login`, { code }).then((res) => {
+    const { access, refresh } = res.data;
+
+    localStorage.setItem("refresh_token", refresh);
+    apiInstance.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+
+    return res.data;
+  });

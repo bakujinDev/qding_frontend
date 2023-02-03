@@ -109,7 +109,11 @@ export default function LoginPopup({ off }: IProps) {
         <div className={styles.socialBox}>
           <ul className={styles.socialList}>
             <li className={styles.kakao}>
-              <button>
+              <button
+                onClick={() =>
+                  onClickSocialBtn({ type: "Kakao", off: () => off() })
+                }
+              >
                 <I_kakao />
                 카카오 로그인
               </button>
