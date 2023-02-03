@@ -1,0 +1,53 @@
+@import "@/styles/colors.scss";
+
+.emailAuthPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: #f8faff;
+
+  .contSec {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 540px;
+    padding: 40px;
+    background: #fff;
+    border-radius: 45px;
+    box-shadow: 0px 4px 13px 2px #e3e5ec;
+
+    .titleArea {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: center;
+      white-space: pre-wrap;
+
+      .title {
+        font-size: 30px;
+        line-height: 34px;
+        font-weight: 600;
+      }
+
+      .explain {
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 500;
+        color: $Gray1;
+      }
+    }
+
+    .contArea {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      font-size: 180px;
+      color: $Primary1;
+
+      .spinner {
+      }
+    }
+  }
+}

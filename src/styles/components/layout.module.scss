@@ -1,0 +1,9 @@
+.layoutCont {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  .contBox {
+    flex: 1;
+  }
+}

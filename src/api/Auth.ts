@@ -55,3 +55,10 @@ export const requestAuthEmail = () =>
 
 export const getIsEmailAuth = () =>
   apiInstance.get("users/email-auth").then((res) => res.data);
+
+interface ITurnEmailAuth {
+  token: string;
+}
+
+export const turnEmailAuh = ({ token }: ITurnEmailAuth) =>
+  apiInstance.put("users/email-auth", { token }).then((res) => res.data);

@@ -1,0 +1,22 @@
+<svg width="200" height="200" viewBox="0 0 200 200" color="#f44c66" fill="none"
+  xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="spinner-secondHalf">
+      <stop offset="0%" stop-opacity="0" stop-color="currentColor" />
+      <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+    </linearGradient>
+    <linearGradient id="spinner-firstHalf">
+      <stop offset="0%" stop-opacity="1" stop-color="currentColor" />
+      <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+    </linearGradient>
+  </defs>
+
+  <g stroke-width="18">
+    <path stroke="url(#spinner-secondHalf)" d="M20 100C20 78.7827 28.4285 58.4344 43.4315 43.4315C58.4344 28.4285 78.7827 20 100 20C121.217 20 141.566 28.4285 156.569 43.4315C171.571 58.4344 180 78.7827 180 100" />
+    <path stroke="url(#spinner-firstHalf)" d="M180 100C180 121.217 171.571 141.566 156.569 156.569C141.566 171.571 121.217 180 100 180C78.7827 180 58.4344 171.571 43.4315 156.569C28.4285 141.566 20 121.217 20 100" />
+
+    <path stroke="currentColor" stroke-linecap="round" d="M20 100C20 99.3334 20 98.6666 20 98" />
+  </g>
+
+  <animateTransform from="0 0 0" to="360 0 0" attributeName="transform" type="rotate" repeatCount="indefinite" dur="1500ms" />
+</svg>
