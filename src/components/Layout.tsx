@@ -2,6 +2,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactElement } from "react";
 import DefaultHeader from "./header/DefaultHeader";
 import styles from "@/styles/components/layout.module.scss";
+import CommonComp from "./CommonComp";
+import { Slide, ToastContainer } from "react-toastify";
 
 interface IProps {
   children: ReactElement<any, any>;
@@ -14,7 +16,10 @@ export default function Layout({ children }: IProps) {
 
       <div className={styles.contBox}>{children}</div>
 
+      <CommonComp />
+
       <ReactQueryDevtools />
+      <ToastContainer />
     </div>
   );
 }

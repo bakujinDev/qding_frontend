@@ -4,14 +4,16 @@ import { Itim } from "@next/font/google";
 import { useState } from "react";
 import PopupBg from "../common/PopupBg";
 import JoinPopup from "./JoinPopup";
-import LoginPopup from "./LoginPopup";
 import useUser from "@/lib/user";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuPopup from "./MenuPopup";
 import EmailAuthPopup from "./EmailAuthPopup";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "@/store/store";
-import { setEmailAuthPopup } from "@/store/reducer/commonReducer";
+import {
+  setEmailAuthPopup,
+  setLoginPopup,
+} from "@/store/reducer/commonReducer";
 
 const itim = Itim({ weight: "400", preload: false });
 
@@ -20,9 +22,9 @@ export default function DefaultHeader() {
   const emailAuthPopup = useSelector(
     (state: AppState) => state.common.emailAuthPopup
   );
+  
   const { user, isLoggedIn } = useUser();
 
-  const [loginPopup, setLoginPopup] = useState<Boolean>(false);
   const [joinPopup, setJoinPopup] = useState<Boolean>(false);
   const [menuPopup, setMenuPopup] = useState<Boolean>(false);
 
@@ -73,7 +75,7 @@ export default function DefaultHeader() {
 
               <button
                 className={styles.loginBtn}
-                onClick={() => setLoginPopup(true)}
+                onClick={() => dispatch(setLoginPopup(true))}
               >
                 로그인
               </button>
@@ -86,13 +88,6 @@ export default function DefaultHeader() {
         <>
           <JoinPopup off={() => setJoinPopup(false)} />
           <PopupBg bg off={() => setJoinPopup(false)} />
-        </>
-      ) : null}
-
-      {loginPopup ? (
-        <>
-          <LoginPopup off={() => setLoginPopup(false)} />
-          <PopupBg bg off={() => setLoginPopup(false)} />
         </>
       ) : null}
 

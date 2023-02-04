@@ -1,26 +1,32 @@
 import { getQnaList } from "@/api/qna";
 import { timeDifference } from "@/lib/time";
+import useUser from "@/lib/user";
+import { setLoginPopup } from "@/store/reducer/commonReducer";
 import styles from "@/styles/pages/home.module.scss";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function Home() {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const qnaList = useQuery(["qnaList"], getQnaList, {});
+  const { user } = useUser();
 
-  console.log(qnaList.data);
+  function onClickAskBtn() {
+    if (user) router.push("/qna/ask");
+    else {
+      toast("질문하기를 사용할려면 로그인이 필요해요");
+      dispatch(setLoginPopup(true));
+    }
+  }
 
-  // const { isLoading, data, isError } = useQuery(["me"], getMe, {
-  //   retry: false,
-  //   onError: (err: any) => {
-  //     if (err.response?.data?.code === "user_inactive") return;
-
-  //     if (localStorage.getItem("refresh_token")) refreshTokenMutation.mutate();
-  //   },
-  // });
   return (
     <main className={styles.home}>
       <section className={styles.questionSec}>
         <article className={styles.topArea}>
-          <button className={styles.askBtn} onClick={() => {}}>
+          <button className={styles.askBtn} onClick={onClickAskBtn}>
             질문하기
           </button>
         </article>
