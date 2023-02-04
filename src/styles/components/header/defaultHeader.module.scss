@@ -52,16 +52,19 @@
       gap: 20px;
 
       button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
         font-weight: 500;
+        color: $Gray1;
 
         &.signInBtn {
-          color: $Gray1;
         }
 
         &.loginBtn {
-          padding: 10px 16px;
-          color: #fff;
-          background: $Primary1;
+          padding: 6px 16px;
+          background: $White2;
           border-radius: 8px;
         }
       }

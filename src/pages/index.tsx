@@ -33,27 +33,37 @@ export default function Home() {
                   <ul className={styles.utilList}>
                     <li className={styles.views}>
                       <p className={styles.key}>좋아요</p>
-                      <p className={styles.value}>{v.view_count}</p>
+                      <p className={styles.value}>{v.votes}</p>
                     </li>
 
                     <li className={styles.views}>
                       <p className={styles.key}>답변수</p>
-                      <p className={styles.value}>{v.view_count}</p>
+                      <p className={styles.value}>{v.answers_count}</p>
                     </li>
 
                     <li className={styles.views}>
                       <p className={styles.key}>조회수</p>
-                      <p className={styles.value}>{v.view_count}</p>
+                      <p className={styles.value}>{v.views}</p>
                     </li>
                   </ul>
 
                   <div className={styles.contBox}>
-                    <h1 className={styles.title}>{v.title}</h1>
-                    <p className={styles.content}>{v.content}</p>
+                    <div className={styles.textBox}>
+                      <h1 className={styles.title}>{v.title}</h1>
+                      <p className={styles.content}>{v.content}</p>
+                    </div>
 
-                    <p className={styles.updatedAt}>
-                      {timeDifference(v.updated_at)}
-                    </p>
+                    <div className={styles.bottomBar}>
+                      <ul className={styles.tagList}>
+                        {v.tag.map((v: any, i: number) => (
+                          <li key={i}>{v.name}</li>
+                        ))}
+                      </ul>
+
+                      <p className={styles.updatedAt}>
+                        {timeDifference(v.updated_at)}
+                      </p>
+                    </div>
                   </div>
                 </li>
               ))}

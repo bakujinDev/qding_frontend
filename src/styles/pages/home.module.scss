@@ -1,17 +1,17 @@
 @import "@/styles/colors.scss";
 
 .home {
+  flex: 1;
   display: flex;
   justify-items: center;
-  height: 100%;
+  align-items: flex-start;
   padding: 40px;
   overflow-y: scroll;
   background: #f8faff;
 
   .questionSec {
     width: 690px;
-    height: 800px;
-    padding: 20px;
+    padding: 0 20px 10px;
     background: #fff;
     border-radius: 20px;
     box-shadow: 0px 4px 13px 2px #e3e5ec;
@@ -19,6 +19,8 @@
     .topArea {
       display: flex;
       justify-content: flex-end;
+      align-items: center;
+      height: 54px;
 
       .askBtn {
         padding: 4px 8px;
@@ -30,11 +32,17 @@
 
     .listArea {
       .qnaList {
+        border-top: 1px solid $White2;
+        border-bottom: 1px solid $White2;
+
         & > li {
           display: flex;
           gap: 10px;
           padding: 10px 0;
-          border-bottom: 1px solid $White2;
+
+          &:nth-of-type(n + 2) {
+            border-top: 1px solid $White2;
+          }
 
           .utilList {
             min-width: 80px;
@@ -58,28 +66,53 @@
           .contBox {
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 12px;
+            overflow: hidden;
 
-            .title {
-              line-height: 20px;
+            .textBox {
+              display: flex;
+              flex-direction: column;
+              gap: 2px;
+
+              .title {
+                line-height: 20px;
+              }
+
+              .content {
+                display: -webkit-box;
+                overflow: hidden;
+                -webkit-box-orient: vertical;
+                font-size: 12px;
+                text-overflow: ellipsis;
+                -webkit-line-clamp: 2;
+              }
             }
 
-            .content {
-              display: -webkit-box;
-              overflow: hidden;
-              -webkit-box-orient: vertical;
-              font-size: 12px;
-              text-overflow: ellipsis;
-              -webkit-line-clamp: 2;
-            }
+            .bottomBar {
+              display: flex;
+              align-items: center;
+              gap: 10px;
 
-            .tagList {
-            }
+              .tagList {
+                flex: 1;
+                display: flex;
+                gap: 4px;
+                overflow: hidden;
 
-            .updatedAt {
-              font-size: 12px;
-              text-align: end;
-              color: $Gray1;
+                li {
+                  padding: 4px;
+                  font-size: 10px;
+                  color: $Blue3;
+                  background: $Blue1;
+                  border-radius: 4px;
+                }
+              }
+
+              .updatedAt {
+                font-size: 12px;
+                text-align: end;
+                color: $Gray1;
+              }
             }
           }
         }
