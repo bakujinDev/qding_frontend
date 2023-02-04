@@ -26,8 +26,6 @@ export default function DefaultHeader() {
   const [joinPopup, setJoinPopup] = useState<Boolean>(false);
   const [menuPopup, setMenuPopup] = useState<Boolean>(false);
 
-  console.log(user);
-
   return (
     <>
       <header className={styles.defaultHeader}>

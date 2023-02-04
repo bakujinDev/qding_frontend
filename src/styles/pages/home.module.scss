@@ -1,0 +1,89 @@
+@import "@/styles/colors.scss";
+
+.home {
+  display: flex;
+  justify-items: center;
+  height: 100%;
+  padding: 40px;
+  overflow-y: scroll;
+  background: #f8faff;
+
+  .questionSec {
+    width: 690px;
+    height: 800px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 4px 13px 2px #e3e5ec;
+
+    .topArea {
+      display: flex;
+      justify-content: flex-end;
+
+      .askBtn {
+        padding: 4px 8px;
+        border-radius: 4px;
+        color: #fff;
+        background: $Primary1;
+      }
+    }
+
+    .listArea {
+      .qnaList {
+        & > li {
+          display: flex;
+          gap: 10px;
+          padding: 10px 0;
+          border-bottom: 1px solid $White2;
+
+          .utilList {
+            min-width: 80px;
+
+            li {
+              display: flex;
+              gap: 4px;
+              font-size: 12px;
+              line-height: 20px;
+
+              .key {
+                width: 36px;
+              }
+
+              .value {
+                flex: 1;
+              }
+            }
+          }
+
+          .contBox {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+
+            .title {
+              line-height: 20px;
+            }
+
+            .content {
+              display: -webkit-box;
+              overflow: hidden;
+              -webkit-box-orient: vertical;
+              font-size: 12px;
+              text-overflow: ellipsis;
+              -webkit-line-clamp: 2;
+            }
+
+            .tagList {
+            }
+
+            .updatedAt {
+              font-size: 12px;
+              text-align: end;
+              color: $Gray1;
+            }
+          }
+        }
+      }
+    }
+  }
+}

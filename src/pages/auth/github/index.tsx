@@ -3,15 +3,15 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import U_spinner from "@/asset/util/U_spinner.svg";
-import styles from "@/styles/pages/email_auth/token/index.module.scss";
+import styles from "@/styles/pages/auth/email_auth/token/index.module.scss";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 
-export default function index() {
+export default function Github() {
   const router = useRouter();
 
   const { code } = router.query;
-  const mutationTurnEmailAuth = useMutation(githubLogin, {
+  const mutationGithubLogin = useMutation(githubLogin, {
     onSuccess: () => {
       window.close();
     },
@@ -20,35 +20,35 @@ export default function index() {
   useEffect(() => {
     if (!code) return;
 
-    mutationTurnEmailAuth.mutate(`${code}`);
+    mutationGithubLogin.mutate(`${code}`);
   }, [code]);
+
+  console.log(mutationGithubLogin);
 
   return (
     <main className={styles.emailAuthPage}>
       <section className={styles.contSec}>
         <article className={styles.titleArea}>
-          <h1 className={styles.title}>
-            깃허브를 통한 로그인 중입니다
-          </h1>
+          <h1 className={styles.title}>깃허브를 통한 로그인 중입니다</h1>
           <h3 className={styles.explain}>
-            {mutationTurnEmailAuth?.isLoading ? "인증이 진행중입니다" : ""}
-            {mutationTurnEmailAuth?.isSuccess ? "인증이 완료되었습니다." : ""}
-            {mutationTurnEmailAuth?.isError
+            {mutationGithubLogin?.isLoading ? "인증이 진행중입니다" : ""}
+            {mutationGithubLogin?.isSuccess ? "인증이 완료되었습니다." : ""}
+            {mutationGithubLogin?.isError
               ? `인증에 문제가 발생하였습니다.\n 인증을 다시 요청 해주세요!`
               : ""}
           </h3>
         </article>
 
         <article className={styles.contArea}>
-          {mutationTurnEmailAuth?.isLoading ? (
+          {mutationGithubLogin?.isLoading ? (
             <U_spinner className={styles.spinner} />
           ) : null}
 
-          {mutationTurnEmailAuth?.isSuccess ? (
+          {mutationGithubLogin?.isSuccess ? (
             <SentimentSatisfiedAltIcon fontSize="inherit" />
           ) : null}
 
-          {mutationTurnEmailAuth?.isError ? (
+          {mutationGithubLogin?.isError ? (
             <SentimentDissatisfiedIcon fontSize="inherit" />
           ) : null}
         </article>

@@ -3,11 +3,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import U_spinner from "@/asset/util/U_spinner.svg";
-import styles from "@/styles/pages/email_auth/token/index.module.scss";
+import styles from "@/styles/pages/auth/email_auth/token/index.module.scss";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 
-export default function index() {
+export default function EmailAuthentication() {
   const router = useRouter();
   const { token } = router.query;
 
