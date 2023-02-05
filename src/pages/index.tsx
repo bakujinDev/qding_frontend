@@ -2,7 +2,7 @@ import { getQnaList } from "@/api/qna";
 import { timeDifference } from "@/lib/time";
 import useUser from "@/lib/user";
 import { setLoginPopup } from "@/store/reducer/commonReducer";
-import styles from "@/styles/pages/home.module.scss";
+import styles from "./index.module.scss";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -34,7 +34,7 @@ export default function Home() {
         <article className={styles.listArea}>
           {qnaList.isLoading ? null : (
             <ul className={styles.qnaList}>
-              {qnaList.data.map((v: any, i: number) => (
+              {qnaList.data?.map((v: any, i: number) => (
                 <li key={i}>
                   <ul className={styles.utilList}>
                     <li className={styles.views}>

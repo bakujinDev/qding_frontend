@@ -1,7 +1,7 @@
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactElement } from "react";
 import DefaultHeader from "./header/DefaultHeader";
-import styles from "@/styles/components/layout.module.scss";
+import styles from "./layout.module.scss";
 import CommonComp from "./CommonComp";
 import { Slide, ToastContainer } from "react-toastify";
 

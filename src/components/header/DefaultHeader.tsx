@@ -1,4 +1,4 @@
-import styles from "@/styles/components/header/defaultHeader.module.scss";
+import styles from "./defaultHeader.module.scss";
 import Link from "next/link";
 import { Itim } from "@next/font/google";
 import { useState } from "react";

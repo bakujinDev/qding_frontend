@@ -1,4 +1,4 @@
-import styles from "@/styles/components/common/popupBg.module.scss";
+import styles from "./popupBg.module.scss";
 
 interface IProps {
   bg?: any;

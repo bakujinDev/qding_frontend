@@ -1,4 +1,4 @@
-import styles from "@/styles/components/header/emailAuthPopup.module.scss";
+import styles from "./emailAuthPopup.module.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import { requestAuthEmail, getIsEmailAuth } from "@/api/auth";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";

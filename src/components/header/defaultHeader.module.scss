@@ -1,4 +1,4 @@
-@import "@/styles/colors.scss";
+@use "../../styles/variable" as *;
 
 .defaultHeader {
   display: flex;

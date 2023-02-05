@@ -1,0 +1,18 @@
+@import "./colors.scss";
+
+@mixin Main {
+  padding: 100px 0 0 250px;
+  height: 100vh;
+}
+
+@mixin Inner {
+  height: 100%;
+  padding: 25px 110px 43px 60px;
+}
+
+@mixin SearchBox {
+  background-color: $Primary4;
+  border-radius: 15px;
+  height: 136px;
+  padding: 24px 24px 24px 27px;
+}

@@ -1,4 +1,4 @@
-import styles from "@/styles/components/header/joinPopup.module.scss";
+import styles from "./joinPopup.module.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import I_kakao from "@/asset/icon/I_kakao.svg";
 import GitHubIcon from "@mui/icons-material/GitHub";
