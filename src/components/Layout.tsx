@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 import DefaultHeader from "./header/DefaultHeader";
 import styles from "./layout.module.scss";
 import CommonComp from "./CommonComp";
-import { Slide, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 interface IProps {
   children: ReactElement<any, any>;
