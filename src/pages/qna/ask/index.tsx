@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useEffect, useRef } from "react";
 import Seo from "@/components/Seo";
 import "react-quill/dist/quill.snow.css";
-import dynamic from "next/dynamic";
+import TextEditor from "@/components/common/TextEditor";
 
 export default function Ask() {
   const editorRef = useRef<HTMLDivElement>(null);
@@ -21,8 +21,6 @@ export default function Ask() {
   useEffect(() => {
     register("content", { required: true, minLength: 20 });
   }, [register]);
-
-  console.log(watch("content"));
 
   return (
     <>
@@ -52,12 +50,13 @@ export default function Ask() {
           </article>
 
           <article className={styles.tipArea}>
-            <h3 className={styles.key}>좋은 제목 짓는법</h3>
+            <h3 className={styles.key}>제목 잘 쓰는법</h3>
 
             <div className={styles.valueBox}>
               <ul className={styles.valueList}>
-                <li>문제를 파악 할 수 있는 제목 작성하기</li>
-                <li>질문 내용을 작성한 다음 제목을 한번 더 생각해보기</li>
+                <li>질문 제목에 의미가 담기도록 간결하게 작성하기</li>
+                <li>구체적인 내용의 제목 작성하기</li>
+                <li>질문의 핵심 단어를 포함하기</li>
               </ul>
             </div>
           </article>
@@ -72,23 +71,20 @@ export default function Ask() {
             </div>
 
             <div className={styles.valueBox}>
-              <ReactQuill
-                theme="snow"
+              <TextEditor
                 value={watch("content")}
-                onChange={(e) => setValue("content", e)}
-                modules={modules}
-                formats={formats}
+                onChange={(e: any) => setValue("content", e)}
               />
             </div>
           </article>
 
           <article className={styles.tipArea}>
-            <h3 className={styles.key}>빠른 답변을 부르는 제목 짓는법</h3>
+            <h3 className={styles.key}>질문 내용 잘 쓰는법</h3>
 
             <div className={styles.valueBox}>
               <ul className={styles.valueList}>
-                <li>문제를 파악 할 수 있는 제목 작성하기</li>
-                <li>질문 내용을 작성한 다음 제목을 한번 더 생각해보기</li>
+                <li>개발 목표와 발생한 문제에 대해 설명하기</li>
+                <li>시도한 방식과 예상한 결과, 실제 결과 설명하기</li>
               </ul>
             </div>
           </article>
@@ -97,30 +93,3 @@ export default function Ask() {
     </>
   );
 }
-
-const ReactQuill = dynamic(() => import("react-quill"), {
-  ssr: false,
-});
-
-const modules = {
-  toolbar: [
-    [{ header: [1, 2, false] }],
-    ["bold", "italic", "code-block"],
-    ["link", "image"],
-    [{ list: "ordered" }, { list: "bullet" }],
-  ],
-  clipboard: {
-    matchVisual: false,
-  },
-};
-
-const formats = [
-  "header",
-  "bold",
-  "italic",
-  "code-block",
-  "image",
-  "link",
-  "list",
-  "bullet",
-];
