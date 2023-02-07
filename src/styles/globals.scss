@@ -1,4 +1,4 @@
-@import './colors.scss';
+@import "./colors.scss";
 
 * {
   box-sizing: border-box;
@@ -64,8 +64,26 @@ input::-webkit-inner-spin-button {
   cursor: not-allowed;
 }
 
-ul{
-  li{
+ul {
+  li {
     list-style: none;
+  }
+}
+
+.quill {
+  .ql-toolbar {
+    border-radius: 4px 4px 0 0;
+  }
+
+  .ql-container {
+    border-radius: 0 0 4px 4px;
+
+    .ql-editor {
+      min-height: 200px;
+
+      img{
+        width: 100%;
+      }
+    }
   }
 }

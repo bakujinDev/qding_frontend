@@ -1,9 +1,10 @@
 import { IPostQuestion } from "@/api/qna";
 import styles from "./ask.module.scss";
 import { useForm } from "react-hook-form";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Seo from "@/components/Seo";
-import CodeIcon from "@mui/icons-material/Code";
+import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
 
 export default function Ask() {
   const editorRef = useRef<HTMLDivElement>(null);
@@ -13,7 +14,15 @@ export default function Ask() {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
+    setValue,
   } = useForm<IPostQuestion>();
+
+  useEffect(() => {
+    register("content", { required: true, minLength: 20 });
+  }, [register]);
+
+  console.log(watch("content"));
 
   return (
     <>
@@ -63,50 +72,13 @@ export default function Ask() {
             </div>
 
             <div className={styles.valueBox}>
-              <div className={styles.editorBox}>
-                <ul className={styles.btnBar}>
-                  <li className={styles.styleBox}>
-                    <button
-                      className={styles.boldBtn}
-                      onClick={() => document.execCommand("bold")}
-                    >
-                      가
-                    </button>
-                    <button
-                      className={styles.italicBtn}
-                      onClick={() => document.execCommand("Italic")}
-                    >
-                      가
-                    </button>
-                    <button
-                      className={styles.italicBtn}
-                      onClick={() => document.execCommand("increaseFontSize")}
-                    >
-                      {"<>"}
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      className={styles.svgBtn}
-                      onClick={() =>
-                        document.execCommand(
-                          "insertHTML",
-                          false,
-                          `${"&nbsp;"}<code>hi</code>${"&nbsp;"}`
-                        )
-                      }
-                    >
-                      <CodeIcon  />
-                    </button>
-                  </li>
-                </ul>
-                <div
-                  className={styles.editor}
-                  ref={editorRef}
-                  contentEditable="true"
-                  spellCheck="false"
-                />
-              </div>
+              <ReactQuill
+                theme="snow"
+                value={watch("content")}
+                onChange={(e) => setValue("content", e)}
+                modules={modules}
+                formats={formats}
+              />
             </div>
           </article>
 
@@ -125,3 +97,30 @@ export default function Ask() {
     </>
   );
 }
+
+const ReactQuill = dynamic(() => import("react-quill"), {
+  ssr: false,
+});
+
+const modules = {
+  toolbar: [
+    [{ header: [1, 2, false] }],
+    ["bold", "italic", "code-block"],
+    ["link", "image"],
+    [{ list: "ordered" }, { list: "bullet" }],
+  ],
+  clipboard: {
+    matchVisual: false,
+  },
+};
+
+const formats = [
+  "header",
+  "bold",
+  "italic",
+  "code-block",
+  "image",
+  "link",
+  "list",
+  "bullet",
+];
