@@ -3,6 +3,7 @@ import styles from "./ask.module.scss";
 import { useForm } from "react-hook-form";
 import { useRef } from "react";
 import Seo from "@/components/Seo";
+import CodeIcon from "@mui/icons-material/Code";
 
 export default function Ask() {
   const editorRef = useRef<HTMLDivElement>(null);
@@ -13,10 +14,6 @@ export default function Ask() {
     formState: { errors },
     reset,
   } = useForm<IPostQuestion>();
-
-  function onClickBoldBtn() {
-    document.execCommand("bold");
-  }
 
   return (
     <>
@@ -67,18 +64,47 @@ export default function Ask() {
 
             <div className={styles.valueBox}>
               <div className={styles.editorBox}>
-                <div className={styles.btnBar}>
-                  <button className={styles.bolBtn} onClick={onClickBoldBtn}>
-                    B
-                  </button>
-                </div>
+                <ul className={styles.btnBar}>
+                  <li className={styles.styleBox}>
+                    <button
+                      className={styles.boldBtn}
+                      onClick={() => document.execCommand("bold")}
+                    >
+                      가
+                    </button>
+                    <button
+                      className={styles.italicBtn}
+                      onClick={() => document.execCommand("Italic")}
+                    >
+                      가
+                    </button>
+                    <button
+                      className={styles.italicBtn}
+                      onClick={() => document.execCommand("increaseFontSize")}
+                    >
+                      {"<>"}
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className={styles.svgBtn}
+                      onClick={() =>
+                        document.execCommand(
+                          "insertHTML",
+                          false,
+                          `${"&nbsp;"}<code>hi</code>${"&nbsp;"}`
+                        )
+                      }
+                    >
+                      <CodeIcon  />
+                    </button>
+                  </li>
+                </ul>
                 <div
                   className={styles.editor}
                   ref={editorRef}
                   contentEditable="true"
                   spellCheck="false"
-                  onInput={(e) => console.log(e.currentTarget.textContent)}
-                  onFocus={(e) => console.log(e)}
                 />
               </div>
             </div>

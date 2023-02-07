@@ -69,17 +69,53 @@
 
           .btnBar {
             display: flex;
-            height: 28px;
+            gap: 10px;
+            height: 30px;
+            padding: 3px;
             border-bottom: 1px solid $White2;
 
-            button {
-              width: 28px;
+            li {
+              display: flex;
+
+              button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-width: 24px;
+                padding: 0 2px;
+                height: 24px;
+
+                &:hover {
+                  background: $White2;
+                  border-radius: 4px;
+                }
+
+                &.boldBtn {
+                  font-weight: 700;
+                }
+
+                &.italicBtn {
+                  font-style: italic;
+                }
+
+                svg {
+                  width: 20px;
+                }
+              }
             }
           }
 
           .editor {
             padding: 12px;
             min-height: 300px;
+
+            code {
+              display: block;
+              padding: 12px;
+              min-height: 30px;
+              background: $White2;
+              border-radius: 4px;
+            }
           }
         }
       }
