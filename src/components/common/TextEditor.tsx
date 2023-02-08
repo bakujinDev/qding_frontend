@@ -1,39 +1,42 @@
 import React, { useMemo } from "react";
 import dynamic from "next/dynamic";
 
-export default function TextEditor({ value, onChange, ...props }: IProps) {
+export default function TextEditor({ value, setValue, ...props }: IProps) {
   const quillRef = React.useRef<any>(false);
 
-  function imgHandler() {
-    const quill = quillRef.current.getEditor();
-    let fileInput = quill.root.querySelector("input.ql-image[type=file]");
+  // function imgHandler() {
+  //   const quill = quillRef.current.getEditor();
+  //   let fileInput = quill.root.querySelector("input.ql-image[type=file]");
 
-    if (fileInput === null) {
-      fileInput = document.createElement("input");
-      fileInput.setAttribute("type", "file");
-      fileInput.setAttribute(
-        "accept",
-        "image/png, image/gif, image/jpeg, image/bmp, image/x-icon"
-      );
-      fileInput.classList.add("ql-image");
+  //   if (fileInput === null) {
+  //     fileInput = document.createElement("input");
+  //     fileInput.setAttribute("type", "file");
+  //     fileInput.setAttribute("accept", "image/*");
+  //     fileInput.classList.add("ql-image");
 
-      fileInput.addEventListener("change", () => {
-        const files = fileInput.files;
-        const range = quill.getSelection(true);
+  //     fileInput.addEventListener("change", () => {
+  //       const files = fileInput.files;
+  //       const range = quill.getSelection(true);
 
-        if (!files || !files.length) {
-          console.log("No files selected");
-          return;
-        }
+  //       if (!files || !files.length) {
+  //         console.log("No files selected");
+  //         return;
+  //       }
 
-        quill.insertEmbed(range.index, "image", files);
-        quill.setSelection(range.index + 1);
-        fileInput.value = "";
-      });
-      quill.root.appendChild(fileInput);
-    }
-    fileInput.click();
-  }
+  //       // quill.enable(false);
+
+  //       let reader = new FileReader();
+  //       reader.readAsDataURL(files[0]);
+  //       reader.onloadend = () => {
+  //         quill.insertEmbed(range.index, "image", reader.result);
+  //         quill.setSelection(range.index + 1);
+  //         fileInput.value = "";
+  //       };
+  //     });
+  //     quill.root.appendChild(fileInput);
+  //   }
+  //   fileInput.click();
+  // }
 
   const modules = useMemo(
     () => ({
@@ -45,7 +48,7 @@ export default function TextEditor({ value, onChange, ...props }: IProps) {
           [{ list: "ordered" }, { list: "bullet" }],
           ["link", "image"],
         ],
-        handlers: { image: imgHandler },
+        // handlers: { image: imgHandler },
       },
     }),
     []
@@ -58,7 +61,7 @@ export default function TextEditor({ value, onChange, ...props }: IProps) {
       formats={formats}
       modules={modules}
       value={value}
-      onChange={onChange}
+      onChange={setValue}
       {...props}
     />
   );
@@ -79,7 +82,7 @@ const ReactQuill = dynamic(
 
 interface IProps {
   value: any;
-  onChange: any;
+  setValue: Function;
 }
 
 const formats = [

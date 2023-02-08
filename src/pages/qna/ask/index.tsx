@@ -1,13 +1,13 @@
 import { IPostQuestion } from "@/api/qna";
 import styles from "./ask.module.scss";
 import { useForm } from "react-hook-form";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import Seo from "@/components/Seo";
 import "react-quill/dist/quill.snow.css";
 import TextEditor from "@/components/common/TextEditor";
 
 export default function Ask() {
-  const editorRef = useRef<HTMLDivElement>(null);
+  const [, set] = useState();
 
   const {
     register,
@@ -21,6 +21,19 @@ export default function Ask() {
   useEffect(() => {
     register("content", { required: true, minLength: 20 });
   }, [register]);
+
+  function a() {
+    let content: any = watch("content");
+
+    if (!(content && content.ops)) return;
+
+    let ops = content.ops;
+
+    ops?.map((v: any, i: number) => {
+      if (v.insert?.image) console.log("hi");
+    });
+  }
+  a();
 
   return (
     <>
@@ -73,7 +86,12 @@ export default function Ask() {
             <div className={styles.valueBox}>
               <TextEditor
                 value={watch("content")}
-                onChange={(e: any) => setValue("content", e)}
+                setValue={(
+                  value: string,
+                  delta: any,
+                  source: any,
+                  editor: any
+                ) => setValue("content", editor.getContents())}
               />
             </div>
           </article>
@@ -84,7 +102,10 @@ export default function Ask() {
             <div className={styles.valueBox}>
               <ul className={styles.valueList}>
                 <li>개발 목표와 발생한 문제에 대해 설명하기</li>
-                <li>시도한 방식과 예상한 결과, 실제 결과 설명하기</li>
+                <li>
+                  시도한 방식과 발생한 결과, 목표와 어떻게 다른지 설명하기
+                </li>
+                <li>코드와 에러메세지를 이미지가 아닌 텍스트로 올리기</li>
               </ul>
             </div>
           </article>
