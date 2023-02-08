@@ -7,7 +7,8 @@ import "react-quill/dist/quill.snow.css";
 import TextEditor from "@/components/common/TextEditor";
 
 export default function Ask() {
-  const [, set] = useState();
+  const [content, setContent] = useState<any>();
+  const [imgList, setImgList] = useState<Array<File>>([]);
 
   const {
     register,
@@ -22,23 +23,31 @@ export default function Ask() {
     register("content", { required: true, minLength: 20 });
   }, [register]);
 
-  function a() {
-    let content: any = watch("content");
-
+  function getImgFile() {
     if (!(content && content.ops)) return;
 
     let ops = content.ops;
 
+    let _imgList: Array<File> = [];
+
     ops?.map((v: any, i: number) => {
-      if (v.insert?.image) console.log("hi");
+      if (!(v.insert && v.insert.image)) return;
+
+      const file = base64toFile(v.insert.image, `${i}`);
+
+      _imgList.push(file);
     });
+
+    setImgList([..._imgList]);
   }
-  a();
+
+  console.log(imgList);
 
   return (
     <>
       <Seo title="질문하기" />
       <main className={styles.ask}>
+        <button onClick={getImgFile}>hi</button>
         <section className={`${styles.titleSec} ${styles.contSec}`}>
           <article className={styles.contArea}>
             <div className={styles.keyBox}>
@@ -91,7 +100,10 @@ export default function Ask() {
                   delta: any,
                   source: any,
                   editor: any
-                ) => setValue("content", editor.getContents())}
+                ) => {
+                  setValue("content", value);
+                  setContent(editor.getContents());
+                }}
               />
             </div>
           </article>
@@ -113,4 +125,18 @@ export default function Ask() {
       </main>
     </>
   );
+}
+
+function base64toFile(base_data: any, filename: string) {
+  var arr = base_data.split(","),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+
+  return new File([u8arr], filename, { type: mime });
 }
