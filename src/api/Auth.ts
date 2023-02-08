@@ -1,4 +1,4 @@
-import { apiInstance, tokenInstance } from "./common";
+import { apiInstance, tokenInstance } from "./instance";
 
 export interface ILoginVar {
   username: string;

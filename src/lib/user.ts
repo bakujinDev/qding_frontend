@@ -1,4 +1,4 @@
-import { apiInstance } from "@/api/common";
+import { apiInstance } from "@/api/instance";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMe, refreshToken } from "../api/auth";
 

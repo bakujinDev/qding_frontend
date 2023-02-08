@@ -1,6 +1,6 @@
 import styles from "./menuPopup.module.scss";
 import { logout } from "@/api/auth";
-import { apiInstance } from "@/api/common";
+import { apiInstance } from "@/api/instance";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface IProps {

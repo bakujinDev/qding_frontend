@@ -1,4 +1,4 @@
-import { apiInstance, tokenInstance } from "./common";
+import { apiInstance, tokenInstance } from "./instance";
 
 export const getQnaList = () =>
   apiInstance.get("qnas/questions").then((res) => res.data);
@@ -11,3 +11,4 @@ export interface IPostQuestion {
 
 export const postQuestion = ({}:IPostQuestion) =>
   apiInstance.post("qnas/question").then((res) => res.data);
+

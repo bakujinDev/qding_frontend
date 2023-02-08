@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import Seo from "@/components/Seo";
 import "react-quill/dist/quill.snow.css";
 import TextEditor from "@/components/common/TextEditor";
+import { useMutation } from "@tanstack/react-query";
+import { getUploadURL } from "@/api/common";
 
 export default function Ask() {
   const [content, setContent] = useState<any>();
@@ -18,6 +20,12 @@ export default function Ask() {
     watch,
     setValue,
   } = useForm<IPostQuestion>();
+
+  const getUploadURLMutation = useMutation(getUploadURL, {
+    onSuccess: (res) => {
+      console.log(res);
+    },
+  });
 
   useEffect(() => {
     register("content", { required: true, minLength: 20 });
@@ -47,7 +55,8 @@ export default function Ask() {
     <>
       <Seo title="질문하기" />
       <main className={styles.ask}>
-        <button onClick={getImgFile}>hi</button>
+        <button onClick={() => getUploadURLMutation.mutate()}>getURL</button>
+        {/* <button onClick={getImgFile}>hi</button> */}
         <section className={`${styles.titleSec} ${styles.contSec}`}>
           <article className={styles.contArea}>
             <div className={styles.keyBox}>
