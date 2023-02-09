@@ -77,12 +77,6 @@ export default function Ask() {
     );
   }
 
-  async function onSubmit({ title, content, tag }: IPostQuestion) {
-    await uploadImgFile();
-
-    content = watch("content");
-  }
-
   function onClickTagDelBtn(tag: object) {
     let _selTagList = watch("tag");
 
@@ -90,6 +84,13 @@ export default function Ask() {
       "tag",
       _selTagList.filter((v) => v !== tag)
     );
+  }
+
+  async function onSubmit({ title, content, tag }: IPostQuestion) {
+    // await uploadImgFile();
+
+    content = watch("content");
+    console.log({ title, content, tag });
   }
 
   useEffect(() => {
@@ -193,13 +194,13 @@ export default function Ask() {
               <div className={styles.valueBox}>
                 <ul className={styles.selectTagList}>
                   {watch("tag")
-                    ? watch("tag").map((v, i) => (
+                    ? watch("tag").map((tag, i) => (
                         <li key={i}>
-                          <p>{v.name}</p>
+                          <p>{tag}</p>
 
                           <button
                             className={styles.delBtn}
-                            onClick={() => onClickTagDelBtn(v)}
+                            onClick={() => onClickTagDelBtn(tag)}
                           >
                             <CloseIcon />
                           </button>
@@ -250,7 +251,10 @@ export default function Ask() {
                     노출되어요
                   </li>
                   <li>많은 태그는 사람들에게 발견되기 쉽게 만들어요</li>
-                  <li>사용 언어, 프레임워크, 라이브러리 등 다양한 태그를 사용해보세요</li>
+                  <li>
+                    사용 언어, 프레임워크, 라이브러리 등 다양한 태그를
+                    사용해보세요
+                  </li>
                 </ul>
               </div>
             </article>
@@ -258,16 +262,36 @@ export default function Ask() {
 
           <section className={styles.btnSec}>
             <article className={styles.noticeArea}>
-              <h3 className={styles.key}>질문 시 이런 점을 주의해 주세요!</h3>
+              <div className={styles.keyBox}>
+                <h3 className={styles.key}>질문 시 이런 점을 주의해 주세요!</h3>
+
+                <p className={styles.explain}>
+                  본 게시판은 개발에 관련된 문제 해결을 위한 정보교류 커뮤니티
+                  입니다.
+                  <br />
+                  해당 게시판에는 다음과 같은 규칙이 있습니다.
+                </p>
+              </div>
 
               <div className={styles.valueBox}>
-                <ul className={styles.valueList}>
-                  <li>개발 목표와 발생한 문제에 대해 설명하기</li>
+                <ol className={styles.valueList}>
                   <li>
-                    시도한 방식과 발생한 결과, 목표와 어떻게 다른지 설명하기
+                    기존 답변 검색: 질문을 게시하기 전, 게시판에 검색하여 이미
+                    질문과 답변이 올라와져 있는지 확인해주세요.
                   </li>
-                  <li>코드와 에러메세지를 이미지가 아닌 텍스트로 올리기</li>
-                </ul>
+                  <li>
+                    구체적인 질문: 다양하게 해석될 수 있는 모호한 질문은
+                    피해주세요.
+                  </li>
+                  <li>
+                    시도한 내용 기재: 문제를 해결하기 위해 했던 시도를
+                    적어주세요.
+                  </li>
+                  <li>
+                    타인에 대한 존중: 게시판은 타인에 대한 존중과 예의가
+                    중요해요.
+                  </li>
+                </ol>
               </div>
             </article>
 

@@ -19,25 +19,25 @@ export default function TagSearchPopup({
     retry: false,
   });
 
-  function onClickTag(tag: any) {
+  function onClickTag(tagName: any) {
     if (value.length > 4) return;
-    
-    if (value.find((e) => e?.pk === tag?.pk)) {
+
+    if (value.find((e) => e === tagName)) {
       off();
       return;
     }
 
-    setValue([...value, tag]);
+    setValue([...value, tagName]);
     off();
   }
 
   return (
     <section className={styles.searchPopup}>
       <ul className={styles.valueList}>
-        {tagList.data?.map((v: any, i: number) => (
-          <li key={i} onClick={() => onClickTag(v)}>
-            <p className={styles.name}>{v.name}</p>
-            <p className={styles.desc}>{v.description}</p>
+        {tagList.data?.map((tag: any, i: number) => (
+          <li key={i} onClick={() => onClickTag(tag.name)}>
+            <p className={styles.name}>{tag.name}</p>
+            <p className={styles.desc}>{tag.description}</p>
           </li>
         ))}
       </ul>
