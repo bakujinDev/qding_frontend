@@ -6,11 +6,10 @@ import Seo from "@/components/Seo";
 import "react-quill/dist/quill.snow.css";
 import TextEditor from "@/components/common/TextEditor";
 import { useMutation } from "@tanstack/react-query";
-import { getUploadURL } from "@/api/common";
+import { getUploadURL, uploadImage } from "@/api/fileUpload";
 
 export default function Ask() {
   const [content, setContent] = useState<any>();
-  const [imgList, setImgList] = useState<Array<File>>([]);
 
   const {
     register,
@@ -22,8 +21,18 @@ export default function Ask() {
   } = useForm<IPostQuestion>();
 
   const getUploadURLMutation = useMutation(getUploadURL, {
-    onSuccess: (res) => {
-      console.log(res);
+    onSuccess: (data: IUploadURLResponse, file: File) => {
+      console.log(file);
+      uploadImageMutation.mutate({
+        file,
+        uploadURL: data.uploadURL,
+      });
+    },
+  });
+
+  const uploadImageMutation = useMutation(uploadImage, {
+    onSuccess: ({ result }: any) => {
+      console.log(result.variants[0]);
     },
   });
 
@@ -31,7 +40,7 @@ export default function Ask() {
     register("content", { required: true, minLength: 20 });
   }, [register]);
 
-  function getImgFile() {
+  function uploadImgFile() {
     if (!(content && content.ops)) return;
 
     let ops = content.ops;
@@ -43,20 +52,14 @@ export default function Ask() {
 
       const file = base64toFile(v.insert.image, `${i}`);
 
-      _imgList.push(file);
+      getUploadURLMutation.mutate(file);
     });
-
-    setImgList([..._imgList]);
   }
-
-  console.log(imgList);
 
   return (
     <>
       <Seo title="질문하기" />
       <main className={styles.ask}>
-        <button onClick={() => getUploadURLMutation.mutate()}>getURL</button>
-        {/* <button onClick={getImgFile}>hi</button> */}
         <section className={`${styles.titleSec} ${styles.contSec}`}>
           <article className={styles.contArea}>
             <div className={styles.keyBox}>
@@ -103,6 +106,7 @@ export default function Ask() {
 
             <div className={styles.valueBox}>
               <TextEditor
+                styles={styles}
                 value={watch("content")}
                 setValue={(
                   value: string,
@@ -131,9 +135,35 @@ export default function Ask() {
             </div>
           </article>
         </section>
+
+        <section className={styles.btnSec}>
+          <article className={styles.noticeArea}>
+            <h3 className={styles.key}>질문 시 이런 점을 주의해 주세요!</h3>
+
+            <div className={styles.valueBox}>
+              <ul className={styles.valueList}>
+                <li>개발 목표와 발생한 문제에 대해 설명하기</li>
+                <li>
+                  시도한 방식과 발생한 결과, 목표와 어떻게 다른지 설명하기
+                </li>
+                <li>코드와 에러메세지를 이미지가 아닌 텍스트로 올리기</li>
+              </ul>
+            </div>
+          </article>
+
+          <article className={styles.btnArea}>
+            <button className={styles.postBtn} onClick={uploadImgFile}>
+              작성하기
+            </button>
+          </article>
+        </section>
       </main>
     </>
   );
+}
+
+interface IUploadURLResponse {
+  uploadURL: string;
 }
 
 function base64toFile(base_data: any, filename: string) {

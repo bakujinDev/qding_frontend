@@ -1,4 +1,4 @@
-@import "@/styles/colors.scss";
+@use "../../../styles/variable" as *;
 
 .ask {
   flex: 1;
@@ -61,50 +61,6 @@
             padding: 0 12px;
           }
         }
-
-        .editorBox {
-          border: 2px solid $White2;
-          border-radius: 4px;
-          overflow: hidden;
-
-          .btnBar {
-            display: flex;
-            gap: 10px;
-            height: 30px;
-            padding: 3px;
-            border-bottom: 1px solid $White2;
-
-            li {
-              display: flex;
-
-              button {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                min-width: 24px;
-                padding: 0 2px;
-                height: 24px;
-
-                &:hover {
-                  background: $White2;
-                  border-radius: 4px;
-                }
-
-                &.boldBtn {
-                  font-weight: 700;
-                }
-
-                &.italicBtn {
-                  font-style: italic;
-                }
-
-                svg {
-                  width: 20px;
-                }
-              }
-            }
-          }
-        }
       }
     }
 
@@ -132,6 +88,55 @@
             font-size: 12px;
           }
         }
+      }
+    }
+  }
+
+  .btnSec {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 960px;
+    margin: 20px 0 0;
+
+    .noticeArea {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0px 4px 13px 2px #e3e5ec;
+    }
+
+    .btnArea {
+      display: flex;
+      gap: 10px;
+
+      .postBtn {
+        flex: 1;
+        height: 40px;
+        border-radius: 8px;
+        color: #fff;
+        background: $Primary1;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .ask {
+    gap: 30px;
+    padding: 12px;
+
+    .contSec {
+      flex-direction: column-reverse;
+      align-items: unset;
+      gap: 12px;
+
+      .tipArea {
+        width: 100%;
       }
     }
   }
