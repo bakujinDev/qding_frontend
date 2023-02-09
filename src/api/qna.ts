@@ -10,8 +10,10 @@ export interface IPostQuestion {
   tag: Array<any>;
 }
 
-export const postQuestion = ({}: IPostQuestion) =>
-  apiInstance.post("qnas/question").then((res) => res.data);
+export const postQuestion = ({ title, content, tag }: IPostQuestion) =>
+  apiInstance
+    .post("qnas/questions", { title, content, tag })
+    .then((res) => res.data);
 
 type GetTagListQueryKey = [string, string?, Date[]?];
 

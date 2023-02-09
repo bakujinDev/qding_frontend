@@ -1,4 +1,4 @@
-import { getTagList, IPostQuestion } from "@/api/qna";
+import { getTagList, IPostQuestion, postQuestion } from "@/api/qna";
 import styles from "./ask.module.scss";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
@@ -55,6 +55,8 @@ export default function Ask() {
     },
   });
 
+  const postQuestionMutation = useMutation(postQuestion, {});
+
   useEffect(() => {
     register("content", { required: true, minLength: 20 });
   }, [register]);
@@ -91,6 +93,7 @@ export default function Ask() {
 
     content = watch("content");
     console.log({ title, content, tag });
+    postQuestionMutation.mutate({ title, content, tag });
   }
 
   useEffect(() => {
