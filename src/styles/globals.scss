@@ -74,8 +74,10 @@ ul {
   .ql-toolbar {
     border-radius: 4px 4px 0 0;
   }
-
+  
   .ql-container {
+    max-height: 460px;
+    overflow-y: scroll;
     border-radius: 0 0 4px 4px;
 
     .ql-editor {

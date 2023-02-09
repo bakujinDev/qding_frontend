@@ -1,11 +1,11 @@
-import { IPostQuestion } from "@/api/qna";
+import { getTagList, IPostQuestion } from "@/api/qna";
 import styles from "./ask.module.scss";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import Seo from "@/components/Seo";
 import "react-quill/dist/quill.snow.css";
 import TextEditor from "@/components/common/TextEditor";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   getUploadURL,
   IGetUploadURL,
@@ -13,9 +13,14 @@ import {
   IUploadURLResponse,
   uploadImage,
 } from "@/api/fileUpload";
+import CloseIcon from "@mui/icons-material/Close";
+import TagSearchPopup from "@/components/qna/ask/TagSearchPopup";
+import PopupBg from "@/components/common/PopupBg";
 
 export default function Ask() {
   const [content, setContent] = useState<any>();
+  const [tagSearch, setTagSearch] = useState<string>("");
+  const [tagSearchPopup, setTagSearchPopup] = useState<boolean>(false);
 
   const {
     register,
@@ -24,7 +29,11 @@ export default function Ask() {
     reset,
     watch,
     setValue,
-  } = useForm<IPostQuestion>();
+  } = useForm<IPostQuestion>({
+    defaultValues: {
+      tag: [],
+    },
+  });
 
   const getUploadURLMutation = useMutation(getUploadURL, {
     onSuccess: async (data: IUploadURLResponse, props: IGetUploadURL) => {
@@ -74,6 +83,20 @@ export default function Ask() {
     content = watch("content");
   }
 
+  function onClickTagDelBtn(tag: object) {
+    let _selTagList = watch("tag");
+
+    setValue(
+      "tag",
+      _selTagList.filter((v) => v !== tag)
+    );
+  }
+
+  useEffect(() => {
+    if (tagSearch) setTagSearchPopup(true);
+    else setTagSearchPopup(false);
+  }, [tagSearch]);
+
   return (
     <>
       <Seo title="질문하기" />
@@ -85,7 +108,7 @@ export default function Ask() {
                 <h1 className={styles.key}>제목</h1>
 
                 <p className={styles.explain}>
-                  제목이 구체적일수록 빠른 답변을 얻을 수 있어요!
+                  질문의 제목을 작성해주세요 (8자 이상)
                 </p>
               </div>
 
@@ -115,12 +138,14 @@ export default function Ask() {
             </article>
           </section>
 
-          <section className={`${styles.titleSec} ${styles.contSec}`}>
+          <section className={styles.contSec}>
             <article className={styles.contArea}>
               <div className={styles.keyBox}>
                 <h1 className={styles.key}>내용</h1>
 
-                <p className={styles.explain}>문제의 내용을 작성해 주세요</p>
+                <p className={styles.explain}>
+                  문제의 내용을 작성해 주세요 (20자 이상)
+                </p>
               </div>
 
               <div className={styles.valueBox}>
@@ -150,6 +175,82 @@ export default function Ask() {
                     시도한 방식과 발생한 결과, 목표와 어떻게 다른지 설명하기
                   </li>
                   <li>코드와 에러메세지를 이미지가 아닌 텍스트로 올리기</li>
+                </ul>
+              </div>
+            </article>
+          </section>
+
+          <section className={styles.contSec}>
+            <article className={styles.contArea}>
+              <div className={styles.keyBox}>
+                <h1 className={styles.key}>태그</h1>
+
+                <p className={styles.explain}>
+                  질문 유형을 선택해주세요 (최대 5개)
+                </p>
+              </div>
+
+              <div className={styles.valueBox}>
+                <ul className={styles.selectTagList}>
+                  {watch("tag")
+                    ? watch("tag").map((v, i) => (
+                        <li key={i}>
+                          <p>{v.name}</p>
+
+                          <button
+                            className={styles.delBtn}
+                            onClick={() => onClickTagDelBtn(v)}
+                          >
+                            <CloseIcon />
+                          </button>
+                        </li>
+                      ))
+                    : null}
+                </ul>
+
+                <div className={styles.tagSearchCont}>
+                  <div className={styles.inputBox}>
+                    <input
+                      value={tagSearch}
+                      onChange={(e) => setTagSearch(e.target.value)}
+                      placeholder="예) react"
+                    />
+                  </div>
+
+                  {tagSearchPopup ? (
+                    <>
+                      <TagSearchPopup
+                        search={tagSearch}
+                        value={watch("tag")}
+                        setValue={(tag: Array<Object>) => setValue("tag", tag)}
+                        off={() => {
+                          setTagSearch("");
+                          setTagSearchPopup(false);
+                        }}
+                      />
+                      <PopupBg
+                        off={() => {
+                          setTagSearch("");
+                          setTagSearchPopup(false);
+                        }}
+                      />
+                    </>
+                  ) : null}
+                </div>
+              </div>
+            </article>
+
+            <article className={styles.tipArea}>
+              <h3 className={styles.key}>좋은 태그 선택하는 법</h3>
+
+              <div className={styles.valueBox}>
+                <ul className={styles.valueList}>
+                  <li>
+                    태그는 해당 분야에 대해 관심, 지식이 있는 사람에게
+                    노출되어요
+                  </li>
+                  <li>많은 태그는 사람들에게 발견되기 쉽게 만들어요</li>
+                  <li>사용 언어, 프레임워크, 라이브러리 등 다양한 태그를 사용해보세요</li>
                 </ul>
               </div>
             </article>
