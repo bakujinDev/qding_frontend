@@ -6,7 +6,13 @@ import Seo from "@/components/Seo";
 import "react-quill/dist/quill.snow.css";
 import TextEditor from "@/components/common/TextEditor";
 import { useMutation } from "@tanstack/react-query";
-import { getUploadURL, uploadImage } from "@/api/fileUpload";
+import {
+  getUploadURL,
+  IGetUploadURL,
+  IUploadImageVariables,
+  IUploadURLResponse,
+  uploadImage,
+} from "@/api/fileUpload";
 
 export default function Ask() {
   const [content, setContent] = useState<any>();
@@ -21,18 +27,22 @@ export default function Ask() {
   } = useForm<IPostQuestion>();
 
   const getUploadURLMutation = useMutation(getUploadURL, {
-    onSuccess: (data: IUploadURLResponse, file: File) => {
-      console.log(file);
-      uploadImageMutation.mutate({
-        file,
+    onSuccess: async (data: IUploadURLResponse, props: IGetUploadURL) => {
+      await uploadImageMutation.mutateAsync({
+        file: props.file,
         uploadURL: data.uploadURL,
+        editorSrc: props.editorSrc,
       });
     },
   });
 
   const uploadImageMutation = useMutation(uploadImage, {
-    onSuccess: ({ result }: any) => {
-      console.log(result.variants[0]);
+    onSuccess: ({ result }: any, props: IUploadImageVariables) => {
+      const uploadSrc = result.variants[0];
+
+      let content = watch("content");
+      content = content.replace(props.editorSrc, uploadSrc);
+      setValue("content", content);
     },
   });
 
@@ -40,130 +50,134 @@ export default function Ask() {
     register("content", { required: true, minLength: 20 });
   }, [register]);
 
-  function uploadImgFile() {
+  async function uploadImgFile() {
     if (!(content && content.ops)) return;
 
     let ops = content.ops;
 
-    let _imgList: Array<File> = [];
+    await Promise.all(
+      ops?.map(async (v: any, i: number) => {
+        if (!(v.insert && v.insert.image)) return;
+        const editorSrc = v.insert.image;
 
-    ops?.map((v: any, i: number) => {
-      if (!(v.insert && v.insert.image)) return;
+        if (editorSrc.startsWith("data:image/")) {
+          const file = base64toFile(editorSrc, `${i}`);
+          await getUploadURLMutation.mutateAsync({ file, editorSrc });
+        }
+      })
+    );
+  }
 
-      const file = base64toFile(v.insert.image, `${i}`);
+  async function onSubmit({ title, content, tag }: IPostQuestion) {
+    await uploadImgFile();
 
-      getUploadURLMutation.mutate(file);
-    });
+    content = watch("content");
   }
 
   return (
     <>
       <Seo title="질문하기" />
       <main className={styles.ask}>
-        <section className={`${styles.titleSec} ${styles.contSec}`}>
-          <article className={styles.contArea}>
-            <div className={styles.keyBox}>
-              <h1 className={styles.key}>제목</h1>
+        <form className={styles.formBox} onSubmit={handleSubmit(onSubmit)}>
+          <section className={styles.contSec}>
+            <article className={styles.contArea}>
+              <div className={styles.keyBox}>
+                <h1 className={styles.key}>제목</h1>
 
-              <p className={styles.explain}>
-                제목이 구체적일수록 빠른 답변을 얻을 수 있어요!
-              </p>
-            </div>
+                <p className={styles.explain}>
+                  제목이 구체적일수록 빠른 답변을 얻을 수 있어요!
+                </p>
+              </div>
 
-            <div className={styles.valueBox}>
-              <div className={styles.inputBox}>
-                <input
-                  {...register("title", {
-                    required: "제목을 입력해주세요",
-                    minLength: { value: 8, message: "8자 이상 입력해주세요" },
-                  })}
-                  placeholder="예) html의 <strong>과 <em>은 어떻게 다른가요?"
+              <div className={styles.valueBox}>
+                <div className={styles.inputBox}>
+                  <input
+                    {...register("title", {
+                      required: "제목을 입력해주세요",
+                      minLength: { value: 8, message: "8자 이상 입력해주세요" },
+                    })}
+                    placeholder="예) html의 <strong>과 <em>은 어떻게 다른가요?"
+                  />
+                </div>
+              </div>
+            </article>
+
+            <article className={styles.tipArea}>
+              <h3 className={styles.key}>제목 잘 쓰는법</h3>
+
+              <div className={styles.valueBox}>
+                <ul className={styles.valueList}>
+                  <li>질문 제목에 의미가 담기도록 간결하게 작성하기</li>
+                  <li>구체적인 내용의 제목 작성하기</li>
+                  <li>질문의 핵심 단어를 포함하기</li>
+                </ul>
+              </div>
+            </article>
+          </section>
+
+          <section className={`${styles.titleSec} ${styles.contSec}`}>
+            <article className={styles.contArea}>
+              <div className={styles.keyBox}>
+                <h1 className={styles.key}>내용</h1>
+
+                <p className={styles.explain}>문제의 내용을 작성해 주세요</p>
+              </div>
+
+              <div className={styles.valueBox}>
+                <TextEditor
+                  styles={styles}
+                  value={watch("content")}
+                  setValue={(
+                    value: string,
+                    delta: any,
+                    source: any,
+                    editor: any
+                  ) => {
+                    setValue("content", value);
+                    setContent(editor.getContents());
+                  }}
                 />
               </div>
-            </div>
-          </article>
+            </article>
 
-          <article className={styles.tipArea}>
-            <h3 className={styles.key}>제목 잘 쓰는법</h3>
+            <article className={styles.tipArea}>
+              <h3 className={styles.key}>질문 내용 잘 쓰는법</h3>
 
-            <div className={styles.valueBox}>
-              <ul className={styles.valueList}>
-                <li>질문 제목에 의미가 담기도록 간결하게 작성하기</li>
-                <li>구체적인 내용의 제목 작성하기</li>
-                <li>질문의 핵심 단어를 포함하기</li>
-              </ul>
-            </div>
-          </article>
-        </section>
+              <div className={styles.valueBox}>
+                <ul className={styles.valueList}>
+                  <li>개발 목표와 발생한 문제에 대해 설명하기</li>
+                  <li>
+                    시도한 방식과 발생한 결과, 목표와 어떻게 다른지 설명하기
+                  </li>
+                  <li>코드와 에러메세지를 이미지가 아닌 텍스트로 올리기</li>
+                </ul>
+              </div>
+            </article>
+          </section>
 
-        <section className={`${styles.titleSec} ${styles.contSec}`}>
-          <article className={styles.contArea}>
-            <div className={styles.keyBox}>
-              <h1 className={styles.key}>내용</h1>
+          <section className={styles.btnSec}>
+            <article className={styles.noticeArea}>
+              <h3 className={styles.key}>질문 시 이런 점을 주의해 주세요!</h3>
 
-              <p className={styles.explain}>문제의 내용을 작성해 주세요</p>
-            </div>
+              <div className={styles.valueBox}>
+                <ul className={styles.valueList}>
+                  <li>개발 목표와 발생한 문제에 대해 설명하기</li>
+                  <li>
+                    시도한 방식과 발생한 결과, 목표와 어떻게 다른지 설명하기
+                  </li>
+                  <li>코드와 에러메세지를 이미지가 아닌 텍스트로 올리기</li>
+                </ul>
+              </div>
+            </article>
 
-            <div className={styles.valueBox}>
-              <TextEditor
-                styles={styles}
-                value={watch("content")}
-                setValue={(
-                  value: string,
-                  delta: any,
-                  source: any,
-                  editor: any
-                ) => {
-                  setValue("content", value);
-                  setContent(editor.getContents());
-                }}
-              />
-            </div>
-          </article>
-
-          <article className={styles.tipArea}>
-            <h3 className={styles.key}>질문 내용 잘 쓰는법</h3>
-
-            <div className={styles.valueBox}>
-              <ul className={styles.valueList}>
-                <li>개발 목표와 발생한 문제에 대해 설명하기</li>
-                <li>
-                  시도한 방식과 발생한 결과, 목표와 어떻게 다른지 설명하기
-                </li>
-                <li>코드와 에러메세지를 이미지가 아닌 텍스트로 올리기</li>
-              </ul>
-            </div>
-          </article>
-        </section>
-
-        <section className={styles.btnSec}>
-          <article className={styles.noticeArea}>
-            <h3 className={styles.key}>질문 시 이런 점을 주의해 주세요!</h3>
-
-            <div className={styles.valueBox}>
-              <ul className={styles.valueList}>
-                <li>개발 목표와 발생한 문제에 대해 설명하기</li>
-                <li>
-                  시도한 방식과 발생한 결과, 목표와 어떻게 다른지 설명하기
-                </li>
-                <li>코드와 에러메세지를 이미지가 아닌 텍스트로 올리기</li>
-              </ul>
-            </div>
-          </article>
-
-          <article className={styles.btnArea}>
-            <button className={styles.postBtn} onClick={uploadImgFile}>
-              작성하기
-            </button>
-          </article>
-        </section>
+            <article className={styles.btnArea}>
+              <button className={styles.postBtn}>작성하기</button>
+            </article>
+          </section>
+        </form>
       </main>
     </>
   );
-}
-
-interface IUploadURLResponse {
-  uploadURL: string;
 }
 
 function base64toFile(base_data: any, filename: string) {

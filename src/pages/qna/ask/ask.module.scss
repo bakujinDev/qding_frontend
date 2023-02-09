@@ -2,124 +2,127 @@
 
 .ask {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
   padding: 40px;
   overflow-y: scroll;
   background: #f8faff;
 
-  .contSec {
+  .formBox {
     display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
     gap: 20px;
-    width: 100%;
-    max-width: 960px;
 
-    .contArea {
-      flex: 1;
+    .contSec {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding: 20px;
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0px 4px 13px 2px #e3e5ec;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+      width: 100%;
+      max-width: 960px;
 
-      .keyBox {
+      .contArea {
+        flex: 1;
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 10px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0px 4px 13px 2px #e3e5ec;
 
-        .key {
-          font-weight: 500;
-        }
-
-        .explain {
-          font-size: 12px;
-          color: $Gray1;
-        }
-      }
-
-      .valueBox {
-        .inputBox {
-          display: flex;
-          align-items: center;
-          height: 32px;
-          border: 2px solid $White2;
-          border-radius: 4px;
-
-          &:focus-within {
-            border-color: $Blue2;
-          }
-
-          input {
-            flex: 1;
-            height: 100%;
-            padding: 0 12px;
-          }
-        }
-      }
-    }
-
-    .tipArea {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: 260px;
-      padding: 20px;
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0px 4px 13px 2px #e3e5ec;
-
-      .key {
-        font-size: 14px;
-      }
-
-      .valueBox {
-        .valueList {
+        .keyBox {
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 4px;
 
-          li {
+          .key {
+            font-weight: 500;
+          }
+
+          .explain {
             font-size: 12px;
+            color: $Gray1;
+          }
+        }
+
+        .valueBox {
+          .inputBox {
+            display: flex;
+            align-items: center;
+            height: 32px;
+            border: 2px solid $White2;
+            border-radius: 4px;
+
+            &:focus-within {
+              border-color: $Blue2;
+            }
+
+            input {
+              flex: 1;
+              height: 100%;
+              padding: 0 12px;
+            }
+          }
+        }
+      }
+
+      .tipArea {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 260px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0px 4px 13px 2px #e3e5ec;
+
+        .key {
+          font-size: 14px;
+        }
+
+        .valueBox {
+          .valueList {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+
+            li {
+              font-size: 12px;
+            }
           }
         }
       }
     }
-  }
 
-  .btnSec {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    max-width: 960px;
-    margin: 20px 0 0;
-
-    .noticeArea {
+    .btnSec {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      padding: 20px;
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0px 4px 13px 2px #e3e5ec;
-    }
+      width: 100%;
+      max-width: 960px;
+      margin: 20px 0 0;
 
-    .btnArea {
-      display: flex;
-      gap: 10px;
+      .noticeArea {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0px 4px 13px 2px #e3e5ec;
+      }
 
-      .postBtn {
-        flex: 1;
-        height: 40px;
-        border-radius: 8px;
-        color: #fff;
-        background: $Primary1;
+      .btnArea {
+        display: flex;
+        gap: 10px;
+
+        .postBtn {
+          flex: 1;
+          height: 40px;
+          border-radius: 8px;
+          color: #fff;
+          background: $Primary1;
+        }
       }
     }
   }
@@ -127,16 +130,19 @@
 
 @include mobile {
   .ask {
-    gap: 30px;
     padding: 12px;
 
-    .contSec {
-      flex-direction: column-reverse;
-      align-items: unset;
-      gap: 12px;
+    .formBox {
+      gap: 30px;
 
-      .tipArea {
-        width: 100%;
+      .contSec {
+        flex-direction: column-reverse;
+        align-items: unset;
+        gap: 12px;
+
+        .tipArea {
+          width: 100%;
+        }
       }
     }
   }
