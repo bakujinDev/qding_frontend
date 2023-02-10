@@ -4,6 +4,16 @@ import { apiInstance, tokenInstance } from "./instance";
 export const getQnaList = () =>
   apiInstance.get("qnas/questions").then((res) => res.data);
 
+type GetQnaPostQueryKey = [string, string?];
+
+export const getQnaPost = ({
+  queryKey,
+}: QueryFunctionContext<GetQnaPostQueryKey>) => {
+  const [_, id] = queryKey;
+
+  return apiInstance.get(`qnas/questions/${id}`).then((res) => res.data);
+};
+
 export interface IPostQuestion {
   title: string;
   content: string;

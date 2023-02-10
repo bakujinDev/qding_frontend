@@ -8,3 +8,9 @@ $breakpoint-desktop: 1024px;
   }
 }
 
+@mixin askBtn {
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #fff;
+  background: $Primary1;
+}

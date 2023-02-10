@@ -74,7 +74,7 @@ ul {
   .ql-toolbar {
     border-radius: 4px 4px 0 0;
   }
-  
+
   .ql-container {
     max-height: 460px;
     overflow-y: scroll;
@@ -86,6 +86,20 @@ ul {
       img {
         display: block;
         margin: 0 auto;
+      }
+    }
+  }
+
+  &.readOnlyQuill {
+    .ql-container {
+      min-height: unset;
+
+      .ql-editor {
+        min-height: unset;
+      }
+      
+      .ql-clipboard {
+        display: none;
       }
     }
   }

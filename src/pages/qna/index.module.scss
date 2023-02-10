@@ -25,10 +25,7 @@
       height: 54px;
 
       .askBtn {
-        padding: 4px 8px;
-        border-radius: 4px;
-        color: #fff;
-        background: $Primary1;
+        @include askBtn;
       }
     }
 
@@ -43,7 +40,7 @@
           padding: 10px;
           cursor: pointer;
 
-          &:hover{
+          &:hover {
             background: $HoverBlue;
           }
 
