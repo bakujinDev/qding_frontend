@@ -1,8 +1,47 @@
 import React, { useMemo } from "react";
 import dynamic from "next/dynamic";
+import { toast } from "react-toastify";
+import { mib2 } from "@/lib/setting";
 
 export default function TextEditor({ value, setValue, styles }: IProps) {
   const quillRef = React.useRef<any>(false);
+
+  function imgHandler() {
+    const quill = quillRef.current.getEditor();
+    let fileInput = quill.root.querySelector("input.ql-image[type=file]");
+
+    if (fileInput === null) {
+      fileInput = document.createElement("input");
+      fileInput.setAttribute("type", "file");
+      fileInput.setAttribute("accept", "image/*");
+      fileInput.classList.add("ql-image");
+
+      fileInput.addEventListener("change", () => {
+        const files = fileInput.files;
+        const range = quill.getSelection(true);
+
+        if (!files || !files.length) {
+          console.log("No files selected");
+          return;
+        }
+
+        if (files[0].size > mib2) {
+          toast("2MiB 이하의 이미지를 사용해 주세요");
+          return;
+        }
+
+        let reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onloadend = () => {
+          quill.insertEmbed(range.index, "image", reader.result);
+          quill.setSelection(range.index + 1);
+          fileInput.value = "";
+        };
+      });
+      quill.root.appendChild(fileInput);
+    }
+    fileInput.click();
+  }
 
   const modules = useMemo(
     () => ({
@@ -14,6 +53,7 @@ export default function TextEditor({ value, setValue, styles }: IProps) {
           [{ list: "ordered" }, { list: "bullet" }],
           ["link", "image"],
         ],
+        handlers: { image: imgHandler },
       },
     }),
     []
@@ -52,9 +92,11 @@ interface IProps {
 }
 
 const formats = [
-  "header",
+  "size",
   "bold",
   "italic",
+  "strike",
+  "blockquote",
   "code-block",
   "image",
   "link",

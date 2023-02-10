@@ -1,16 +1,18 @@
-@use "../styles/variable" as *;
+@use "../../styles/variable" as *;
 
-.home {
+.qna {
   flex: 1;
   display: flex;
-  justify-items: center;
+  justify-content: center;
   align-items: flex-start;
+  gap: 20px;
   padding: 40px;
   overflow-y: scroll;
   background: #f8faff;
 
   .questionSec {
-    width: 690px;
+    width: 100%;
+    max-width: 690px;
     padding: 0 20px 10px;
     background: #fff;
     border-radius: 20px;
@@ -38,7 +40,12 @@
         & > li {
           display: flex;
           gap: 10px;
-          padding: 10px 0;
+          padding: 10px;
+          cursor: pointer;
+
+          &:hover{
+            background: $HoverBlue;
+          }
 
           &:nth-of-type(n + 2) {
             border-top: 1px solid $White2;
@@ -64,6 +71,7 @@
           }
 
           .contBox {
+            flex: 1;
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -118,5 +126,14 @@
         }
       }
     }
+  }
+
+  .aside {
+    width: 320px;
+    height: 400px;
+    padding: 0 20px 10px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 4px 13px 2px #e3e5ec;
   }
 }
