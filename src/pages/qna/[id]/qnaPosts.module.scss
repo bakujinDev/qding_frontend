@@ -45,7 +45,105 @@
     }
 
     .contArea {
+      display: flex;
+      gap: 16px;
       padding: 12px 0;
+      border-top: 1px solid $White2;
+
+      .voteBox {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        text-align: center;
+
+        p {
+          font-size: 20px;
+          line-height: 20px;
+          color: $Gray1;
+        }
+
+        button {
+          display: flex;
+          align-items: center;
+
+          &:hover {
+            svg {
+              color: $Primary1;
+            }
+          }
+        }
+      }
+
+      .contCont {
+        flex: 1;
+
+        .quillBox {
+          min-height: 172px;
+        }
+
+        .tagBar {
+          display: flex;
+          gap: 4px;
+          padding: 24px 0 0;
+
+          .tagList {
+            padding: 4px;
+            font-size: 10px;
+            color: $Blue3;
+            background: $Blue1;
+            border-radius: 4px;
+          }
+        }
+
+        .utilBar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 12px;
+          padding: 12px 0 0;
+
+          .btnBox {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            button {
+              display: flex;
+              align-items: center;
+              font-size: 12px;
+            }
+          }
+
+          .profBox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px;
+            border-radius: 4px;
+            cursor: pointer;
+
+            &:hover {
+              background: $Blue1;
+            }
+
+            img {
+              width: 20px;
+              height: 20px;
+              object-fit: cover;
+              border-radius: 50%;
+            }
+
+            .name {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+
+    .replyArea {
+      padding: 12px 0 0;
       border-top: 1px solid $White2;
     }
   }
