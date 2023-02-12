@@ -1,8 +1,8 @@
-import { getQnaPost } from "@/api/qna";
+import { getQnaPost, postQuestionComment } from "@/api/qna";
 import Seo from "@/components/Seo";
 import { timeDifference } from "@/lib/time";
 import useUser from "@/lib/user";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -22,11 +22,29 @@ export default function QnaPosts() {
     retry: false,
   });
 
+  const commentMutation = useMutation(postQuestionComment, {
+    onSuccess: (res) => {
+      console.log(res);
+    },
+  });
+
+  console.log(data);
+
   return isSuccess ? (
     <>
       <Seo title={data.title} />
 
       <main className={styles.qnaPosts}>
+        <button
+          onClick={() =>
+            commentMutation.mutate({
+              id: `${id}`,
+              content: "hi",
+            })
+          }
+        >
+          hi
+        </button>
         <section className={styles.questionSec}>
           <article className={styles.topBar}>
             <div className={styles.titleBox}>
@@ -48,7 +66,7 @@ export default function QnaPosts() {
           </article>
 
           <article className={styles.contArea}>
-            <div className={styles.voteBox}>
+            <div className={styles.utilBox}>
               <button
                 className={`${styles.upBtn} ${styles.voteBtn}`}
                 onClick={() => {}}
@@ -69,9 +87,9 @@ export default function QnaPosts() {
                 <HistoryIcon />
               </button>
 
-              {/* <button className={styles.flagBtn} onClick={() => {}}>
+              <button className={styles.flagBtn} onClick={() => {}}>
                 <FlagIcon />
-              </button> */}
+              </button>
             </div>
 
             <div className={styles.contCont}>
@@ -122,16 +140,42 @@ export default function QnaPosts() {
 
           <article className={styles.replyArea}>
             <ul className={styles.replyList}>
-            {/* {.map((v, i) => (
-            <li key={i}>{v}</li>
-            ))} */}
+              {data.question_comments.map((v: any, i: number) => (
+                <li key={i}>
+                  <div className={styles.utilBox}>
+                    <button
+                      className={`${styles.upBtn} ${styles.voteBtn}`}
+                      onClick={() => {}}
+                    >
+                      <ThumbUpAltIcon />
+                    </button>
+
+                    <p>{data.votes}</p>
+
+                    <button
+                      className={`${styles.downBtn} ${styles.voteBtn}`}
+                      onClick={() => {}}
+                    >
+                      <ThumbDownAltIcon />
+                    </button>
+
+                    <button className={styles.flagBtn} onClick={() => {}}>
+                      <FlagIcon />
+                    </button>
+                  </div>
+
+                  <div className={styles.contBox}>
+                    <p className={styles.content}>{v.content} -</p>
+                    <p className={styles.name}>{v.creator.name}</p>
+                    <p className={styles.updatedAt}>
+                      {timeDifference(data.updated_at)}
+                    </p>
+                  </div>
+                </li>
+              ))}
             </ul>
           </article>
         </section>
-
-        {/* {.map((v, i) => (
-          <li key={i}>{v}</li>
-          ))} */}
       </main>
     </>
   ) : (

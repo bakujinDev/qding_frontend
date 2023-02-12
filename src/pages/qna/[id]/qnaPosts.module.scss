@@ -50,7 +50,7 @@
       padding: 12px 0;
       border-top: 1px solid $White2;
 
-      .voteBox {
+      .utilBox {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -143,8 +143,58 @@
     }
 
     .replyArea {
-      padding: 12px 0 0;
       border-top: 1px solid $White2;
+
+      .replyList {
+        li {
+          display: flex;
+          gap: 6px;
+          padding: 6px 0;
+          font-size: 12px;
+          border-bottom: 1px solid $White2;
+
+          .utilBox {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            text-align: center;
+
+            p {
+              line-height: 12px;
+              color: $Gray1;
+            }
+
+            button {
+              display: flex;
+              align-items: center;
+
+              &:hover {
+                svg {
+                  color: $Primary1;
+                }
+              }
+
+              svg {
+                height: 12px;
+              }
+            }
+          }
+
+          .contBox {
+            display: flex;
+            gap: 4px;
+
+            .name {
+              color: $Blue3;
+            }
+
+            .updatedAt {
+              color: $Gray1;
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -35,3 +35,13 @@ export const getTagList = ({
     .get("qnas/tags", { params: { search } })
     .then((res) => res.data);
 };
+
+export interface IPostComment {
+  id: string | number;
+  content: string;
+}
+
+export const postQuestionComment = ({ id, content }: IPostComment) =>
+  apiInstance
+    .post(`qnas/questions/${id}/comments`, { content })
+    .then((res) => res.data);
