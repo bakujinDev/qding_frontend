@@ -64,25 +64,8 @@
             flex-direction: column;
             gap: 10px;
 
-            .key {
-            }
-
             .inputBox {
-              display: flex;
-              align-items: center;
-              height: 40px;
-              border: 2px solid $White2;
-              border-radius: 4px;
-
-              &:focus-within {
-                border-color: $Blue2;
-              }
-
-              input {
-                flex: 1;
-                height: 100%;
-                padding: 0 12px;
-              }
+              @include inputBox;
             }
           }
         }

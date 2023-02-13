@@ -1,0 +1,12 @@
+@use "../../../styles/variable" as *;
+
+.qnaPosts {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  overflow-y: scroll;
+  padding: 40px;
+  background: #f8faff;
+}

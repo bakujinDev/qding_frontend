@@ -37,11 +37,11 @@ export const getTagList = ({
 };
 
 export interface IPostComment {
-  id: string | number;
+  questionId: string;
   content: string;
 }
 
-export const postQuestionComment = ({ id, content }: IPostComment) =>
+export const postQuestionComment = ({ questionId, content }: IPostComment) =>
   apiInstance
-    .post(`qnas/questions/${id}/comments`, { content })
+    .post(`qnas/questions/${questionId}/comments`, { content })
     .then((res) => res.data);

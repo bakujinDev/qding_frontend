@@ -14,3 +14,28 @@ $breakpoint-desktop: 1024px;
   color: #fff;
   background: $Primary1;
 }
+
+@mixin inputBox {
+  display: flex;
+  align-items: center;
+  border: 2px solid $White2;
+  border-radius: 4px;
+
+  &:focus-within {
+    border-color: $Blue2;
+  }
+
+  input {
+    flex: 1;
+    height: 40px;
+    padding: 0 12px;
+  }
+
+  textarea {
+    flex: 1;
+    min-height: 60px;
+    padding: 8px 12px;
+    border: none;
+    outline: none;
+  }
+}
