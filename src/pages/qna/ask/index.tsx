@@ -3,7 +3,6 @@ import styles from "./ask.module.scss";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import Seo from "@/components/Seo";
-import "react-quill/dist/quill.snow.css";
 import TextEditor from "@/components/common/TextEditor";
 import { useMutation } from "@tanstack/react-query";
 import {

@@ -2,6 +2,8 @@ import React, { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
 import { mib2 } from "@/lib/setting";
+import "react-quill/dist/quill.snow.css";
+import { I_codeFile } from "@/lib/textEditor";
 
 export default function TextEditor({ value, setValue, styles }: IProps) {
   const quillRef = React.useRef<any>(false);
@@ -49,7 +51,7 @@ export default function TextEditor({ value, setValue, styles }: IProps) {
         container: [
           [{ size: ["small", false, "large", "huge"] }],
           ["bold", "italic", "strike"],
-          ["blockquote", "code-block"],
+          ["blockquote", "code", "code-block"],
           [{ list: "ordered" }, { list: "bullet" }],
           ["link", "image"],
         ],
@@ -76,6 +78,9 @@ const ReactQuill = dynamic(
   async () => {
     const { default: RQ } = await import("react-quill");
 
+    let icons = RQ.Quill.import("ui/icons");
+    icons["code-block"] = I_codeFile;
+
     return ({ forwardedRef, ...props }: any) => (
       <RQ ref={forwardedRef} {...props} />
     );
@@ -97,9 +102,12 @@ const formats = [
   "italic",
   "strike",
   "blockquote",
+  "code",
   "code-block",
   "image",
   "link",
   "list",
   "bullet",
 ];
+
+
