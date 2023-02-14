@@ -29,13 +29,6 @@ export default function QnaPosts() {
       <Seo title={data.title} />
 
       <main className={styles.qnaPosts}>
-        <button
-          onClick={() => {
-            console.log(typeof data?.answers, data?.answers);
-          }}
-        >
-          dd
-        </button>
         <QuestionSec questionId={`${questionId}`} data={data} />
 
         {data.answers

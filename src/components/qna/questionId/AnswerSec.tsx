@@ -11,6 +11,8 @@ import { IPostAnswerComment, postAnswerComment } from "@/api/qna";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddComment from "@/components/common/AddComment";
 import { commentRuleList } from "@/lib/forum";
+import CloseIcon from "@mui/icons-material/Close";
+import useUser from "@/lib/user";
 
 interface IProps {
   questionId: string;
@@ -19,6 +21,8 @@ interface IProps {
 
 export default function AnswerSec({ questionId, data }: IProps) {
   const queryClient = useQueryClient();
+
+  const { user } = useUser();
 
   const [addCommentMode, setAddCommentMode] = useState<boolean>(false);
 
@@ -46,6 +50,8 @@ export default function AnswerSec({ questionId, data }: IProps) {
       content,
     });
   }
+
+  console.log(user);
 
   return (
     <section className={styles.answerSec}>
@@ -86,26 +92,28 @@ export default function AnswerSec({ questionId, data }: IProps) {
             />
           </div>
 
-          <div className={styles.utilBar}>
-            <div className={styles.btnBox}>
-              <button className={styles.editBtn} onClick={() => {}}>
-                수정하기
-              </button>
+          <div className={styles.bottomBar}>
+            <div className={styles.utilBar}>
+              <div className={styles.btnBox}>
+                <button className={styles.editBtn} onClick={() => {}}>
+                  수정하기
+                </button>
 
-              <button className={styles.followBtn} onClick={() => {}}>
-                알람받기
-              </button>
+                <button className={styles.followBtn} onClick={() => {}}>
+                  알람받기
+                </button>
 
-              <button className={styles.shareBtn} onClick={() => {}}>
-                공유하기
-              </button>
-            </div>
+                <button className={styles.shareBtn} onClick={() => {}}>
+                  공유하기
+                </button>
+              </div>
 
-            <div className={styles.profBox}>
-              <img src={data.editor?.avatar || data.creator.avatar} alt="" />
-              <p className={styles.name}>
-                {data.editor?.name || data.creator.name}
-              </p>
+              <div className={styles.profBox}>
+                <img src={data.editor?.avatar || data.creator.avatar} alt="" />
+                <p className={styles.name}>
+                  {data.editor?.name || data.creator.name}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -124,7 +132,7 @@ export default function AnswerSec({ questionId, data }: IProps) {
                       <ThumbUpAltIcon />
                     </button>
 
-                    <p>{data.votes}</p>
+                    {data.votes === 0 ? null : <p>{data.votes}</p>}
 
                     <button
                       className={`${styles.downBtn} ${styles.voteBtn}`}
@@ -144,6 +152,12 @@ export default function AnswerSec({ questionId, data }: IProps) {
                     <p className={styles.updatedAt}>
                       {timeDifference(data.updated_at)}
                     </p>
+
+                    {v?.creator?.id === user?.pk ? (
+                      <button className={styles.delBtn} onClick={() => {}}>
+                        <CloseIcon />
+                      </button>
+                    ) : null}
                   </div>
                 </li>
               ))
