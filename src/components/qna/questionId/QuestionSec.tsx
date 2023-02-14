@@ -7,7 +7,7 @@ import styles from "./QuestionSec.module.scss";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { IPostComment, postQuestionComment } from "@/api/qna";
+import { IPostQuestionComment, postQuestionComment } from "@/api/qna";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddComment from "@/components/common/AddComment";
 import { commentRuleList } from "@/lib/forum";
@@ -27,7 +27,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<IPostComment>({
+  } = useForm<IPostQuestionComment>({
     defaultValues: {
       questionId: `${questionId}`,
     },
@@ -40,7 +40,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
     },
   });
 
-  function commentSubmit({ content }: IPostComment) {
+  function commentSubmit({ content }: IPostQuestionComment) {
     commentMutation.mutate({
       questionId: `${questionId}`,
       content,

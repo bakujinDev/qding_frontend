@@ -8,7 +8,6 @@ import styles from "./qnaPosts.module.scss";
 import QuestionSec from "@/components/qna/questionId/QuestionSec";
 import AddAnswerSec from "@/components/qna/questionId/AddAnswerSec";
 import AnswerSec from "@/components/qna/questionId/AnswerSec";
-import { useState } from "react";
 
 export default function QnaPosts() {
   const router = useRouter();
@@ -16,20 +15,14 @@ export default function QnaPosts() {
   const { user } = useUser();
   const { questionId } = router.query;
 
-  const [answerArray, setAnswerArray] = useState<any>([]);
+  const { data } = useQuery(["postQuery", `${questionId}`], getQnaPost, {
+    retry: false,
+    onSuccess: (res) => {
+      console.log(res);
+    },
+  });
 
-  const { data, isSuccess } = useQuery(
-    ["postQuery", `${questionId}`],
-    getQnaPost,
-    {
-      retry: false,
-      onSuccess: (res) => {
-        console.log(res);
-        console.log([...res.answers].map((e, i) => i));
-        // if (res.answers) setAnswerArray([...res.answers]);
-      },
-    }
-  );
+  console.log(user);
 
   return data ? (
     <>

@@ -7,7 +7,7 @@ import styles from "./AnswerSec.module.scss";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { IPostComment, postQuestionComment } from "@/api/qna";
+import { IPostAnswerComment, postAnswerComment } from "@/api/qna";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddComment from "@/components/common/AddComment";
 import { commentRuleList } from "@/lib/forum";
@@ -22,30 +22,30 @@ export default function AnswerSec({ questionId, data }: IProps) {
 
   const [addCommentMode, setAddCommentMode] = useState<boolean>(false);
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  //   reset,
-  // } = useForm<IPostComment>({
-  //   defaultValues: {
-  //     questionId: `${questionId}`,
-  //   },
-  // });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<IPostAnswerComment>({
+    defaultValues: {
+      answerId: `${data.pk}`,
+    },
+  });
 
-  // const commentMutation = useMutation(postQuestionComment, {
-  //   onSuccess: (res) => {
-  //     reset();
-  //     queryClient.refetchQueries(["postQuery", `${questionId}`]);
-  //   },
-  // });
+  const commentMutation = useMutation(postAnswerComment, {
+    onSuccess: (res) => {
+      reset();
+      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+    },
+  });
 
-  // function commentSubmit({ content }: IPostComment) {
-  //   commentMutation.mutate({
-  //     questionId: `${questionId}`,
-  //     content,
-  //   });
-  // }
+  function commentSubmit({ content }: IPostAnswerComment) {
+    commentMutation.mutate({
+      answerId: `${data.pk}`,
+      content,
+    });
+  }
 
   return (
     <section className={styles.answerSec}>
@@ -111,10 +111,10 @@ export default function AnswerSec({ questionId, data }: IProps) {
         </div>
       </article>
 
-      {/* <article className={styles.commentArea}>
+      <article className={styles.commentArea}>
         <ul className={styles.commentList}>
-          {data.question_comments
-            ? data.question_comments.map((v: any, i: number) => (
+          {data.answer_comments
+            ? data.answer_comments.map((v: any, i: number) => (
                 <li key={i}>
                   <div className={styles.utilBox}>
                     <button
@@ -158,7 +158,7 @@ export default function AnswerSec({ questionId, data }: IProps) {
           commentSubmit={commentSubmit}
           ruleList={commentRuleList}
         />
-      </article> */}
+      </article>
     </section>
   );
 }

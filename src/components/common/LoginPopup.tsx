@@ -6,8 +6,6 @@ import { ILoginVar, usernameLogin } from "@/api/auth";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { onClickSocialBtn } from "@/lib/user";
-import { useSelector } from "react-redux";
-import { AppState } from "@/store/store";
 
 interface IProps {
   off: Function;
@@ -15,7 +13,6 @@ interface IProps {
 
 export default function LoginPopup({ off }: IProps) {
   const queryClient = useQueryClient();
-  const loginPopup = useSelector((state: AppState) => state.common.loginPopup);
 
   const {
     register,
@@ -23,7 +20,6 @@ export default function LoginPopup({ off }: IProps) {
     formState: { errors },
     reset,
   } = useForm<ILoginVar>();
-
 
   const mutation = useMutation(usernameLogin, {
     onSuccess: () => {
