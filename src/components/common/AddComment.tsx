@@ -20,15 +20,7 @@ export default function AddComment({
   return (
     <div className={styles.addCommentCont}>
       {addCommentMode ? (
-        <>
-          {ruleList ? (
-            <ul className={styles.ruleList}>
-              {ruleList.map((v, i) => (
-                <li key={i}>{v}</li>
-              ))}
-            </ul>
-          ) : null}
-
+        <div className={styles.addModeBox}>
           <form
             className={styles.commentForm}
             onSubmit={handleSubmit(commentSubmit)}
@@ -45,7 +37,15 @@ export default function AddComment({
 
             <button className={styles.addBtn}>댓글 달기</button>
           </form>
-        </>
+
+          {ruleList ? (
+            <ul className={styles.ruleList}>
+              {ruleList.map((v, i) => (
+                <li key={i}>{v}</li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
       ) : (
         <button
           className={styles.commentModeBtn}

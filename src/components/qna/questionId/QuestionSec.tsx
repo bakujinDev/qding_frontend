@@ -49,13 +49,6 @@ export default function QuestionSec({ questionId, data }: IProps) {
 
   return (
     <section className={styles.questionSec}>
-      <button
-        onClick={() => {
-          queryClient.refetchQueries(["postQuery", `${questionId}`]);
-        }}
-      >
-        hi
-      </button>
       <article className={styles.topBar}>
         <div className={styles.titleBox}>
           <h1 className={styles.title}>{data.title}</h1>

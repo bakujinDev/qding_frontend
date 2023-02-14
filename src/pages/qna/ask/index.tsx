@@ -15,6 +15,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import TagSearchPopup from "@/components/qna/ask/TagSearchPopup";
 import PopupBg from "@/components/common/PopupBg";
+import { base64toFile } from "@/lib/textEditor";
 
 export default function Ask() {
   const [content, setContent] = useState<any>();
@@ -56,10 +57,6 @@ export default function Ask() {
 
   const postQuestionMutation = useMutation(postQuestion, {});
 
-  useEffect(() => {
-    register("content", { required: true, minLength: 20 });
-  }, [register]);
-
   async function uploadImgFile() {
     if (!(content && content.ops)) return;
 
@@ -92,6 +89,12 @@ export default function Ask() {
     content = watch("content");
     postQuestionMutation.mutate({ title, content, tag });
   }
+
+  useEffect(() => {
+    if (!register) return;
+
+    register("content", { required: true, minLength: 20 });
+  }, [register]);
 
   useEffect(() => {
     if (tagSearch) setTagSearchPopup(true);
@@ -303,18 +306,4 @@ export default function Ask() {
       </main>
     </>
   );
-}
-
-function base64toFile(base_data: any, filename: string) {
-  var arr = base_data.split(","),
-    mime = arr[0].match(/:(.*?);/)[1],
-    bstr = atob(arr[1]),
-    n = bstr.length,
-    u8arr = new Uint8Array(n);
-
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
-
-  return new File([u8arr], filename, { type: mime });
 }

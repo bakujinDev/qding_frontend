@@ -45,3 +45,13 @@ export const postQuestionComment = ({ questionId, content }: IPostComment) =>
   apiInstance
     .post(`qnas/questions/${questionId}/comments`, { content })
     .then((res) => res.data);
+
+export interface IPostAnsewr {
+  questionId: string;
+  content: string;
+}
+
+export const postAnswer = ({ questionId, content }: IPostAnsewr) =>
+  apiInstance
+    .post(`qnas/questions/${questionId}/answers`, { content })
+    .then((res) => res.data);
