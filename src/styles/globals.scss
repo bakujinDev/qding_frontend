@@ -93,11 +93,12 @@ ul {
   &.readOnlyQuill {
     .ql-container {
       min-height: unset;
+      border: none;
 
       .ql-editor {
         min-height: unset;
       }
-      
+
       .ql-clipboard {
         display: none;
       }

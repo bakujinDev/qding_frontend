@@ -3,7 +3,7 @@ import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import FlagIcon from "@mui/icons-material/Flag";
 import HistoryIcon from "@mui/icons-material/History";
 import { timeDifference } from "@/lib/time";
-import styles from "./QuestionSec.module.scss";
+import styles from "./AnswerSec.module.scss";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -17,55 +17,38 @@ interface IProps {
   data: any;
 }
 
-export default function QuestionSec({ questionId, data }: IProps) {
+export default function AnswerSec({ questionId, data }: IProps) {
   const queryClient = useQueryClient();
 
   const [addCommentMode, setAddCommentMode] = useState<boolean>(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<IPostComment>({
-    defaultValues: {
-      questionId: `${questionId}`,
-    },
-  });
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  //   reset,
+  // } = useForm<IPostComment>({
+  //   defaultValues: {
+  //     questionId: `${questionId}`,
+  //   },
+  // });
 
-  const commentMutation = useMutation(postQuestionComment, {
-    onSuccess: (res) => {
-      reset();
-      queryClient.refetchQueries(["postQuery", `${questionId}`]);
-    },
-  });
+  // const commentMutation = useMutation(postQuestionComment, {
+  //   onSuccess: (res) => {
+  //     reset();
+  //     queryClient.refetchQueries(["postQuery", `${questionId}`]);
+  //   },
+  // });
 
-  function commentSubmit({ content }: IPostComment) {
-    commentMutation.mutate({
-      questionId: `${questionId}`,
-      content,
-    });
-  }
+  // function commentSubmit({ content }: IPostComment) {
+  //   commentMutation.mutate({
+  //     questionId: `${questionId}`,
+  //     content,
+  //   });
+  // }
 
   return (
-    <section className={styles.questionSec}>
-      <article className={styles.topBar}>
-        <div className={styles.titleBox}>
-          <h1 className={styles.title}>{data.title}</h1>
-        </div>
-
-        <div className={styles.infoBox}>
-          <span className={styles.view}>
-            <p className={styles.key}>조회수</p>
-            <p className={styles.value}>{data.views}</p>
-          </span>
-
-          <span className={styles.updatedAt}>
-            <p className={styles.value}>{timeDifference(data.updated_at)}</p>
-          </span>
-        </div>
-      </article>
-
+    <section className={styles.answerSec}>
       <article className={styles.contArea}>
         <div className={styles.utilBox}>
           <button
@@ -103,14 +86,6 @@ export default function QuestionSec({ questionId, data }: IProps) {
             />
           </div>
 
-          <div className={styles.tagBar}>
-            <ul className={styles.tagList}>
-              {data.tag.map((tag: any, i: number) => (
-                <li key={i}>{tag.name}</li>
-              ))}
-            </ul>
-          </div>
-
           <div className={styles.utilBar}>
             <div className={styles.btnBox}>
               <button className={styles.editBtn} onClick={() => {}}>
@@ -136,7 +111,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
         </div>
       </article>
 
-      <article className={styles.commentArea}>
+      {/* <article className={styles.commentArea}>
         <ul className={styles.commentList}>
           {data.question_comments
             ? data.question_comments.map((v: any, i: number) => (
@@ -183,7 +158,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
           commentSubmit={commentSubmit}
           ruleList={commentRuleList}
         />
-      </article>
+      </article> */}
     </section>
   );
 }
