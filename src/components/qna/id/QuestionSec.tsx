@@ -7,7 +7,10 @@ import styles from "./QuestionSec.module.scss";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { IPostComment } from "@/api/qna";
+import { IPostComment, postQuestionComment } from "@/api/qna";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import AddComment from "@/components/common/AddComment";
+import { commentRuleList } from "@/lib/forum";
 
 interface IProps {
   questionId: string;
@@ -15,6 +18,8 @@ interface IProps {
 }
 
 export default function QuestionSec({ questionId, data }: IProps) {
+  const queryClient = useQueryClient();
+
   const [addCommentMode, setAddCommentMode] = useState<boolean>(false);
 
   const {
@@ -28,14 +33,32 @@ export default function QuestionSec({ questionId, data }: IProps) {
     },
   });
 
+  const commentMutation = useMutation(postQuestionComment, {
+    onSuccess: (res) => {
+      reset();
+      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+    },
+  });
+
+  function commentSubmit({ content }: IPostComment) {
+    commentMutation.mutate({
+      questionId: `${questionId}`,
+      content,
+    });
+  }
+
   return (
     <section className={styles.questionSec}>
+      <button
+        onClick={() => {
+          queryClient.refetchQueries(["postQuery", `${questionId}`]);
+        }}
+      >
+        hi
+      </button>
       <article className={styles.topBar}>
         <div className={styles.titleBox}>
-          <h1 className={styles.title}>
-            {data.title}
-            123456789123456789123456789123456789123456789123456789123456789123456789
-          </h1>
+          <h1 className={styles.title}>{data.title}</h1>
         </div>
 
         <div className={styles.infoBox}>
@@ -157,32 +180,14 @@ export default function QuestionSec({ questionId, data }: IProps) {
           ))}
         </ul>
 
-        <div className={styles.addCommentCont}>
-          {addCommentMode ? (
-            <form className={styles.commentForm}>
-              <div className={styles.inputBox}>
-                <textarea
-                  {...register("content", {
-                    required: "댓글을 입력해주세요",
-                    minLength: { value: 8, message: "8자 이상 입력해주세요" },
-                  })}
-                  placeholder=""
-                />
-              </div>
-
-              <button className={styles.addBtn} onClick={() => {}}>
-                댓글 달기
-              </button>
-            </form>
-          ) : (
-            <button
-              className={styles.commentModeBtn}
-              onClick={() => setAddCommentMode(true)}
-            >
-              댓글 달기
-            </button>
-          )}
-        </div>
+        <AddComment
+          addCommentMode={addCommentMode}
+          setAddCommentMode={setAddCommentMode}
+          register={register}
+          handleSubmit={handleSubmit}
+          commentSubmit={commentSubmit}
+          ruleList={commentRuleList}
+        />
       </article>
     </section>
   );

@@ -187,30 +187,6 @@
       }
     }
 
-    .addCommentCont {
-      padding: 12px 0;
-
-      .commentForm {
-        display: flex;
-        gap: 12px;
-
-        .inputBox {
-          flex: 1;
-          @include inputBox;
-        }
-
-        .addBtn {
-          padding: 4px 8px;
-          border-radius: 4px;
-          color: #fff;
-          background: $Blue3;
-        }
-      }
-
-      .commentModeBtn {
-        font-size: 12px;
-        color: $Gray1;
-      }
-    }
+    
   }
 }
