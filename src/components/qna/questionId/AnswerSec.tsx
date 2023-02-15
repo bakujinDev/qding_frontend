@@ -178,9 +178,8 @@ export default function AnswerSec({ questionId, data }: IProps) {
                       {timeDifference(data.updated_at)}
                     </p>
 
-                    {/* {v?.creator?.id === user?.pk &&
-                    chk5MFromNow(v.created_at) ? ( */}
-                    {v?.creator?.id === user?.pk ? (
+                    {v?.creator?.id === user?.pk &&
+                    chk5MFromNow(v.created_at) ? (
                       <>
                         <button
                           className={`${styles.editBtn} ${styles.nonCircleBtn}`}
@@ -191,6 +190,7 @@ export default function AnswerSec({ questionId, data }: IProps) {
                         >
                           <EditIcon />
                         </button>
+                        
                         <button
                           className={`${styles.delBtn} ${styles.circleBtn}`}
                           onClick={() => {}}

@@ -5,9 +5,14 @@ import HistoryIcon from "@mui/icons-material/History";
 import { timeDifference } from "@/lib/time";
 import styles from "./QuestionSec.module.scss";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { IPostQuestionComment, postQuestionComment } from "@/api/qna";
+import {
+  editQuestionComment,
+  IEditQuestionComment,
+  IPostQuestionComment,
+  postQuestionComment,
+} from "@/api/qna";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddComment from "@/components/common/AddComment";
 import { commentRuleList } from "@/lib/forum";
@@ -25,32 +30,53 @@ export default function QuestionSec({ questionId, data }: IProps) {
 
   const { user } = useUser();
 
-  const [addCommentMode, setAddCommentMode] = useState<boolean>(false);
+  const [commentMode, setCommentMode] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<IPostQuestionComment>({
     defaultValues: {
       questionId: `${questionId}`,
     },
   });
 
-  const commentMutation = useMutation(postQuestionComment, {
+  const editCommentMutation = useMutation(editQuestionComment, {
     onSuccess: (res) => {
       reset();
       queryClient.refetchQueries(["postQuery", `${questionId}`]);
     },
   });
 
-  function commentSubmit({ content }: IPostQuestionComment) {
-    commentMutation.mutate({
+  function editCommentSubmit({ content }: IEditQuestionComment) {
+    editCommentMutation.mutate({
+      commentId: `${commentMode}`,
+      content,
+    });
+  }
+
+  const postCommentMutation = useMutation(postQuestionComment, {
+    onSuccess: (res) => {
+      reset();
+      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+    },
+  });
+
+  function postCommentSubmit({ content }: IPostQuestionComment) {
+    postCommentMutation.mutate({
       questionId: `${questionId}`,
       content,
     });
   }
+
+  useEffect(() => {
+    if (!commentMode) reset();
+    editCommentMutation.reset();
+    postCommentMutation.reset();
+  }, [commentMode]);
 
   return (
     <section className={styles.questionSec}>
@@ -178,10 +204,15 @@ export default function QuestionSec({ questionId, data }: IProps) {
                     </p>
 
                     {v?.creator?.id === user?.pk ? (
+                      // {v?.creator?.id === user?.pk &&
+                      //   chk5MFromNow(v.created_at) ? (
                       <>
                         <button
                           className={`${styles.editBtn} ${styles.nonCircleBtn}`}
-                          onClick={() => {}}
+                          onClick={() => {
+                            setCommentMode(v.pk);
+                            setValue("content", v.content);
+                          }}
                         >
                           <EditIcon />
                         </button>
@@ -201,12 +232,14 @@ export default function QuestionSec({ questionId, data }: IProps) {
         </ul>
 
         <AddComment
-          commentMode={addCommentMode}
-          setCommentMode={setAddCommentMode}
+          commentMode={commentMode}
+          setCommentMode={setCommentMode}
           register={register}
           handleSubmit={handleSubmit}
-          postCommentSubmit={commentSubmit}
+          editCommentSubmit={editCommentSubmit}
+          postCommentSubmit={postCommentSubmit}
           ruleList={commentRuleList}
+          error={editCommentMutation.error || postCommentMutation.error}
         />
       </article>
     </section>
