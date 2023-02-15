@@ -21,3 +21,8 @@ export function timeDifference(time: string) {
     return new Date(timestamp).toLocaleDateString("kr");
   }
 }
+
+export function chk5MFromNow(time: string) {
+  let min5 = 300000;
+  return new Date().getTime() <= new Date(time).getTime() + min5;
+}

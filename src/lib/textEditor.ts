@@ -14,3 +14,4 @@ export function base64toFile(base_data: any, filename: string) {
 
   return new File([u8arr], filename, { type: mime });
 }
+

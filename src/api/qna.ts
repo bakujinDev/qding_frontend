@@ -59,6 +59,16 @@ export const postAnswerComment = ({ answerId, content }: IPostAnswerComment) =>
     .post(`qnas/answers/${answerId}/comments`, { content })
     .then((res) => res.data);
 
+export interface IEditAnswerComment {
+  commentId: string;
+  content: string;
+}
+
+export const editAnswreComment = ({ commentId, content }: IEditAnswerComment) =>
+  apiInstance
+    .put(`qnas/answers/comments/${commentId}`, { content })
+    .then((res) => res.data);
+
 export interface IPostAnsewr {
   questionId: string;
   content: string;

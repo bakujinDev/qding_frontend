@@ -201,11 +201,11 @@ export default function QuestionSec({ questionId, data }: IProps) {
         </ul>
 
         <AddComment
-          addCommentMode={addCommentMode}
-          setAddCommentMode={setAddCommentMode}
+          commentMode={addCommentMode}
+          setCommentMode={setAddCommentMode}
           register={register}
           handleSubmit={handleSubmit}
-          commentSubmit={commentSubmit}
+          postCommentSubmit={commentSubmit}
           ruleList={commentRuleList}
         />
       </article>
