@@ -2,7 +2,7 @@ import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import FlagIcon from "@mui/icons-material/Flag";
 import HistoryIcon from "@mui/icons-material/History";
-import { timeDifference } from "@/lib/time";
+import { chk5MFromNow, timeDifference } from "@/lib/time";
 import styles from "./QuestionSec.module.scss";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
@@ -211,9 +211,8 @@ export default function QuestionSec({ questionId, data }: IProps) {
                       {timeDifference(data.updated_at)}
                     </p>
 
-                    {v?.creator?.id === user?.pk ? (
-                      // {v?.creator?.id === user?.pk &&
-                      //   chk5MFromNow(v.created_at) ? (
+                    {v?.creator?.id === user?.pk &&
+                    chk5MFromNow(v.created_at) ? (
                       <>
                         <button
                           className={`${styles.editBtn} ${styles.nonCircleBtn}`}
