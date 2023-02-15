@@ -33,13 +33,7 @@ export default function AnswerSec({ questionId, data }: IProps) {
 
   const [commentMode, setCommentMode] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    setValue,
-  } = useForm<IPostAnswerComment>({
+  const commentForm = useForm<IPostAnswerComment>({
     defaultValues: {
       answerId: `${data.pk}`,
     },
@@ -47,7 +41,7 @@ export default function AnswerSec({ questionId, data }: IProps) {
 
   const editCommentMutation = useMutation(editAnswerComment, {
     onSuccess: (res) => {
-      reset();
+      commentForm.reset();
       queryClient.refetchQueries(["postQuery", `${questionId}`]);
     },
   });
@@ -67,7 +61,7 @@ export default function AnswerSec({ questionId, data }: IProps) {
 
   const postCommentMutation = useMutation(postAnswerComment, {
     onSuccess: (res) => {
-      reset();
+      commentForm.reset();
       queryClient.refetchQueries(["postQuery", `${questionId}`]);
     },
   });
@@ -80,7 +74,7 @@ export default function AnswerSec({ questionId, data }: IProps) {
   }
 
   useEffect(() => {
-    if (!commentMode) reset();
+    if (!commentMode) commentForm.reset();
     editCommentMutation.reset();
     postCommentMutation.reset();
   }, [commentMode]);
@@ -192,7 +186,7 @@ export default function AnswerSec({ questionId, data }: IProps) {
                           className={`${styles.editBtn} ${styles.nonCircleBtn}`}
                           onClick={() => {
                             setCommentMode(v.pk);
-                            setValue("content", v.content);
+                            commentForm.setValue("content", v.content);
                           }}
                         >
                           <EditIcon />
@@ -219,8 +213,7 @@ export default function AnswerSec({ questionId, data }: IProps) {
         <AddComment
           commentMode={commentMode}
           setCommentMode={setCommentMode}
-          register={register}
-          handleSubmit={handleSubmit}
+          form={commentForm}
           editCommentSubmit={editCommentSubmit}
           postCommentSubmit={postCommentSubmit}
           ruleList={commentRuleList}

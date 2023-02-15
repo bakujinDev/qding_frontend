@@ -1,12 +1,12 @@
+import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import styles from "./AddComment.module.scss";
 
 interface IProps {
   commentMode: any;
   setCommentMode: Function;
-  register: any;
-  handleSubmit: Function;
-  editCommentSubmit: Function;
-  postCommentSubmit: Function;
+  form: UseFormReturn<any>;
+  editCommentSubmit: SubmitHandler<any>;
+  postCommentSubmit: SubmitHandler<any>;
   ruleList?: Array<string>;
   error: any;
 }
@@ -14,14 +14,12 @@ interface IProps {
 export default function AddComment({
   commentMode,
   setCommentMode,
-  register,
-  handleSubmit,
+  form,
   editCommentSubmit,
   postCommentSubmit,
   ruleList,
   error,
 }: IProps) {
-  console.log(error?.response.data.detail);
   return (
     <div className={styles.addCommentCont}>
       {commentMode ? (
@@ -30,11 +28,11 @@ export default function AddComment({
             <div className={styles.addModeBox}>
               <form
                 className={styles.commentForm}
-                onSubmit={handleSubmit(postCommentSubmit)}
+                onSubmit={form.handleSubmit(postCommentSubmit)}
               >
                 <div className={styles.inputBox}>
                   <textarea
-                    {...register("content", {
+                    {...form.register("content", {
                       required: "댓글을 입력해주세요",
                       minLength: {
                         value: 8,
@@ -57,6 +55,11 @@ export default function AddComment({
                 </div>
               </form>
 
+              <p className={styles.error}>
+                {form.formState.errors?.content?.message ||
+                  error?.response.data.detail}
+              </p>
+
               {ruleList ? (
                 <ul className={styles.ruleList}>
                   {ruleList.map((v, i) => (
@@ -64,18 +67,16 @@ export default function AddComment({
                   ))}
                 </ul>
               ) : null}
-
-              <p className={styles.error}>{error?.response.data.detail}</p>
             </div>
           ) : (
             <div className={styles.addModeBox}>
               <form
                 className={styles.commentForm}
-                onSubmit={handleSubmit(editCommentSubmit)}
+                onSubmit={form.handleSubmit(editCommentSubmit)}
               >
                 <div className={styles.inputBox}>
                   <textarea
-                    {...register("content", {
+                    {...form.register("content", {
                       required: "댓글을 입력해주세요",
                       minLength: { value: 8, message: "8자 이상 입력해주세요" },
                     })}
@@ -95,7 +96,10 @@ export default function AddComment({
                 </div>
               </form>
 
-              <p className={styles.error}>{error?.response.data.detail}</p>
+              <p className={styles.error}>
+                {form.formState.errors?.content?.message ||
+                  error?.response.data.detail}
+              </p>
             </div>
           )}
         </>

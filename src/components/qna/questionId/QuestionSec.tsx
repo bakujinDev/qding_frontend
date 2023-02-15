@@ -10,7 +10,6 @@ import { useForm } from "react-hook-form";
 import {
   deleteQuestionComment,
   editQuestionComment,
-  IDeleteQuestionComment,
   IEditQuestionComment,
   IPostQuestionComment,
   postQuestionComment,
@@ -34,13 +33,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
 
   const [commentMode, setCommentMode] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    setValue,
-  } = useForm<IPostQuestionComment>({
+  const commentForm = useForm<IPostQuestionComment>({
     defaultValues: {
       questionId: `${questionId}`,
     },
@@ -48,7 +41,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
 
   const editCommentMutation = useMutation(editQuestionComment, {
     onSuccess: (res) => {
-      reset();
+      commentForm.reset();
       queryClient.refetchQueries(["postQuery", `${questionId}`]);
     },
   });
@@ -68,7 +61,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
 
   const postCommentMutation = useMutation(postQuestionComment, {
     onSuccess: (res) => {
-      reset();
+      commentForm.reset();
       queryClient.refetchQueries(["postQuery", `${questionId}`]);
     },
   });
@@ -81,7 +74,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
   }
 
   useEffect(() => {
-    if (!commentMode) reset();
+    if (!commentMode) commentForm.reset();
     editCommentMutation.reset();
     postCommentMutation.reset();
   }, [commentMode]);
@@ -218,7 +211,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
                           className={`${styles.editBtn} ${styles.nonCircleBtn}`}
                           onClick={() => {
                             setCommentMode(v.pk);
-                            setValue("content", v.content);
+                            commentForm.setValue("content", v.content);
                           }}
                         >
                           <EditIcon />
@@ -245,8 +238,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
         <AddComment
           commentMode={commentMode}
           setCommentMode={setCommentMode}
-          register={register}
-          handleSubmit={handleSubmit}
+          form={commentForm}
           editCommentSubmit={editCommentSubmit}
           postCommentSubmit={postCommentSubmit}
           ruleList={commentRuleList}
