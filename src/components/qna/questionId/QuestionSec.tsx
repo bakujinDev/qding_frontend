@@ -8,7 +8,9 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
+  deleteQuestionComment,
   editQuestionComment,
+  IDeleteQuestionComment,
   IEditQuestionComment,
   IPostQuestionComment,
   postQuestionComment,
@@ -57,6 +59,12 @@ export default function QuestionSec({ questionId, data }: IProps) {
       content,
     });
   }
+
+  const deleteCommentMutation = useMutation(deleteQuestionComment, {
+    onSuccess: (res) => {
+      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+    },
+  });
 
   const postCommentMutation = useMutation(postQuestionComment, {
     onSuccess: (res) => {
@@ -219,7 +227,11 @@ export default function QuestionSec({ questionId, data }: IProps) {
 
                         <button
                           className={`${styles.delBtn} ${styles.circleBtn}`}
-                          onClick={() => {}}
+                          onClick={() =>
+                            deleteCommentMutation.mutate({
+                              commentId: `${v.pk}`,
+                            })
+                          }
                         >
                           <CloseIcon />
                         </button>

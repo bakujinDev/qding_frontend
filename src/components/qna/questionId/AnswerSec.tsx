@@ -8,7 +8,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
-  editAnswreComment,
+  editAnswerComment,
   IEditAnswerComment,
   IPostAnswerComment,
   postAnswerComment,
@@ -44,7 +44,7 @@ export default function AnswerSec({ questionId, data }: IProps) {
     },
   });
 
-  const editCommentMutation = useMutation(editAnswreComment, {
+  const editCommentMutation = useMutation(editAnswerComment, {
     onSuccess: (res) => {
       reset();
       queryClient.refetchQueries(["postQuery", `${questionId}`]);
@@ -190,7 +190,7 @@ export default function AnswerSec({ questionId, data }: IProps) {
                         >
                           <EditIcon />
                         </button>
-                        
+
                         <button
                           className={`${styles.delBtn} ${styles.circleBtn}`}
                           onClick={() => {}}

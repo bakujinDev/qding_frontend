@@ -64,7 +64,7 @@ export interface IEditAnswerComment {
   content: string;
 }
 
-export const editAnswreComment = ({ commentId, content }: IEditAnswerComment) =>
+export const editAnswerComment = ({ commentId, content }: IEditAnswerComment) =>
   apiInstance
     .put(`qnas/answers/comments/${commentId}`, { content })
     .then((res) => res.data);
@@ -80,6 +80,24 @@ export const editQuestionComment = ({
 }: IEditAnswerComment) =>
   apiInstance
     .put(`qnas/questions/comments/${commentId}`, { content })
+    .then((res) => res.data);
+
+export interface IDeleteAnswerComment {
+  commentId: string;
+}
+
+export const deleteAnswerComment = ({ commentId }: IDeleteAnswerComment) =>
+  apiInstance
+    .delete(`qnas/answers/comments/${commentId}`)
+    .then((res) => res.data);
+
+export interface IDeleteQuestionComment {
+  commentId: string;
+}
+
+export const deleteQuestionComment = ({ commentId }: IDeleteQuestionComment) =>
+  apiInstance
+    .delete(`qnas/questions/comments/${commentId}`)
     .then((res) => res.data);
 
 export interface IPostAnsewr {
