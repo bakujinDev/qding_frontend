@@ -5,7 +5,7 @@ import {
   IUploadURLResponse,
   uploadImage,
 } from "@/api/fileUpload";
-import { IPostAnsewr, postAnswer } from "@/api/qna";
+import { postAnswer } from "@/api/qna";
 import TextEditor from "@/components/common/TextEditor";
 import { base64toFile } from "@/lib/textEditor";
 import { useMutation } from "@tanstack/react-query";

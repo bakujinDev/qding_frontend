@@ -153,7 +153,7 @@
 
         &:hover {
           .contBox {
-            .delBtn {
+            button {
               display: flex;
             }
           }
@@ -214,22 +214,38 @@
             color: $Gray2;
           }
 
-          .delBtn {
+          button {
             display: none;
             justify-content: center;
             align-items: center;
-            width: 12px;
-            height: 12px;
-            background: $Gray1;
-            border-radius: 50%;
+            width: 14px;
+            height: 14px;
 
-            &:hover {
-              background: $Primary1;
+            &.nonCircleBtn {
+              &:hover {
+                svg {
+                  color: $Primary1;
+                }
+              }
+
+              svg {
+                width: 14px;
+                color: $Gray1;
+              }
             }
 
-            svg {
-              width: 10px;
-              color: #fff;
+            &.circleBtn {
+              background: $Gray1;
+              border-radius: 50%;
+
+              &:hover {
+                background: $Primary1;
+              }
+
+              svg {
+                width: 12px;
+                color: #fff;
+              }
             }
           }
         }

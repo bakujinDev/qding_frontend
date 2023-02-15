@@ -12,6 +12,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddComment from "@/components/common/AddComment";
 import { commentRuleList } from "@/lib/forum";
 import CloseIcon from "@mui/icons-material/Close";
+import EditIcon from "@mui/icons-material/Edit";
 import useUser from "@/lib/user";
 
 interface IProps {
@@ -177,9 +178,21 @@ export default function QuestionSec({ questionId, data }: IProps) {
                     </p>
 
                     {v?.creator?.id === user?.pk ? (
-                      <button className={styles.delBtn} onClick={() => {}}>
-                        <CloseIcon />
-                      </button>
+                      <>
+                        <button
+                          className={`${styles.editBtn} ${styles.nonCircleBtn}`}
+                          onClick={() => {}}
+                        >
+                          <EditIcon />
+                        </button>
+
+                        <button
+                          className={`${styles.delBtn} ${styles.circleBtn}`}
+                          onClick={() => {}}
+                        >
+                          <CloseIcon />
+                        </button>
+                      </>
                     ) : null}
                   </div>
                 </li>
