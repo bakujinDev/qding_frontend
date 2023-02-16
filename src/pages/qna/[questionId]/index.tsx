@@ -22,8 +22,6 @@ export default function QnaPosts() {
     },
   });
 
-  console.log(user);
-
   return data ? (
     <>
       <Seo title={data.title} />

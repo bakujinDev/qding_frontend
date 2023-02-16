@@ -23,8 +23,6 @@ export default function Github() {
     mutationGithubLogin.mutate(`${code}`);
   }, [code]);
 
-  console.log(mutationGithubLogin);
-
   return (
     <main className={styles.emailAuthPage}>
       <section className={styles.contSec}>

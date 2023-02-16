@@ -201,7 +201,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
                     <p className={styles.content}>{v.content} -</p>
                     <p className={styles.name}>{v.creator.name}</p>
                     <p className={styles.updatedAt}>
-                      {timeDifference(data.updated_at)}
+                      {timeDifference(v.updated_at)}
                     </p>
 
                     {v?.creator?.id === user?.pk &&

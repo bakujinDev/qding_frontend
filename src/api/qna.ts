@@ -1,3 +1,4 @@
+import { getCookie, getViewCookie } from "@/lib/cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import { apiInstance, tokenInstance } from "./instance";
 
@@ -9,9 +10,14 @@ type GetQnaPostQueryKey = [string, string?];
 export const getQnaPost = ({
   queryKey,
 }: QueryFunctionContext<GetQnaPostQueryKey>) => {
-  const [_, id] = queryKey;
+  const [category, id] = queryKey;
 
-  return apiInstance.get(`qnas/questions/${id}`).then((res) => res.data);
+  let cookie = getCookie(`${category}_${id}`);
+  getViewCookie({ name: `${category}_${id}`, value: 1 });
+
+  return apiInstance
+    .get(`qnas/questions/${id}`, { params: { cookie } })
+    .then((res) => res.data);
 };
 
 export interface IPostQuestion {
