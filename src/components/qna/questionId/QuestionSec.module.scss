@@ -64,6 +64,12 @@
             color: $Primary1;
           }
         }
+
+        &.on {
+          svg {
+            color: $Primary1;
+          }
+        }
       }
     }
 
@@ -185,6 +191,12 @@
             height: 12px;
 
             &:hover {
+              svg {
+                color: $Primary1;
+              }
+            }
+
+            &.on {
               svg {
                 color: $Primary1;
               }

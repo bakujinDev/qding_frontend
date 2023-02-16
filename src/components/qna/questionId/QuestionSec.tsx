@@ -101,7 +101,9 @@ export default function QuestionSec({ questionId, data }: IProps) {
       <article className={styles.contArea}>
         <div className={styles.utilBox}>
           <button
-            className={`${styles.upBtn} ${styles.voteBtn}`}
+            className={`${styles.upBtn} ${styles.voteBtn} ${
+              data.is_voted === "plus" ? styles.on : ""
+            }`}
             onClick={() => {}}
           >
             <ThumbUpAltIcon />
