@@ -16,9 +16,14 @@ import CloseIcon from "@mui/icons-material/Close";
 import TagSearchPopup from "@/components/qna/ask/TagSearchPopup";
 import PopupBg from "@/components/common/PopupBg";
 import { base64toFile } from "@/lib/textEditor";
+import { extractContent } from "@/lib/forum";
+import { useRouter } from "next/router";
+import U_spinner from "@/asset/util/U_spinner.svg";
 
 export default function Ask() {
-  const [content, setContent] = useState<any>();
+  const router = useRouter();
+
+  const [contentObj, setContentObj] = useState<any>();
   const [tagSearch, setTagSearch] = useState<string>("");
   const [tagSearchPopup, setTagSearchPopup] = useState<boolean>(false);
 
@@ -55,12 +60,16 @@ export default function Ask() {
     },
   });
 
-  const postQuestionMutation = useMutation(postQuestion, {});
+  const postQuestionMutation = useMutation(postQuestion, {
+    onSuccess: (res) => {
+      router.push(`/qna/${res.pk}`);
+    },
+  });
 
   async function uploadImgFile() {
-    if (!(content && content.ops)) return;
+    if (!(contentObj && contentObj.ops)) return;
 
-    let ops = content.ops;
+    let ops = contentObj.ops;
 
     await Promise.all(
       ops?.map(async (v: any, i: number) => {
@@ -93,8 +102,18 @@ export default function Ask() {
   useEffect(() => {
     if (!register) return;
 
-    register("content", { required: true, minLength: 20 });
-  }, [register]);
+    register("content", {
+      required: "질문 내용을 입력해주세요",
+      validate: {
+        chkLength: (v) =>
+          extractContent(v).length >= 20 || "20자 이상 입력해주세요",
+      },
+    });
+
+    register("tag", {
+      required: "태그를 선택해주세요",
+    });
+  }, []);
 
   useEffect(() => {
     if (tagSearch) setTagSearchPopup(true);
@@ -117,7 +136,11 @@ export default function Ask() {
               </div>
 
               <div className={styles.valueBox}>
-                <div className={styles.inputBox}>
+                <div
+                  className={`${styles.inputBox} ${
+                    errors.title?.message ? styles.errorBox : ""
+                  }`}
+                >
                   <input
                     {...register("title", {
                       required: "제목을 입력해주세요",
@@ -126,6 +149,10 @@ export default function Ask() {
                     placeholder="예) html의 <strong>과 <em>은 어떻게 다른가요?"
                   />
                 </div>
+
+                {errors.title?.message ? (
+                  <p className={styles.errorMsg}>{errors.title?.message}</p>
+                ) : null}
               </div>
             </article>
 
@@ -163,9 +190,14 @@ export default function Ask() {
                     editor: any
                   ) => {
                     setValue("content", value);
-                    setContent(editor.getContents());
+                    setContentObj(editor.getContents());
                   }}
+                  error={errors.content?.message}
                 />
+
+                {errors.content?.message ? (
+                  <p className={styles.errorMsg}>{errors.content?.message}</p>
+                ) : null}
               </div>
             </article>
 
@@ -213,7 +245,11 @@ export default function Ask() {
                 </ul>
 
                 <div className={styles.tagSearchCont}>
-                  <div className={styles.inputBox}>
+                  <div
+                    className={`${styles.inputBox} ${
+                      errors.tag?.message ? styles.errorBox : ""
+                    }`}
+                  >
                     <input
                       value={tagSearch}
                       onChange={(e) => setTagSearch(e.target.value)}
@@ -241,6 +277,10 @@ export default function Ask() {
                     </>
                   ) : null}
                 </div>
+
+                {errors.tag?.message ? (
+                  <p className={styles.errorMsg}>{errors.tag?.message}</p>
+                ) : null}
               </div>
             </article>
 
@@ -299,7 +339,16 @@ export default function Ask() {
             </article>
 
             <article className={styles.btnArea}>
-              <button className={styles.postBtn}>작성하기</button>
+              <button
+                className={styles.postBtn}
+                disabled={postQuestionMutation.isLoading}
+              >
+                <p>작성하기</p>
+
+                {postQuestionMutation.isLoading ? (
+                  <U_spinner className={styles.spinner} />
+                ) : null}
+              </button>
             </article>
           </section>
         </form>

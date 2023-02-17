@@ -5,7 +5,14 @@ import { mib2 } from "@/lib/setting";
 import "react-quill/dist/quill.snow.css";
 import { I_codeFile } from "@/lib/textEditor";
 
-export default function TextEditor({ value, setValue, styles }: IProps) {
+interface IProps {
+  value: any;
+  setValue: Function;
+  styles: { readonly [key: string]: string };
+  error?: string;
+}
+
+export default function TextEditor({ value, setValue, styles, error }: IProps) {
   const quillRef = React.useRef<any>(false);
 
   function imgHandler() {
@@ -63,7 +70,7 @@ export default function TextEditor({ value, setValue, styles }: IProps) {
 
   return (
     <ReactQuill
-      className={styles.quill}
+      className={`${styles.quill} ${error ? "errorBox" : ""}`}
       theme="snow"
       forwardedRef={quillRef}
       formats={formats}
@@ -90,12 +97,6 @@ const ReactQuill = dynamic(
   }
 );
 
-interface IProps {
-  value: any;
-  setValue: Function;
-  styles: { readonly [key: string]: string };
-}
-
 const formats = [
   "size",
   "bold",
@@ -109,5 +110,3 @@ const formats = [
   "list",
   "bullet",
 ];
-
-

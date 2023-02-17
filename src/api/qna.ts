@@ -2,8 +2,17 @@ import { getCookie, getViewCookie } from "@/lib/cookie";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import { apiInstance, tokenInstance } from "./instance";
 
-export const getQnaList = () =>
-  apiInstance.get("qnas/questions").then((res) => res.data);
+type GetQnaListQueryKey = [string, string?];
+
+export const getQnaList = ({
+  queryKey,
+}: QueryFunctionContext<GetQnaListQueryKey>) => {
+  const [category, page] = queryKey;
+
+  return apiInstance
+    .get("qnas/questions", { params: { page } })
+    .then((res) => res.data);
+};
 
 type GetQnaPostQueryKey = [string, string?];
 

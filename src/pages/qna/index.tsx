@@ -9,11 +9,18 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { extractContent } from "@/lib/forum";
 import Seo from "@/components/Seo";
+import PageNation from "@/components/common/Pagenation";
 
 export default function Qna() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const qnaList = useQuery(["qnaList"], getQnaList, {});
+  const qnaList = useQuery(
+    ["qnaList", `${router.query.page || 1}`],
+    getQnaList,
+    {
+      onSuccess: (res) => console.log(res),
+    }
+  );
   const { user } = useUser();
 
   function onClickAskBtn() {
@@ -37,49 +44,53 @@ export default function Qna() {
 
           <article className={styles.listArea}>
             {qnaList.isLoading ? null : (
-              <ul className={styles.qnaList}>
-                {qnaList.data?.map((v: any, i: number) => (
-                  <li key={i} onClick={() => router.push(`qna/${v.pk}`)}>
-                    <ul className={styles.utilList}>
-                      <li className={styles.views}>
-                        <p className={styles.key}>좋아요</p>
-                        <p className={styles.value}>{v.votes}</p>
-                      </li>
+              <>
+                <ul className={styles.qnaList}>
+                  {qnaList.data?.list.map((v: any, i: number) => (
+                    <li key={i} onClick={() => router.push(`qna/${v.pk}`)}>
+                      <ul className={styles.utilList}>
+                        <li className={styles.views}>
+                          <p className={styles.key}>좋아요</p>
+                          <p className={styles.value}>{v.votes}</p>
+                        </li>
 
-                      <li className={styles.views}>
-                        <p className={styles.key}>답변수</p>
-                        <p className={styles.value}>{v.answers_count}</p>
-                      </li>
+                        <li className={styles.views}>
+                          <p className={styles.key}>답변수</p>
+                          <p className={styles.value}>{v.answers_count}</p>
+                        </li>
 
-                      <li className={styles.views}>
-                        <p className={styles.key}>조회수</p>
-                        <p className={styles.value}>{v.views}</p>
-                      </li>
-                    </ul>
+                        <li className={styles.views}>
+                          <p className={styles.key}>조회수</p>
+                          <p className={styles.value}>{v.views}</p>
+                        </li>
+                      </ul>
 
-                    <div className={styles.contBox}>
-                      <div className={styles.textBox}>
-                        <h1 className={styles.title}>{v.title}</h1>
-                        <p className={styles.content}>
-                          {extractContent(v.content)}
-                        </p>
+                      <div className={styles.contBox}>
+                        <div className={styles.textBox}>
+                          <h1 className={styles.title}>{v.title}</h1>
+                          <p className={styles.content}>
+                            {extractContent(v.content)}
+                          </p>
+                        </div>
+
+                        <div className={styles.bottomBar}>
+                          <ul className={styles.tagList}>
+                            {v.tag.map((v: any, i: number) => (
+                              <li key={i}>{v.name}</li>
+                            ))}
+                          </ul>
+
+                          <p className={styles.updatedAt}>
+                            {timeDifference(v.updated_at)}
+                          </p>
+                        </div>
                       </div>
+                    </li>
+                  ))}
+                </ul>
 
-                      <div className={styles.bottomBar}>
-                        <ul className={styles.tagList}>
-                          {v.tag.map((v: any, i: number) => (
-                            <li key={i}>{v.name}</li>
-                          ))}
-                        </ul>
-
-                        <p className={styles.updatedAt}>
-                          {timeDifference(v.updated_at)}
-                        </p>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+                <PageNation count={qnaList.data?.total} />
+              </>
             )}
           </article>
         </section>

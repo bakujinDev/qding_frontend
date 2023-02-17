@@ -71,6 +71,20 @@ ul {
 }
 
 .quill {
+  &.errorBox {
+    .ql-toolbar {
+      &.ql-snow {
+        border-color: $ErrorColor;
+      }
+    }
+
+    .ql-container {
+      &.ql-snow {
+        border-color: $ErrorColor;
+      }
+    }
+  }
+
   .ql-toolbar {
     border-radius: 4px 4px 0 0;
   }

@@ -20,6 +20,7 @@ import { commentRuleList } from "@/lib/forum";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import useUser from "@/lib/user";
+import { useRouter } from "next/router";
 
 interface IProps {
   questionId: string;
@@ -27,6 +28,7 @@ interface IProps {
 }
 
 export default function QuestionSec({ questionId, data }: IProps) {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const { user } = useUser();
@@ -148,7 +150,10 @@ export default function QuestionSec({ questionId, data }: IProps) {
 
             <div className={styles.utilBar}>
               <div className={styles.btnBox}>
-                <button className={styles.editBtn} onClick={() => {}}>
+                <button
+                  className={styles.editBtn}
+                  onClick={() => router.push(`/qna/${questionId}/edit`)}
+                >
                   수정하기
                 </button>
 

@@ -1,0 +1,38 @@
+@use "../../styles/variable" as *;
+
+.pageNationBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  font-size: 12px;
+
+  .pageList {
+    display: flex;
+    gap: 4px;
+
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 4px;
+      border: 1px solid $Gray1;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &.on {
+        color: #fff;
+        background: $Primary1;
+        border-color: $Primary1;
+      }
+
+      &:hover {
+        color: #fff;
+        background: $Primary2;
+        border-color: $Primary2;
+      }
+    }
+  }
+}

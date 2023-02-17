@@ -25,6 +25,10 @@ $breakpoint-desktop: 1024px;
     border-color: $Blue2;
   }
 
+  &.errorBox{
+    border-color: $ErrorColor;
+  }
+
   input {
     flex: 1;
     height: 40px;
