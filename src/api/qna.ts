@@ -1,6 +1,6 @@
-import { getCookie, getViewCookie } from "@/lib/cookie";
+import { getLocalStorage, setViewLocal } from "@/lib/localStorage";
 import { QueryFunctionContext } from "@tanstack/react-query";
-import { apiInstance, tokenInstance } from "./instance";
+import { apiInstance } from "./instance";
 
 type GetQnaListQueryKey = [string, string?];
 
@@ -21,11 +21,13 @@ export const getQnaPost = ({
 }: QueryFunctionContext<GetQnaPostQueryKey>) => {
   const [category, id] = queryKey;
 
-  let cookie = getCookie(`${category}_${id}`);
-  getViewCookie({ name: `${category}_${id}`, value: 1 });
+  if (!id) return;
+
+  let viewLocalItem = getLocalStorage(`${category}_${id}`);
+  setViewLocal({ name: `${category}_${id}`, value: 1 });
 
   return apiInstance
-    .get(`qnas/questions/${id}`, { params: { cookie } })
+    .get(`qnas/questions/${id}`, { params: { viewLocalItem } })
     .then((res) => res.data);
 };
 

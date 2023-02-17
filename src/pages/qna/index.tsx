@@ -10,10 +10,15 @@ import { toast } from "react-toastify";
 import { extractContent } from "@/lib/forum";
 import Seo from "@/components/Seo";
 import PageNation from "@/components/common/Pagenation";
+import { useEffect, useState } from "react";
+import { getLocalStorage } from "@/lib/localStorage";
 
 export default function Qna() {
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const [viewHistory, setViewHistory] = useState<Array<any>>();
+
   const qnaList = useQuery(
     ["qnaList", `${router.query.page || 1}`],
     getQnaList,
@@ -30,6 +35,11 @@ export default function Qna() {
       dispatch(setLoginPopup(true));
     }
   }
+
+  useEffect(() => {
+    setViewHistory(getLocalStorage("qnaPostHistory"));
+  }, []);
+  console.log(viewHistory);
 
   return (
     <>
@@ -96,7 +106,19 @@ export default function Qna() {
         </section>
 
         <aside className={styles.aside}>
-          <article className={styles.profileArea}></article>
+          <details className={styles.viewHistory}>
+            <summary>최근 본 게시물</summary>
+
+            <div className={styles.valueBox}>
+              <ul className={styles.valueList}>
+                {viewHistory
+                  ? viewHistory.map((v: any, i: number) => (
+                      <li key={i}>{v.title}</li>
+                    ))
+                  : null}
+              </ul>
+            </div>
+          </details>
         </aside>
       </main>
     </>

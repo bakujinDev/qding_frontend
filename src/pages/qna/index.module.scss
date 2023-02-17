@@ -128,9 +128,42 @@
   .aside {
     width: 320px;
     height: 400px;
-    padding: 0 20px 10px;
+    padding: 10px 0;
     background: #fff;
     border-radius: 20px;
     box-shadow: 0px 4px 13px 2px #e3e5ec;
+
+    details {
+      summary {
+        display: flex;
+        align-items: center;
+        height: 40px;
+        padding: 0 12px;
+        cursor: pointer;
+      }
+
+      .valueBox {
+        background: $White2;
+
+        .valueList {
+          li {
+            display: flex;
+            align-items: center;
+            height: 32px;
+            padding: 0 12px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include mobile {
+  .qna {
+    padding: 12px;
+
+    .aside {
+      display: none;
+    }
   }
 }

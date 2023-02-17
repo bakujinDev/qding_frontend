@@ -1,4 +1,5 @@
 @import "./colors.scss";
+@import "./reset.scss";
 
 * {
   box-sizing: border-box;
@@ -62,12 +63,6 @@ input::-webkit-inner-spin-button {
 
 *:disabled {
   cursor: not-allowed;
-}
-
-ul {
-  li {
-    list-style: none;
-  }
 }
 
 .quill {
