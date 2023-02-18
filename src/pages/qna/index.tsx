@@ -39,7 +39,6 @@ export default function Qna() {
   useEffect(() => {
     setViewHistory(getLocalStorage("qnaPostHistory"));
   }, []);
-  console.log(viewHistory);
 
   return (
     <>
@@ -106,14 +105,16 @@ export default function Qna() {
         </section>
 
         <aside className={styles.aside}>
-          <details className={styles.viewHistory}>
+          <details className={styles.viewHistory} open>
             <summary>최근 본 게시물</summary>
 
             <div className={styles.valueBox}>
               <ul className={styles.valueList}>
                 {viewHistory
                   ? viewHistory.map((v: any, i: number) => (
-                      <li key={i}>{v.title}</li>
+                      <li key={i} onClick={() => router.push(`/qna/${v.id}`)}>
+                        <p>{v.title}</p>
+                      </li>
                     ))
                   : null}
               </ul>
