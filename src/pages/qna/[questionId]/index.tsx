@@ -7,7 +7,6 @@ import styles from "./qnaPosts.module.scss";
 import QuestionSec from "@/components/qna/questionId/QuestionSec";
 import AddAnswerSec from "@/components/qna/questionId/AddAnswerSec";
 import AnswerSec from "@/components/qna/questionId/AnswerSec";
-import { useEffect } from "react";
 import { viewHistory } from "@/lib/localStorage";
 
 export default function QnaPosts() {
@@ -18,22 +17,14 @@ export default function QnaPosts() {
 
   const postQuery = useQuery(["postQuery", `${questionId}`], getQnaPost, {
     retry: false,
-    enabled: false,
     onSuccess: (res) => {
       console.log(res);
-
       viewHistory({
         name: "qnaPostHistory",
         value: { id: questionId, title: res.title },
       });
     },
   });
-
-  useEffect(() => {
-    if (!router.isReady) return;
-
-    postQuery.refetch();
-  }, [router.isReady]);
 
   return postQuery.data ? (
     <>

@@ -21,7 +21,7 @@ export const getQnaPost = ({
 }: QueryFunctionContext<GetQnaPostQueryKey>) => {
   const [category, id] = queryKey;
 
-  if (!id) return;
+  if (id === "undefined") return false;
 
   let viewLocalItem = getLocalStorage(`${category}_${id}`);
   setViewLocal({ name: `${category}_${id}`, value: 1 });
