@@ -1,22 +1,24 @@
 import { getQnaList } from "@/api/qna";
 import { timeDifference } from "@/lib/time";
-import useUser from "@/lib/user";
 import { setLoginPopup } from "@/store/reducer/commonReducer";
 import styles from "./index.module.scss";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { extractContent } from "@/lib/forum";
 import Seo from "@/components/Seo";
 import PageNation from "@/components/common/Pagenation";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { getLocalStorage } from "@/lib/localStorage";
 import { AppState } from "@/store/store";
+import { deleteNotification, getNotification } from "@/api/notification";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function Qna() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const queryclient = useQueryClient();
   const user = useSelector((state: AppState) => state.common.userInfo);
 
   const [viewHistory, setViewHistory] = useState<Array<any>>();
@@ -24,10 +26,13 @@ export default function Qna() {
   const qnaList = useQuery(
     ["qnaList", `${router.query.page || 1}`],
     getQnaList,
-    {
-      onSuccess: (res) => console.log(res),
-    }
+    {}
   );
+  const notificationList = useQuery(["notifications"], getNotification, {
+    onSuccess: (res) => console.log(res),
+  });
+
+  const deleteNotificationMutation = useMutation(deleteNotification, {});
 
   function onClickAskBtn() {
     if (user) router.push("/qna/ask");
@@ -35,6 +40,26 @@ export default function Qna() {
       toast("질문하기를 사용할려면 로그인이 필요해요");
       dispatch(setLoginPopup(true));
     }
+  }
+
+  function onClickNotification(notification: any) {
+    router.push(notification.push_url);
+    deleteNotificationMutation.mutate(
+      {
+        pk: notification.pk,
+      },
+      { onSuccess: (res) => queryclient.refetchQueries(["notifications"]) }
+    );
+  }
+
+  function onCLickNotificationDeleteBtn(e: SyntheticEvent, notification: any) {
+    e.stopPropagation();
+    deleteNotificationMutation.mutate(
+      {
+        pk: notification.pk,
+      },
+      { onSuccess: (res) => queryclient.refetchQueries(["notifications"]) }
+    );
   }
 
   useEffect(() => {
@@ -121,6 +146,31 @@ export default function Qna() {
                     )
                   : null}
               </ul>
+            </div>
+          </details>
+
+          <details className={styles.notification} open>
+            <summary>알림</summary>
+
+            <div className={styles.valueBox}>
+              {notificationList.data ? (
+                <ul className={styles.valueList}>
+                  {notificationList.data.map((v: any, i: number) => (
+                    <li key={i} onClick={() => onClickNotification(v)}>
+                      <p>{v.content}</p>
+
+                      <button
+                        className={styles.delBtn}
+                        onClick={(e) => onCLickNotificationDeleteBtn(e, v)}
+                      >
+                        <CloseIcon />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className={styles.nullBox}>새로운 알람이 없습니다</div>
+              )}
             </div>
           </details>
         </aside>

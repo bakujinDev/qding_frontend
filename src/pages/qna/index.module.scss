@@ -127,7 +127,7 @@
 
   .aside {
     width: 320px;
-    min-height: 300px;
+    overflow: hidden;
     background: #fff;
     border-radius: 20px;
     box-shadow: 0px 4px 13px 2px #e3e5ec;
@@ -146,9 +146,10 @@
       }
 
       .valueBox {
-        overflow: hidden;
-        background: $White2;
-        box-shadow: rgba(0, 0, 0, 0.04) 0px 1.95px 2.6px inset;
+        max-height: 180px;
+        overflow-y: scroll;
+        background: $HoverBlue;
+        box-shadow: rgba(0, 0, 0, 0.08) 0px 1.95px 2.6px inset;
 
         .valueList {
           li {
@@ -167,12 +168,38 @@
             }
 
             p {
+              flex: 1;
               font-size: 14px;
               overflow: hidden;
               white-space: nowrap;
               text-overflow: ellipsis;
             }
+
+            .delBtn {
+              display: flex;
+              align-items: center;
+
+              &:hover {
+                svg {
+                  color: $Blue2;
+                }
+              }
+
+              svg {
+                height: 20px;
+                color: $Gray2;
+              }
+            }
           }
+        }
+
+        .nullBox {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 44px;
+          font-size: 12px;
+          color: $Gray2;
         }
       }
     }
@@ -194,14 +221,14 @@
     max-height: 0;
   }
   100% {
-    max-height: 10000px;
+    max-height: 180px;
   }
 }
 
 details {
   &[open] {
     .valueBox {
-      animation: openFrame 1.2s ease-in-out;
+      animation: openFrame 0.4s ease-in-out;
     }
   }
 }
