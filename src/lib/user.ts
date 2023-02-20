@@ -1,13 +1,20 @@
 import { apiInstance } from "@/api/instance";
+import { setUserInfo } from "@/store/reducer/commonReducer";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
 import { getMe, refreshToken } from "../api/auth";
 
 export default function useUser() {
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
   const { isLoading, data, isError } = useQuery(["me"], getMe, {
     retry: false,
+    onSuccess: (res) => {
+      dispatch(setUserInfo(res));
+    },
     onError: (err: any) => {
+      dispatch(setUserInfo(null));
       if (err.response?.data?.code === "user_inactive") return;
 
       if (localStorage.getItem("refresh_token")) refreshTokenMutation.mutate();

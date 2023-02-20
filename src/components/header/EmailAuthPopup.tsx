@@ -1,20 +1,21 @@
 import styles from "./emailAuthPopup.module.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import { requestAuthEmail, getIsEmailAuth } from "@/api/auth";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import useUser from "@/lib/user";
-import { useEffect, useRef, useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { ApiCoolTime } from "@/lib/setting";
+import { useSelector } from "react-redux";
+import { AppState } from "@/store/store";
 
 interface IProps {
   off: Function;
 }
 
 export default function EmailAuthPopup({ off }: IProps) {
-  const { user } = useUser();
-
   const [requestMail, setRequestMail] = useState<boolean>(false);
   const [requestCoolTime, setRequestCoolTime] = useState<number>(0);
+
+  const user = useSelector((state: AppState) => state.common.userInfo);
 
   const mutation = useMutation(requestAuthEmail, {
     onSuccess: () => {

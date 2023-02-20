@@ -5,17 +5,19 @@ import { setLoginPopup } from "@/store/reducer/commonReducer";
 import styles from "./index.module.scss";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { extractContent } from "@/lib/forum";
 import Seo from "@/components/Seo";
 import PageNation from "@/components/common/Pagenation";
 import { useEffect, useState } from "react";
 import { getLocalStorage } from "@/lib/localStorage";
+import { AppState } from "@/store/store";
 
 export default function Qna() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const user = useSelector((state: AppState) => state.common.userInfo);
 
   const [viewHistory, setViewHistory] = useState<Array<any>>();
 
@@ -26,7 +28,6 @@ export default function Qna() {
       onSuccess: (res) => console.log(res),
     }
   );
-  const { user } = useUser();
 
   function onClickAskBtn() {
     if (user) router.push("/qna/ask");
@@ -111,11 +112,13 @@ export default function Qna() {
             <div className={styles.valueBox}>
               <ul className={styles.valueList}>
                 {viewHistory
-                  ? viewHistory.map((v: any, i: number) => (
-                      <li key={i} onClick={() => router.push(`/qna/${v.id}`)}>
-                        <p>{v.title}</p>
-                      </li>
-                    ))
+                  ? viewHistory.map((v: any, i: number) =>
+                      v.title && v.id ? (
+                        <li key={i} onClick={() => router.push(`/qna/${v.id}`)}>
+                          <p>{v.title}</p>
+                        </li>
+                      ) : null
+                    )
                   : null}
               </ul>
             </div>

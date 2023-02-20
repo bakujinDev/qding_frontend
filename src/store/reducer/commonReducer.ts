@@ -3,11 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface ICommonState {
   emailAuthPopup: boolean;
   loginPopup: boolean;
+  userInfo: any;
 }
 
 const initialState: ICommonState = {
   emailAuthPopup: false,
   loginPopup: false,
+  userInfo: null,
 };
 
 export const commonSlice = createSlice({
@@ -20,9 +22,13 @@ export const commonSlice = createSlice({
     setLoginPopup: (state, action) => {
       state.loginPopup = action.payload;
     },
+    setUserInfo: (state, action) => {
+      state.userInfo = action.payload;
+    },
   },
 });
 
-export const { setEmailAuthPopup, setLoginPopup } = commonSlice.actions;
+export const { setEmailAuthPopup, setLoginPopup, setUserInfo } =
+  commonSlice.actions;
 
 export default commonSlice;

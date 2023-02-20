@@ -20,6 +20,8 @@ import { commentRuleList } from "@/lib/forum";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import useUser from "@/lib/user";
+import { useSelector } from "react-redux";
+import { AppState } from "@/store/store";
 
 interface IProps {
   questionId: string;
@@ -28,8 +30,7 @@ interface IProps {
 
 export default function AnswerSec({ questionId, data }: IProps) {
   const queryClient = useQueryClient();
-
-  const { user } = useUser();
+  const user = useSelector((state: AppState) => state.common.userInfo);
 
   const [commentMode, setCommentMode] = useState(false);
 

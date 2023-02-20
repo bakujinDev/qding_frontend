@@ -11,7 +11,6 @@ import { viewHistory } from "@/lib/localStorage";
 
 export default function QnaPosts() {
   const router = useRouter();
-  const { user } = useUser();
 
   const { questionId } = router.query;
 

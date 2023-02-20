@@ -21,6 +21,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import useUser from "@/lib/user";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { AppState } from "@/store/store";
 
 interface IProps {
   questionId: string;
@@ -30,8 +32,7 @@ interface IProps {
 export default function QuestionSec({ questionId, data }: IProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
-
-  const { user } = useUser();
+  const user = useSelector((state: AppState) => state.common.userInfo);
 
   const [commentMode, setCommentMode] = useState(false);
 
