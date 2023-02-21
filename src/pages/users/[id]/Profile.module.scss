@@ -1,0 +1,132 @@
+@use "../../../styles/variable" as *;
+
+.profile {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 40px;
+  overflow-y: scroll;
+  background: #f8faff;
+
+  .innerSec {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+    max-width: 960px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 4px 13px 2px #e3e5ec;
+
+    .profileArea {
+      display: flex;
+      gap: 16px;
+
+      .profImgCont {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .profImg {
+          width: 110px;
+          height: 110px;
+          object-fit: cover;
+          border-radius: 4px;
+        }
+
+        .msgBtn {
+          padding: 4px 8px;
+          font-size: 14px;
+          border: 1px solid $Gray1;
+          border-radius: 4px;
+        }
+      }
+
+      .contCont {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+
+        .nickname {
+          font-size: 28px;
+          font-weight: 500;
+        }
+
+        .profMsg {
+          font-size: 16px;
+          color: $Gray2;
+          width: 400px;
+        }
+
+        .urlList {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+
+          li {
+            display: flex;
+            gap: 4px;
+            font-size: 14px;
+            color: $Gray2;
+
+            .key {
+              width: 80px;
+            }
+          }
+        }
+      }
+    }
+
+    .careerArea {
+      .careerList {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        li {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          svg {
+            height: 16px;
+          }
+
+          .textBox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            hr {
+              width: 1px;
+              height: 16px;
+              background: $Gray1;
+            }
+
+            .office {
+              display: flex;
+              gap: 4px;
+
+              .officeName {
+                font-weight: 600;
+              }
+            }
+
+            .termsBox {
+              display: flex;
+              gap: 4px;
+            }
+          }
+        }
+      }
+    }
+
+    .activityArea {
+      
+    }
+  }
+}

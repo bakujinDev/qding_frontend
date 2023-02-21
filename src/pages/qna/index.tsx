@@ -82,7 +82,7 @@ export default function Qna() {
               <>
                 <ul className={styles.qnaList}>
                   {qnaList.data?.list.map((v: any, i: number) => (
-                    <li key={i} onClick={() => router.push(`qna/${v.pk}`)}>
+                    <li key={i} onClick={() => router.push(`/qna/${v.pk}`)}>
                       <ul className={styles.utilList}>
                         <li className={styles.views}>
                           <p className={styles.key}>좋아요</p>
@@ -124,7 +124,7 @@ export default function Qna() {
                   ))}
                 </ul>
 
-                <PageNation count={qnaList.data?.total} />
+                <PageNation total={qnaList.data?.total} />
               </>
             )}
           </article>

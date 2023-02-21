@@ -1,0 +1,114 @@
+@use "../../styles/variable" as *;
+
+.activityCont {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid $White3;
+  border-radius: 8px;
+
+  &[open] {
+    summary {
+      .orderList {
+        display: flex;
+      }
+    }
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding: 0 12px;
+    cursor: pointer;
+
+    .titleBox {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+
+      .contTitle {
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .count {
+        color: $Gray1;
+      }
+    }
+
+    .orderList {
+      display: none;
+      border: 1px solid $Gray1;
+      border-radius: 4px;
+
+      li {
+        &:nth-of-type(n + 2) {
+          .optBtn {
+            border-left: 1px solid $Gray1;
+          }
+        }
+
+        .optBtn {
+          padding: 4px 8px;
+          color: $Gray1;
+
+          &.on {
+            color: #fff;
+            background: $Blue2;
+          }
+        }
+      }
+    }
+  }
+
+  .valueBox {
+    border-top: 1px solid $White3;
+
+    .activityList {
+      li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        height: 40px;
+        padding: 0 12px;
+        cursor: pointer;
+        border-bottom: 1px solid $White3;
+
+        &:hover {
+          background: $Blue1;
+        }
+
+        .votes {
+          padding: 2px 6px;
+          text-align: center;
+          color: $Gray1;
+          border: 1px solid $Gray1;
+          border-radius: 4px;
+
+          &.plus {
+            color: #fff;
+            background: $Green1;
+            border-color: $Green1;
+          }
+        }
+
+        .title {
+          flex: 1;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .time {
+          color: $Gray1;
+        }
+      }
+    }
+
+    .pageNation {
+      height: 50px;
+    }
+  }
+}
