@@ -4,6 +4,7 @@ import styles from "./HistoryDetail.module.scss";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import HistoryPageNation from "./HistoryPagenation";
+import PendingIcon from "@mui/icons-material/Pending";
 
 interface IProps {
   queryKey: string;
@@ -22,20 +23,26 @@ export default function HistoryDetail({
   const [orderOpt, setOrderOpt] = useState(orderList[0]);
   const [page, setPage] = useState(1);
 
-  const question: any = useQuery(
-    [queryKey, id, orderOpt.value, page],
-    queryApi,
-    {
-      onSuccess: (res) => console.log(res),
-    }
-  );
+  const query: any = {
+    data: {
+      list: [],
+      total: 0,
+    },
+  };
+  // const query: any = useQuery(
+  //   [queryKey, id, orderOpt.value, page],
+  //   queryApi,
+  //   {
+  //     onSuccess: (res) => console.log(res),
+  //   }
+  // );
 
   return (
     <details className={styles.activityCont}>
       <summary>
         <div className={styles.titleBox}>
           <h1 className={styles.contTitle}>질문</h1>
-          <h3 className={styles.count}>{question.data?.total}개</h3>
+          <h3 className={styles.count}>{query.data?.total}개</h3>
         </div>
 
         <ul className={styles.orderList}>
@@ -55,27 +62,39 @@ export default function HistoryDetail({
       </summary>
 
       <div className={styles.valueBox}>
-        <ul className={styles.activityList}>
-          {question.data?.list?.map((v: any, i: number) => (
-            <li key={i} onClick={() => router.push(`/qna/${v.pk}`)}>
-              <span
-                className={`${styles.votes} ${v.votes > 4 ? styles.plus : ""}`}
-              >
-                {v.votes}
-              </span>
-              <p className={styles.title}>{v.title}</p>
+        {query.data?.total > 0 ? (
+          <>
+            <ul className={styles.activityList}>
+              {query.data?.list?.map((v: any, i: number) => (
+                <li key={i} onClick={() => router.push(`/qna/${v.pk}`)}>
+                  <span
+                    className={`${styles.votes} ${
+                      v.votes > 4 ? styles.plus : ""
+                    }`}
+                  >
+                    {v.votes}
+                  </span>
+                  <p className={styles.title}>{v.title}</p>
 
-              <p className={styles.time}>{timeDifference(v.created_at)}</p>
-            </li>
-          ))}
-        </ul>
+                  <p className={styles.time}>{timeDifference(v.created_at)}</p>
+                </li>
+              ))}
+            </ul>
+
+            <HistoryPageNation
+              page={page}
+              setPage={setPage}
+              total={query.data?.total}
+            />
+          </>
+        ) : (
+          <div className={styles.emptyBox}>
+            <PendingIcon />
+            
+            <p>아직 작성한 내용이 없어요</p>
+          </div>
+        )}
       </div>
-
-      <HistoryPageNation
-        page={page}
-        setPage={setPage}
-        total={question.data?.total}
-      />
     </details>
   );
 }
