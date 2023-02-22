@@ -8,11 +8,12 @@ import QuestionSec from "@/components/qna/questionId/QuestionSec";
 import AddAnswerSec from "@/components/qna/questionId/AddAnswerSec";
 import AnswerSec from "@/components/qna/questionId/AnswerSec";
 import { viewHistory } from "@/lib/localStorage";
+import { useEffect } from "react";
 
 export default function QnaPosts() {
   const router = useRouter();
 
-  const { questionId } = router.query;
+  const { questionId, answerId } = router.query;
 
   const postQuery = useQuery(["postQuery", `${questionId}`], getQnaPost, {
     retry: false,
@@ -24,6 +25,16 @@ export default function QnaPosts() {
       });
     },
   });
+
+  useEffect(() => {
+    if (!(answerId && postQuery.data)) return;
+
+    const answer = document.getElementById(`answer${answerId}`);
+    if (!answer) return;
+
+    const ansewrPos = answer.getBoundingClientRect();
+    window.scrollTo({top: ansewrPos.top - 60,behavior:'smooth'});
+  }, [postQuery]);
 
   return postQuery.data ? (
     <>

@@ -81,7 +81,7 @@ export default function AnswerSec({ questionId, data }: IProps) {
   }, [commentMode]);
 
   return (
-    <section className={styles.answerSec}>
+    <section className={styles.answerSec} id={`answer${data.pk}`}>
       <article className={styles.contArea}>
         <div className={styles.utilBox}>
           <button

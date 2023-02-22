@@ -58,7 +58,7 @@ export default function AnswerHistory() {
                     router.push({
                       pathname: `/qna/${v.question.pk}`,
                       query: {
-                        answer: v.pk,
+                        answerId: v.pk,
                       },
                     })
                   }
