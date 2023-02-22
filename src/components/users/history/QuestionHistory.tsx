@@ -5,37 +5,23 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import HistoryPageNation from "./HistoryPagenation";
 import PendingIcon from "@mui/icons-material/Pending";
+import { getProfileQuestions } from "@/api/user";
+import { D_orderList } from "@/lib/profile";
 
-interface IProps {
-  queryKey: string;
-  queryApi: any;
-  orderList: Array<any>;
-}
-
-export default function HistoryDetail({
-  queryKey,
-  queryApi,
-  orderList,
-}: IProps) {
+export default function QuestionHistory() {
   const router = useRouter();
 
   const { id } = router.query;
-  const [orderOpt, setOrderOpt] = useState(orderList[0]);
+  const [orderOpt, setOrderOpt] = useState(D_orderList[0]);
   const [page, setPage] = useState(1);
 
-  const query: any = {
-    data: {
-      list: [],
-      total: 0,
-    },
-  };
-  // const query: any = useQuery(
-  //   [queryKey, id, orderOpt.value, page],
-  //   queryApi,
-  //   {
-  //     onSuccess: (res) => console.log(res),
-  //   }
-  // );
+  const query: any = useQuery(
+    ["question_creator", id, orderOpt.value, page],
+    getProfileQuestions,
+    {
+      onSuccess: (res) => console.log(res),
+    }
+  );
 
   return (
     <details className={styles.activityCont}>
@@ -46,7 +32,7 @@ export default function HistoryDetail({
         </div>
 
         <ul className={styles.orderList}>
-          {orderList.map((v, i) => (
+          {D_orderList.map((v, i) => (
             <li key={i}>
               <button
                 className={`${styles.optBtn} ${
@@ -90,7 +76,7 @@ export default function HistoryDetail({
         ) : (
           <div className={styles.emptyBox}>
             <PendingIcon />
-            
+
             <p>아직 작성한 내용이 없어요</p>
           </div>
         )}

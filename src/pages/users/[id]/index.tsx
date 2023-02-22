@@ -3,9 +3,14 @@ import styles from "./Profile.module.scss";
 import WorkIcon from "@mui/icons-material/Work";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { getProfileQuestions, getUserProfile } from "@/api/user";
+import {
+  getProfileAnswers,
+  getProfileQuestions,
+  getUserProfile,
+} from "@/api/user";
 import { D_orderList } from "@/lib/profile";
-import HistoryDetail from "@/components/users/HistoryDetail";
+import QuestionHistory from "@/components/users/history/QuestionHistory";
+import AnswerHistory from "@/components/users/history/AnswerHistory";
 
 export default function Profile() {
   const router = useRouter();
@@ -100,11 +105,11 @@ export default function Profile() {
           </article>
 
           <article className={styles.activityArea}>
-            <HistoryDetail
-              queryKey="question_creator"
-              queryApi={getProfileQuestions}
-              orderList={D_orderList}
-            />
+            <QuestionHistory />
+          </article>
+
+          <article className={styles.activityArea}>
+            <AnswerHistory />
           </article>
         </section>
       </main>

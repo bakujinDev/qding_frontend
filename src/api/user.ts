@@ -31,3 +31,20 @@ export const getProfileQuestions = ({
     })
     .then((res) => res.data);
 };
+
+export const getProfileAnswers = ({
+  queryKey,
+}: QueryFunctionContext<QueryGetPost>) => {
+  const [_, id, orderOpt, page] = queryKey;
+
+  if (!id) return false;
+
+  return apiInstance
+    .get(`qnas/answers/@${id}`, {
+      params: {
+        order_opt: orderOpt,
+        page,
+      },
+    })
+    .then((res) => res.data);
+};
