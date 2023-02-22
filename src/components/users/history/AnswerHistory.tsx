@@ -19,6 +19,7 @@ export default function AnswerHistory() {
     ["answer_creator", id, orderOpt.value, page],
     getProfileAnswers,
     {
+      retry: false,
       onSuccess: (res) => console.log(res),
     }
   );
@@ -65,7 +66,7 @@ export default function AnswerHistory() {
                 >
                   <span
                     className={`${styles.votes} ${
-                      v.votes > 4 ? styles.plus : ""
+                      v.is_selected ? styles.plus : ""
                     }`}
                   >
                     {v.votes}

@@ -8,7 +8,7 @@ import {
 import { postAnswer } from "@/api/qna";
 import TextEditor from "@/components/common/TextEditor";
 import { base64toFile } from "@/lib/textEditor";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./AddAnswerSec.module.scss";
@@ -18,6 +18,8 @@ interface IProps {
 }
 
 export default function AddAnswerSec({ questionId }: IProps) {
+  const queryClient = useQueryClient();
+
   const [content, setContent] = useState<any>();
 
   const {
@@ -53,6 +55,7 @@ export default function AddAnswerSec({ questionId }: IProps) {
     onSuccess: (res) => {
       console.log(res);
       reset;
+      queryClient.refetchQueries(["postQuery", `${questionId}`]);
     },
   });
 

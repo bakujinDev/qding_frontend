@@ -13,6 +13,16 @@ export const getUserProfile = ({
   return apiInstance.get(`users/profile/${id}`).then((res) => res.data);
 };
 
+export const getUserTagLank = ({
+  queryKey,
+}: QueryFunctionContext<QueryUserId>) => {
+  const [_, id] = queryKey;
+
+  if (!id) return false;
+
+  return apiInstance.get(`qnas/tags/@${id}`).then((res) => res.data);
+};
+
 type QueryGetPost = [string, (string | string[])?, string?, number?];
 
 export const getProfileQuestions = ({

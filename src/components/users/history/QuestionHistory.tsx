@@ -18,9 +18,7 @@ export default function QuestionHistory() {
   const query: any = useQuery(
     ["question_creator", id, orderOpt.value, page],
     getProfileQuestions,
-    {
-      onSuccess: (res) => console.log(res),
-    }
+    { retry: false, onSuccess: (res) => console.log(res) }
   );
 
   return (
@@ -55,7 +53,7 @@ export default function QuestionHistory() {
                 <li key={i} onClick={() => router.push(`/qna/${v.pk}`)}>
                   <span
                     className={`${styles.votes} ${
-                      v.votes > 4 ? styles.plus : ""
+                      v.select_answer !== null ? styles.plus : ""
                     }`}
                   >
                     {v.votes}

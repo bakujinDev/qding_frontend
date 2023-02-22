@@ -25,7 +25,15 @@ export default function MenuPopup({ off }: IProps) {
 
   function onClickLogoutBtn() {
     const refreshToken = localStorage.getItem("refresh_token");
-    if (refreshToken) logoutMutation.mutate({ refresh: refreshToken });
+    if (refreshToken)
+      logoutMutation.mutate(
+        { refresh: refreshToken },
+        {
+          onSuccess: () => {
+            router.reload();
+          },
+        }
+      );
   }
 
   return (

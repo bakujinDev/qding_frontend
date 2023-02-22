@@ -11,6 +11,7 @@ import {
 import { D_orderList } from "@/lib/profile";
 import QuestionHistory from "@/components/users/history/QuestionHistory";
 import AnswerHistory from "@/components/users/history/AnswerHistory";
+import TagLank from "@/components/users/TagLank";
 
 export default function Profile() {
   const router = useRouter();
@@ -102,6 +103,10 @@ export default function Profile() {
                 </span>
               </li>
             </ul>
+          </article>
+
+          <article className={styles.activityArea}>
+            <TagLank />
           </article>
 
           <article className={styles.activityArea}>
