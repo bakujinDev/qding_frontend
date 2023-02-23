@@ -1,0 +1,43 @@
+@use "../../styles/variable" as *;
+
+.tagLank {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .contTitle {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .valueBox {
+    .tagList {
+      display: flex;
+      gap: 12px;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 8px;
+        height: 32px;
+        border: 1px solid $Gray2;
+        border-radius: 8px;
+        cursor: pointer;
+
+        &:hover {
+          background: $Blue1;
+        }
+
+        .key {
+          font-size: 16px;
+        }
+
+        .value {
+          font-size: 14px;
+          color: $Gray2;
+        }
+      }
+    }
+  }
+}

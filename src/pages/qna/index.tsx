@@ -29,6 +29,7 @@ export default function Qna() {
     {}
   );
   const notificationList = useQuery(["notifications"], getNotification, {
+    retry: false,
     onSuccess: (res) => console.log(res),
   });
 
