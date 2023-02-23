@@ -10,7 +10,7 @@ export const getUserProfile = ({
 
   if (!id) return false;
 
-  return apiInstance.get(`users/profile/${id}`).then((res) => res.data);
+  return apiInstance.get(`users/profile/@${id}`).then((res) => res.data);
 };
 
 export const getUserTagLank = ({
