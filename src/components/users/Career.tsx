@@ -20,7 +20,7 @@ export default function Career() {
       <ul className={styles.careerList}>
         {query.data
           ? query.data?.map((v: any, i: number) => (
-              <li>
+              <li key={i}>
                 <WorkIcon />
 
                 <span className={styles.textBox}>

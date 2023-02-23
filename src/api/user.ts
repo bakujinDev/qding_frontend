@@ -13,6 +13,31 @@ export const getUserProfile = ({
   return apiInstance.get(`users/profile/@${id}`).then((res) => res.data);
 };
 
+export interface IEditProfile {
+  avatar: string;
+  name: string;
+  introduce: string;
+  blog: string;
+  github: string;
+}
+
+export const editProfile = ({
+  avatar,
+  name,
+  introduce,
+  blog,
+  github,
+}: IEditProfile) =>
+  apiInstance
+    .put("users/me", {
+      avatar: avatar || undefined,
+      name: name || undefined,
+      introduce: introduce || undefined,
+      blog: blog || undefined,
+      github: github || undefined,
+    })
+    .then((res) => res.data);
+
 export const getUserTagLank = ({
   queryKey,
 }: QueryFunctionContext<QueryUserId>) => {

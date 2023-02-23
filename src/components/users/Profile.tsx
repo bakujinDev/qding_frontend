@@ -29,9 +29,16 @@ export default function Profile() {
             <h2 className={styles.nickname}>{user.data?.name}</h2>
 
             <p className={styles.profMsg}>
-              {user.data?.message || "등록된 메세지가 없습니다."}
+              {user.data?.introduce || "등록된 메세지가 없습니다."}
             </p>
           </div>
+
+          <button
+            className={styles.editBtn}
+            onClick={() => router.push(`/users/${id}/edit`)}
+          >
+            프로필 수정
+          </button>
         </div>
 
         <div className={styles.utilCont}>
@@ -40,17 +47,27 @@ export default function Profile() {
           </button>
 
           <ul className={styles.urlList}>
-            <li>
-              <button className={styles.linkBtn} onClick={() => {}}>
-                <ArticleIcon />
-              </button>
-            </li>
+            {user.data?.blog ? (
+              <li>
+                <button
+                  className={styles.linkBtn}
+                  onClick={() => window.open(user.data?.blog, "_blank")}
+                >
+                  <ArticleIcon />
+                </button>
+              </li>
+            ) : null}
 
-            <li>
-              <button className={styles.linkBtn} onClick={() => {}}>
-                <GitHubIcon />
-              </button>
-            </li>
+            {user.data?.github ? (
+              <li>
+                <button
+                  className={styles.linkBtn}
+                  onClick={() => window.open(user.data?.github, "_blank")}
+                >
+                  <GitHubIcon />
+                </button>
+              </li>
+            ) : null}
           </ul>
         </div>
       </article>

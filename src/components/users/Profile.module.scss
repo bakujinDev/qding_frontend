@@ -7,6 +7,7 @@
 
   .profImgCont {
     display: flex;
+    align-items: flex-start;
     gap: 16px;
 
     .profImgBox {
@@ -23,6 +24,7 @@
     }
 
     .infoBox {
+      flex: 1;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -37,6 +39,22 @@
         height: 80px;
         font-size: 16px;
         color: $Gray2;
+      }
+    }
+
+    .editBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 80px;
+      height: 26px;
+      font-size: 14px;
+      color: #fff;
+      background: $Blue2;
+      border-radius: 4px;
+
+      &:hover {
+        background: $Blue3;
       }
     }
   }
