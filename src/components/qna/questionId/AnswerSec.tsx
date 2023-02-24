@@ -8,18 +8,17 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
+  IPostAnswerComment,
+  postAnswerComment,
   deleteAnswerComment,
   editAnswerComment,
   IEditAnswerComment,
-  IPostAnswerComment,
-  postAnswerComment,
-} from "@/api/qna";
+} from "@/api/qna/answer";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddComment from "@/components/common/AddComment";
 import { commentRuleList } from "@/lib/forum";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
-import useUser from "@/lib/user";
 import { useSelector } from "react-redux";
 import { AppState } from "@/store/store";
 

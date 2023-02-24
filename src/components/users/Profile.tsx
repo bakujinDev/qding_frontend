@@ -35,7 +35,7 @@ export default function Profile() {
 
           <button
             className={styles.editBtn}
-            onClick={() => router.push(`/users/${id}/edit`)}
+            onClick={() => router.push(`/users/edit`)}
           >
             프로필 수정
           </button>

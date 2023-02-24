@@ -1,4 +1,4 @@
-import { getQnaPost } from "@/api/qna";
+import { getQnaPost } from "@/api/qna/question";
 import Seo from "@/components/Seo";
 import useUser from "@/lib/user";
 import { useQuery } from "@tanstack/react-query";

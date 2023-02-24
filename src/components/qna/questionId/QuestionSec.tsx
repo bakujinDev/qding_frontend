@@ -13,7 +13,8 @@ import {
   IEditQuestionComment,
   IPostQuestionComment,
   postQuestionComment,
-} from "@/api/qna";
+  voteQuestion,
+} from "@/api/qna/question";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddComment from "@/components/common/AddComment";
 import { commentRuleList } from "@/lib/forum";
@@ -23,6 +24,7 @@ import useUser from "@/lib/user";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { AppState } from "@/store/store";
+import { toast } from "react-toastify";
 
 interface IProps {
   questionId: string;
@@ -39,6 +41,16 @@ export default function QuestionSec({ questionId, data }: IProps) {
   const commentForm = useForm<IPostQuestionComment>({
     defaultValues: {
       questionId: `${questionId}`,
+    },
+  });
+
+  const voteMutation = useMutation(voteQuestion, {
+    onSuccess: (res) => {
+      console.log(res.data);
+      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+    },
+    onError: (err:any) => {
+      toast(err.response.data.detail);
     },
   });
 
@@ -107,7 +119,9 @@ export default function QuestionSec({ questionId, data }: IProps) {
             className={`${styles.upBtn} ${styles.voteBtn} ${
               data.is_voted === "plus" ? styles.on : ""
             }`}
-            onClick={() => {}}
+            onClick={() =>
+              voteMutation.mutate({ questionId, vote_type: "plus" })
+            }
           >
             <ThumbUpAltIcon />
           </button>
@@ -115,8 +129,12 @@ export default function QuestionSec({ questionId, data }: IProps) {
           <p>{data.votes}</p>
 
           <button
-            className={`${styles.downBtn} ${styles.voteBtn}`}
-            onClick={() => {}}
+            className={`${styles.downBtn} ${styles.voteBtn} ${
+              data.is_voted === "minus" ? styles.on : ""
+            }`}
+            onClick={() =>
+              voteMutation.mutate({ questionId, vote_type: "minus" })
+            }
           >
             <ThumbDownAltIcon />
           </button>

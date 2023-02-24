@@ -17,7 +17,7 @@ export default function ProfileIndex() {
         <section className={styles.innerSec}>
           <Profile />
 
-          <Career />
+          {/* <Career /> */}
 
           <TagLank />
 

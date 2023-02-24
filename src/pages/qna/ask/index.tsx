@@ -1,4 +1,4 @@
-import { IPostQuestion, postQuestion } from "@/api/qna";
+import { IPostQuestion, postQuestion } from "@/api/qna/question";
 import styles from "./ask.module.scss";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";

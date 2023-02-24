@@ -1,4 +1,4 @@
-import { getQnaList } from "@/api/qna";
+import { getQnaList } from "@/api/qna/question";
 import { timeDifference } from "@/lib/time";
 import { setLoginPopup } from "@/store/reducer/commonReducer";
 import styles from "./index.module.scss";

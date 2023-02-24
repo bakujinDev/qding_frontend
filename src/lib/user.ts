@@ -11,7 +11,7 @@ export default function useUser() {
   const { isLoading, data, isError } = useQuery(["me"], getMe, {
     retry: false,
     onSuccess: (res) => {
-      console.log(res);
+      console.log("me", res);
       dispatch(setUserInfo(res));
     },
     onError: (err: any) => {
@@ -23,7 +23,8 @@ export default function useUser() {
   });
 
   const refreshTokenMutation = useMutation(refreshToken, {
-    onSuccess: () => {
+    onSuccess: (res) => {
+      console.log("refetch", res);
       queryClient.refetchQueries(["me"]);
     },
     onError: () => {
