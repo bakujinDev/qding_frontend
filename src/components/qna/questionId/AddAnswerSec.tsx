@@ -54,13 +54,15 @@ export default function AddAnswerSec({ questionId }: IProps) {
   const postAnswerMutation = useMutation(postAnswer, {
     onSuccess: (res) => {
       console.log(res);
-      reset;
+      reset();
       queryClient.refetchQueries(["postQuery", `${questionId}`]);
     },
   });
 
   async function uploadImgFile() {
+    console.log("a");
     if (!(content && content.ops)) return;
+    console.log("b");
 
     let ops = content.ops;
 
@@ -78,6 +80,7 @@ export default function AddAnswerSec({ questionId }: IProps) {
   }
 
   async function onSubmit() {
+    console.log('d')
     await uploadImgFile();
     let content = watch("content");
     postAnswerMutation.mutate({ questionId: `${questionId}`, content });
@@ -105,7 +108,9 @@ export default function AddAnswerSec({ questionId }: IProps) {
           }}
         />
 
-        <button className={styles.postBtn}>답변 남기기</button>
+        <button type="submit" className={styles.postBtn}>
+          답변 남기기
+        </button>
       </form>
     </section>
   );

@@ -11,6 +11,14 @@ export const postAnswer = ({ questionId, content }: IPostAnsewr) =>
     .post(`qnas/questions/${questionId}/answers`, { content })
     .then((res) => res.data);
 
+export interface IVoteQuestion {
+  answerId: string;
+  vote_type: "plus" | "minus";
+}
+
+export const voteAnswer = ({ answerId, vote_type }: IVoteQuestion) =>
+  apiInstance.post(`qnas/answers/${answerId}/vote`, { vote_type });
+
 export interface IPostAnswerComment {
   answerId: string;
   content: string;

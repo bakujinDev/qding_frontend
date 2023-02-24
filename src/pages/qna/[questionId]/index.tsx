@@ -33,7 +33,7 @@ export default function QnaPosts() {
     if (!answer) return;
 
     const ansewrPos = answer.getBoundingClientRect();
-    window.scrollTo({top: ansewrPos.top - 60,behavior:'smooth'});
+    window.scrollTo({ top: ansewrPos.top - 60, behavior: "smooth" });
   }, [postQuery]);
 
   return postQuery.data ? (
@@ -44,9 +44,15 @@ export default function QnaPosts() {
         <QuestionSec questionId={`${questionId}`} data={postQuery.data} />
 
         {postQuery.data.answers
-          ? postQuery.data.answers.map((answer: any, i: number) => (
-              <AnswerSec questionId={`${questionId}`} data={answer} key={i} />
-            ))
+          ? postQuery.data.answers
+              .sort((a: any, b: any) => {
+                if (a.votes > b.votes) return -1;
+                if (a.votes === b.votes) return 0;
+                if (a.votes < b.votes) return 1;
+              })
+              .map((answer: any, i: number) => (
+                <AnswerSec questionId={`${questionId}`} data={answer} key={i} />
+              ))
           : null}
 
         <AddAnswerSec questionId={`${questionId}`} />

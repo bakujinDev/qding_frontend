@@ -20,7 +20,6 @@ import AddComment from "@/components/common/AddComment";
 import { commentRuleList } from "@/lib/forum";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
-import useUser from "@/lib/user";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { AppState } from "@/store/store";
@@ -49,7 +48,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
       console.log(res.data);
       queryClient.refetchQueries(["postQuery", `${questionId}`]);
     },
-    onError: (err:any) => {
+    onError: (err: any) => {
       toast(err.response.data.detail);
     },
   });
@@ -117,7 +116,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
         <div className={styles.utilBox}>
           <button
             className={`${styles.upBtn} ${styles.voteBtn} ${
-              data.is_voted === "plus" ? styles.on : ""
+              data.is_question_voted === "plus" ? styles.on : ""
             }`}
             onClick={() =>
               voteMutation.mutate({ questionId, vote_type: "plus" })
@@ -130,7 +129,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
 
           <button
             className={`${styles.downBtn} ${styles.voteBtn} ${
-              data.is_voted === "minus" ? styles.on : ""
+              data.is_question_voted === "minus" ? styles.on : ""
             }`}
             onClick={() =>
               voteMutation.mutate({ questionId, vote_type: "minus" })

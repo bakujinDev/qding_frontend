@@ -13,6 +13,7 @@ import {
   deleteAnswerComment,
   editAnswerComment,
   IEditAnswerComment,
+  voteAnswer,
 } from "@/api/qna/answer";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddComment from "@/components/common/AddComment";
@@ -21,6 +22,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import { useSelector } from "react-redux";
 import { AppState } from "@/store/store";
+import { toast } from "react-toastify";
 
 interface IProps {
   questionId: string;
@@ -36,6 +38,16 @@ export default function AnswerSec({ questionId, data }: IProps) {
   const commentForm = useForm<IPostAnswerComment>({
     defaultValues: {
       answerId: `${data.pk}`,
+    },
+  });
+
+  const voteMutation = useMutation(voteAnswer, {
+    onSuccess: (res) => {
+      console.log(res.data);
+      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+    },
+    onError: (err: any) => {
+      toast(err.response.data.detail);
     },
   });
 
@@ -84,8 +96,12 @@ export default function AnswerSec({ questionId, data }: IProps) {
       <article className={styles.contArea}>
         <div className={styles.utilBox}>
           <button
-            className={`${styles.upBtn} ${styles.voteBtn}`}
-            onClick={() => {}}
+            className={`${styles.upBtn} ${styles.voteBtn} ${
+              data.is_answer_voted === "plus" ? styles.on : ""
+            }`}
+            onClick={() =>
+              voteMutation.mutate({ answerId: data.pk, vote_type: "plus" })
+            }
           >
             <ThumbUpAltIcon />
           </button>
@@ -93,8 +109,12 @@ export default function AnswerSec({ questionId, data }: IProps) {
           <p>{data.votes}</p>
 
           <button
-            className={`${styles.downBtn} ${styles.voteBtn}`}
-            onClick={() => {}}
+            className={`${styles.downBtn} ${styles.voteBtn} ${
+              data.is_answer_voted === "minus" ? styles.on : ""
+            }`}
+            onClick={() =>
+              voteMutation.mutate({ answerId: data.pk, vote_type: "minus" })
+            }
           >
             <ThumbDownAltIcon />
           </button>

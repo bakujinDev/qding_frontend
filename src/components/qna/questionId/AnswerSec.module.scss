@@ -35,6 +35,12 @@
             color: $Primary1;
           }
         }
+
+        &.on {
+          svg {
+            color: $Primary1;
+          }
+        }
       }
     }
 

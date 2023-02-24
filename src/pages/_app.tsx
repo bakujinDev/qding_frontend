@@ -8,6 +8,7 @@ import "@/styles/ReactToastify.scss";
 
 export default function App({ Component, pageProps }: AppProps) {
   const client = new QueryClient();
+  
 
   return (
     <Provider store={store}>
