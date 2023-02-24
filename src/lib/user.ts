@@ -11,6 +11,7 @@ export default function useUser() {
   const { isLoading, data, isError } = useQuery(["me"], getMe, {
     retry: false,
     onSuccess: (res) => {
+      console.log(res);
       dispatch(setUserInfo(res));
     },
     onError: (err: any) => {

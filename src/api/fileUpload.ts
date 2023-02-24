@@ -3,7 +3,7 @@ import { apiInstance } from "./instance";
 
 export interface IGetUploadURL {
   file: File;
-  editorSrc: string;
+  editorSrc?: string;
 }
 
 export interface IUploadURLResponse {
@@ -16,7 +16,7 @@ export const getUploadURL = (data: IGetUploadURL) =>
 export interface IUploadImageVariables {
   file: File;
   uploadURL: string;
-  editorSrc: string;
+  editorSrc?: string;
 }
 
 export const uploadImage = ({ file, uploadURL }: IUploadImageVariables) => {

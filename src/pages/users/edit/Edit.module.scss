@@ -69,12 +69,30 @@
         }
 
         .submitBtn {
-          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 6px;
           height: 40px;
-          font-weight: 500;
+          border-radius: 8px;
           color: #fff;
           background: $Primary1;
-          border-radius: 8px;
+
+          &:disabled {
+            background: $Primary2;
+
+            .spinner {
+              display: block;
+            }
+          }
+
+          .spinner {
+            display: none;
+
+            width: 24px;
+            height: 24px;
+            color: #fff;
+          }
         }
       }
     }

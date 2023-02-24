@@ -13,6 +13,14 @@ export const getUserProfile = ({
   return apiInstance.get(`users/profile/@${id}`).then((res) => res.data);
 };
 
+export interface IEditProfileForm {
+  avatar: File;
+  name: string;
+  introduce: string;
+  blog: string;
+  github: string;
+}
+
 export interface IEditProfile {
   avatar: string;
   name: string;

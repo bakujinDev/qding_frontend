@@ -18,8 +18,8 @@ import useUser from "@/lib/user";
 const itim = Itim({ weight: "400", preload: false });
 
 export default function DefaultHeader() {
-  const dispatch = useDispatch();
   useUser();
+  const dispatch = useDispatch();
   const user = useSelector((state: AppState) => state.common.userInfo);
   const emailAuthPopup = useSelector(
     (state: AppState) => state.common.emailAuthPopup

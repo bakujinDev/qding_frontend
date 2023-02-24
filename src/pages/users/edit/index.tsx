@@ -1,6 +1,6 @@
-import { editProfile, IEditProfile } from "@/api/user";
+import { editProfile, IEditProfileForm } from "@/api/user";
 import { AppState } from "@/store/store";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { getUserProfile } from "@/api/user";
 import { useRef, useState } from "react";
@@ -9,50 +9,85 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import styles from "./Edit.module.scss";
 import { mib2 } from "@/lib/setting";
+import {
+  getUploadURL,
+  IGetUploadURL,
+  IUploadImageVariables,
+  IUploadURLResponse,
+  uploadImage,
+} from "@/api/fileUpload";
+import U_spinner from "@/asset/util/U_spinner.svg";
+import useUser from "@/lib/user";
 
 export default function Edit() {
+  useUser();
   const router = useRouter();
-  const imgRef = useRef<any>();
+  const imgInputRef = useRef<any>();
+  const imgRef = useRef<string>();
+  const queryClient = useQueryClient();
 
   const [previewImg, setPreviewImg] = useState<string>();
 
   const user = useSelector((state: AppState) => state.common.userInfo);
 
   const initData = useQuery(["user", user?.pk], getUserProfile, {
+    retry: false,
     onSuccess: (res) => console.log(res),
   });
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
     watch,
     setValue,
-  } = useForm<IEditProfile>({});
+  } = useForm<IEditProfileForm>({});
 
-  const mutation = useMutation(editProfile, {
+  const editMutation = useMutation(editProfile, {
     onSuccess: (res) => {
       reset();
+      queryClient.refetchQueries(["me"]);
       router.push(`/users/${user?.pk}`);
     },
   });
 
-  const onSubmit = ({
+  const getUploadURLMutation = useMutation(getUploadURL, {
+    onSuccess: async (data: IUploadURLResponse, props: IGetUploadURL) => {
+      await uploadImageMutation.mutateAsync({
+        file: props.file,
+        uploadURL: data.uploadURL,
+      });
+    },
+  });
+
+  const uploadImageMutation = useMutation(uploadImage, {
+    onSuccess: ({ result }: any, props: IUploadImageVariables) => {
+      imgRef.current = result.variants[0];
+    },
+  });
+
+  async function onSubmit({
     avatar,
     name,
     introduce,
     blog,
     github,
-  }: IEditProfile) => {
-    mutation.mutate({
-      avatar,
+  }: IEditProfileForm) {
+    if (avatar) {
+      await getUploadURLMutation.mutateAsync({
+        file: avatar,
+      });
+    }
+
+    editMutation.mutate({
+      avatar: imgRef.current || "",
       name,
       introduce,
       blog,
       github,
     });
-  };
+  }
 
   function onChangeProfImg(e: any) {
     const file = e.target.files[0];
@@ -87,7 +122,7 @@ export default function Edit() {
                 <button
                   type="button"
                   className={styles.editProfileBtn}
-                  onClick={() => imgRef.current.click()}
+                  onClick={() => imgInputRef.current.click()}
                 >
                   <img src={previewImg || initData.data?.avatar} alt="" />
                 </button>
@@ -97,7 +132,7 @@ export default function Edit() {
                   onChange={(e) => onChangeProfImg(e)}
                   type="file"
                   accept="image/*"
-                  ref={imgRef}
+                  ref={imgInputRef}
                 />
               </div>
             </li>
@@ -164,14 +199,20 @@ export default function Edit() {
           </ul>
 
           <div className={styles.submitBar}>
-            {mutation.isError ? (
+            {editMutation.isError ? (
               <p className={styles.errorText}>
                 프로필 수정 중 에러가 발생하였습니다.
               </p>
             ) : null}
 
-            <button className={styles.submitBtn} type="submit">
-              수정
+            <button
+              type="submit"
+              className={styles.submitBtn}
+              disabled={isSubmitting}
+            >
+              <p>수정하기</p>
+
+              <U_spinner className={styles.spinner} />
             </button>
           </div>
         </form>

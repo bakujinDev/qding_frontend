@@ -55,7 +55,7 @@ export default function Ask() {
       const uploadSrc = result.variants[0];
 
       let content = watch("content");
-      content = content.replace(props.editorSrc, uploadSrc);
+      content = content.replace(props.editorSrc || "", uploadSrc);
       setValue("content", content);
     },
   });
