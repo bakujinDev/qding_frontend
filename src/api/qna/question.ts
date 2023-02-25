@@ -84,3 +84,13 @@ export const deleteQuestionComment = ({ commentId }: IDeleteQuestionComment) =>
   apiInstance
     .delete(`qnas/questions/comments/${commentId}`)
     .then((res) => res.data);
+
+export interface IChoiceAnswer {
+  questionId: string;
+  answerId: string;
+}
+
+export const choiceAnswer = ({ questionId, answerId }: IChoiceAnswer) =>
+  apiInstance
+    .post(`qnas/questions/${questionId}/choice_answer`, { answerId })
+    .then((res) => res.data);

@@ -60,9 +60,7 @@ export default function AddAnswerSec({ questionId }: IProps) {
   });
 
   async function uploadImgFile() {
-    console.log("a");
     if (!(content && content.ops)) return;
-    console.log("b");
 
     let ops = content.ops;
 
@@ -80,7 +78,6 @@ export default function AddAnswerSec({ questionId }: IProps) {
   }
 
   async function onSubmit() {
-    console.log('d')
     await uploadImgFile();
     let content = watch("content");
     postAnswerMutation.mutate({ questionId: `${questionId}`, content });

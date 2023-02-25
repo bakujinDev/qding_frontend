@@ -51,7 +51,12 @@ export default function QnaPosts() {
                 if (a.votes < b.votes) return 1;
               })
               .map((answer: any, i: number) => (
-                <AnswerSec questionId={`${questionId}`} data={answer} key={i} />
+                <AnswerSec
+                  questionId={`${questionId}`}
+                  data={answer}
+                  isQuestionOwner={postQuery.data?.is_question_owner}
+                  key={i}
+                />
               ))
           : null}
 

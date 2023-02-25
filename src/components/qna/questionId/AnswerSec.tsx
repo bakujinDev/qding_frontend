@@ -23,13 +23,20 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useSelector } from "react-redux";
 import { AppState } from "@/store/store";
 import { toast } from "react-toastify";
+import CheckIcon from "@mui/icons-material/Check";
+import { choiceAnswer } from "@/api/qna/question";
 
 interface IProps {
   questionId: string;
   data: any;
+  isQuestionOwner: boolean | undefined;
 }
 
-export default function AnswerSec({ questionId, data }: IProps) {
+export default function AnswerSec({
+  questionId,
+  data,
+  isQuestionOwner,
+}: IProps) {
   const queryClient = useQueryClient();
   const user = useSelector((state: AppState) => state.common.userInfo);
 
@@ -48,6 +55,13 @@ export default function AnswerSec({ questionId, data }: IProps) {
     },
     onError: (err: any) => {
       toast(err.response.data.detail);
+    },
+  });
+
+  const choiceAnswerMutation = useMutation(choiceAnswer, {
+    onSuccess: (res) => {
+      console.log(res);
+      queryClient.refetchQueries(["postQuery", `${questionId}`]);
     },
   });
 
@@ -118,6 +132,17 @@ export default function AnswerSec({ questionId, data }: IProps) {
           >
             <ThumbDownAltIcon />
           </button>
+
+          {isQuestionOwner ? (
+            <button
+              className={styles.choiceBtn}
+              onClick={() =>
+                choiceAnswerMutation.mutate({ questionId, answerId: data.pk })
+              }
+            >
+              <CheckIcon />
+            </button>
+          ) : null}
 
           <button className={styles.historyBtn} onClick={() => {}}>
             <HistoryIcon />
