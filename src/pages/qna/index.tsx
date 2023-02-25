@@ -14,6 +14,7 @@ import { getLocalStorage } from "@/lib/localStorage";
 import { AppState } from "@/store/store";
 import { deleteNotification, getNotification } from "@/api/notification";
 import CloseIcon from "@mui/icons-material/Close";
+import CheckIcon from "@mui/icons-material/Check";
 
 export default function Qna() {
   const router = useRouter();
@@ -26,10 +27,9 @@ export default function Qna() {
   const qnaList = useQuery(
     ["qnaList", `${router.query.page || 1}`],
     getQnaList,
-    {}
+    { onSuccess: (res) => console.log(res) }
   );
   const notificationList = useQuery(["notifications"], getNotification, {
-    retry: false,
     onSuccess: (res) => console.log(res),
   });
 
@@ -91,7 +91,10 @@ export default function Qna() {
                         </li>
 
                         <li className={styles.views}>
-                          <p className={styles.key}>답변수</p>
+                          <div className={styles.key}>
+                            {v.select_answer ? <CheckIcon /> : null}
+                            <p>답변수</p>
+                          </div>
                           <p className={styles.value}>{v.answers_count}</p>
                         </li>
 
@@ -154,7 +157,7 @@ export default function Qna() {
             <summary>알림</summary>
 
             <div className={styles.valueBox}>
-              {notificationList.data ? (
+              {notificationList.data && notificationList.data.length > 0 ? (
                 <ul className={styles.valueList}>
                   {notificationList.data.map((v: any, i: number) => (
                     <li key={i} onClick={() => onClickNotification(v)}>

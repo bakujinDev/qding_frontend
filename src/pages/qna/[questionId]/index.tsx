@@ -54,7 +54,10 @@ export default function QnaPosts() {
                 <AnswerSec
                   questionId={`${questionId}`}
                   data={answer}
-                  isQuestionOwner={postQuery.data?.is_question_owner}
+                  canSelectAnswer={
+                    postQuery.data?.is_question_owner &&
+                    !postQuery.data?.select_answer
+                  }
                   key={i}
                 />
               ))

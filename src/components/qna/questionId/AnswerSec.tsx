@@ -29,13 +29,13 @@ import { choiceAnswer } from "@/api/qna/question";
 interface IProps {
   questionId: string;
   data: any;
-  isQuestionOwner: boolean | undefined;
+  canSelectAnswer: boolean | undefined;
 }
 
 export default function AnswerSec({
   questionId,
   data,
-  isQuestionOwner,
+  canSelectAnswer,
 }: IProps) {
   const queryClient = useQueryClient();
   const user = useSelector((state: AppState) => state.common.userInfo);
@@ -63,6 +63,7 @@ export default function AnswerSec({
       console.log(res);
       queryClient.refetchQueries(["postQuery", `${questionId}`]);
     },
+    onError: (err: any) => toast(err?.response?.data),
   });
 
   const editCommentMutation = useMutation(editAnswerComment, {
@@ -133,7 +134,7 @@ export default function AnswerSec({
             <ThumbDownAltIcon />
           </button>
 
-          {isQuestionOwner ? (
+          {canSelectAnswer ? (
             <button
               className={styles.choiceBtn}
               onClick={() =>
@@ -142,6 +143,12 @@ export default function AnswerSec({
             >
               <CheckIcon />
             </button>
+          ) : null}
+
+          {data.is_answer_selected ? (
+            <span className={styles.selected}>
+              <CheckIcon />
+            </span>
           ) : null}
 
           <button className={styles.historyBtn} onClick={() => {}}>

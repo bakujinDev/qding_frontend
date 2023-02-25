@@ -58,7 +58,17 @@
               line-height: 20px;
 
               .key {
-                width: 36px;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 4px;
+                width: 56px;
+
+                svg {
+                  width: 20px;
+                  height: 20px;
+                  color: $Green1;
+                }
               }
 
               .value {
