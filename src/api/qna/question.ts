@@ -27,7 +27,7 @@ export const getQnaPost = ({
   setViewLocal({ name: `${category}_${id}`, value: 1 });
 
   return apiInstance
-    .get(`qnas/questions/${id}`, { params: { viewLocalItem } })
+    .get(`qnas/questions/${id}/post`, { params: { viewLocalItem } })
     .then((res) => res.data);
 };
 

@@ -17,7 +17,7 @@ import {
 } from "@/api/qna/answer";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddComment from "@/components/common/AddComment";
-import { commentRuleList, extractContent, onClickShareBtn } from "@/lib/forum";
+import { commentRuleList, onClickShareBtn } from "@/lib/forum";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import { useSelector } from "react-redux";
@@ -26,6 +26,7 @@ import { toast } from "react-toastify";
 import CheckIcon from "@mui/icons-material/Check";
 import { choiceAnswer } from "@/api/qna/question";
 import { subscribeNotification } from "@/api/notification";
+import { useRouter } from "next/router";
 
 interface IQuestion {
   id: string | string[];
@@ -39,6 +40,7 @@ interface IProps {
 }
 
 export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const user = useSelector((state: AppState) => state.common.userInfo);
 
@@ -70,7 +72,11 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
 
   const subscribeNotificationMutation = useMutation(subscribeNotification, {
     onSuccess: (res) => {
-      console.log(res);
+      console.log(res.message);
+      if (res.message === "create") toast("알림 목록에 추가되었어요");
+      else if (res.message === "remove") toast("알림 목록에 제외되었어요");
+
+      queryClient.refetchQueries(["postQuery", `${question.id}`]);
     },
   });
 
@@ -156,7 +162,7 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
             </button>
           ) : null}
 
-          {data.is_answer_selected ? (
+          {data.is_selected ? (
             <span className={styles.selected}>
               <CheckIcon />
             </span>
@@ -184,12 +190,17 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
           <div className={styles.bottomBar}>
             <div className={styles.utilBar}>
               <div className={styles.btnBox}>
-                <button className={styles.editBtn} onClick={() => {}}>
+                <button
+                  className={styles.editBtn}
+                  onClick={() => router.push(`/qna/${question.id}/edit`)}
+                >
                   수정하기
                 </button>
 
                 <button
-                  className={styles.followBtn}
+                  className={`${styles.followBtn} ${
+                    data.is_answer_described ? styles.on : ""
+                  }`}
                   onClick={() =>
                     subscribeNotificationMutation.mutate({
                       type: "answer",
@@ -197,7 +208,7 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
                     })
                   }
                 >
-                  알람받기
+                  알림받기
                 </button>
 
                 <button

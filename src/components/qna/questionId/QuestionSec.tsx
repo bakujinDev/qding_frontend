@@ -176,7 +176,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
                 </button>
 
                 <button className={styles.followBtn} onClick={() => {}}>
-                  알람받기
+                  알림받기
                 </button>
 
                 <button
