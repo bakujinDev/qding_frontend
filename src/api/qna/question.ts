@@ -52,6 +52,20 @@ export const postQuestion = ({ title, content, tag }: IPostQuestion) =>
     .post("qnas/questions", { title, content, tag })
     .then((res) => res.data);
 
+export interface IEditQuestion extends IPostQuestion {
+  questionId: string | string[];
+}
+
+export const editQuestion = ({
+  questionId,
+  title,
+  content,
+  tag,
+}: IEditQuestion) =>
+  apiInstance
+    .put(`qnas/questions/${questionId}`, { title, content, tag })
+    .then((res) => res.data);
+
 export interface IVoteQuestion {
   questionId: string;
   vote_type: "plus" | "minus";

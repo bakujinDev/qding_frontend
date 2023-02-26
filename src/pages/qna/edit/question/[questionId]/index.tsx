@@ -1,4 +1,5 @@
 import {
+  editQuestion,
   getQnaPost,
   getQuestion,
   IPostQuestion,
@@ -82,7 +83,7 @@ export default function EditPost() {
     },
   });
 
-  const postQuestionMutation = useMutation(postQuestion, {
+  const editQuestionMutation = useMutation(editQuestion, {
     onSuccess: (res) => {
       router.push(`/qna/${res.pk}`);
     },
@@ -118,7 +119,9 @@ export default function EditPost() {
   async function onSubmit({ title, content, tag }: IPostQuestion) {
     await uploadImgFile();
     content = watch("content");
-    postQuestionMutation.mutate({ title, content, tag });
+
+    if (!questionId) return;
+    editQuestionMutation.mutate({ questionId, title, content, tag });
   }
 
   useEffect(() => {
@@ -363,11 +366,11 @@ export default function EditPost() {
             <article className={styles.btnArea}>
               <button
                 className={styles.postBtn}
-                disabled={postQuestionMutation.isLoading}
+                disabled={editQuestionMutation.isLoading}
               >
-                <p>작성하기</p>
+                <p>수정하기</p>
 
-                {postQuestionMutation.isLoading ? (
+                {editQuestionMutation.isLoading ? (
                   <U_spinner className={styles.spinner} />
                 ) : null}
               </button>
