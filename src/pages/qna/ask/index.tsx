@@ -23,6 +23,7 @@ import U_spinner from "@/asset/util/U_spinner.svg";
 export default function Ask() {
   const router = useRouter();
 
+  const [focus, setFocus] = useState<"title" | "content" | "tag">("title");
   const [contentObj, setContentObj] = useState<any>();
   const [tagSearch, setTagSearch] = useState<string>("");
   const [tagSearchPopup, setTagSearchPopup] = useState<boolean>(false);
@@ -125,8 +126,15 @@ export default function Ask() {
       <Seo title="질문하기" />
       <main className={styles.ask}>
         <form className={styles.formBox} onSubmit={handleSubmit(onSubmit)}>
-          <section className={styles.contSec}>
-            <article className={styles.contArea}>
+          <section
+            className={`${styles.contSec} ${
+              focus === "title" ? styles.focus : ""
+            }`}
+          >
+            <article
+              className={styles.contArea}
+              onFocus={() => setFocus("title")}
+            >
               <div className={styles.keyBox}>
                 <h1 className={styles.key}>제목</h1>
 
@@ -169,8 +177,15 @@ export default function Ask() {
             </article>
           </section>
 
-          <section className={styles.contSec}>
-            <article className={styles.contArea}>
+          <section
+            className={`${styles.contSec} ${
+              focus === "content" ? styles.focus : ""
+            }`}
+          >
+            <article
+              className={styles.contArea}
+              onFocus={() => setFocus("content")}
+            >
               <div className={styles.keyBox}>
                 <h1 className={styles.key}>내용</h1>
 
@@ -216,8 +231,15 @@ export default function Ask() {
             </article>
           </section>
 
-          <section className={styles.contSec}>
-            <article className={styles.contArea}>
+          <section
+            className={`${styles.contSec} ${
+              focus === "tag" ? styles.focus : ""
+            }`}
+          >
+            <article
+              className={styles.contArea}
+              onFocus={() => setFocus("tag")}
+            >
               <div className={styles.keyBox}>
                 <h1 className={styles.key}>태그</h1>
 

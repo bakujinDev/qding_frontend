@@ -1,10 +1,4 @@
-import {
-  editQuestion,
-  getQnaPost,
-  getQuestion,
-  IPostQuestion,
-  postQuestion,
-} from "@/api/qna/question";
+import { editQuestion, getQuestion, IPostQuestion } from "@/api/qna/question";
 import styles from "./editQuestion.module.scss";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
@@ -31,6 +25,7 @@ export default function EditPost() {
 
   const { questionId } = router.query;
 
+  const [focus, setFocus] = useState<"title" | "content" | "tag">("title");
   const [contentObj, setContentObj] = useState<any>();
   const [tagSearch, setTagSearch] = useState<string>("");
   const [tagSearchPopup, setTagSearchPopup] = useState<boolean>(false);
@@ -150,8 +145,15 @@ export default function EditPost() {
       <Seo title="질문하기" />
       <main className={styles.ask}>
         <form className={styles.formBox} onSubmit={handleSubmit(onSubmit)}>
-          <section className={styles.contSec}>
-            <article className={styles.contArea}>
+          <section
+            className={`${styles.contSec} ${
+              focus === "title" ? styles.focus : ""
+            }`}
+          >
+            <article
+              className={styles.contArea}
+              onFocus={() => setFocus("title")}
+            >
               <div className={styles.keyBox}>
                 <h1 className={styles.key}>제목</h1>
 
@@ -194,8 +196,15 @@ export default function EditPost() {
             </article>
           </section>
 
-          <section className={styles.contSec}>
-            <article className={styles.contArea}>
+          <section
+            className={`${styles.contSec} ${
+              focus === "content" ? styles.focus : ""
+            }`}
+          >
+            <article
+              className={styles.contArea}
+              onFocus={() => setFocus("content")}
+            >
               <div className={styles.keyBox}>
                 <h1 className={styles.key}>내용</h1>
 
@@ -241,8 +250,15 @@ export default function EditPost() {
             </article>
           </section>
 
-          <section className={styles.contSec}>
-            <article className={styles.contArea}>
+          <section
+            className={`${styles.contSec} ${
+              focus === "tag" ? styles.focus : ""
+            }`}
+          >
+            <article
+              className={styles.contArea}
+              onFocus={() => setFocus("tag")}
+            >
               <div className={styles.keyBox}>
                 <h1 className={styles.key}>태그</h1>
 
