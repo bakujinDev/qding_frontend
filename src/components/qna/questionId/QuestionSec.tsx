@@ -170,7 +170,9 @@ export default function QuestionSec({ questionId, data }: IProps) {
               <div className={styles.btnBox}>
                 <button
                   className={styles.editBtn}
-                  onClick={() => router.push(`/qna/${questionId}/edit`)}
+                  onClick={() =>
+                    router.push(`/qna/edit/question/${questionId}`)
+                  }
                 >
                   수정하기
                 </button>

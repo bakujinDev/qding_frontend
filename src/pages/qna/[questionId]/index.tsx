@@ -15,7 +15,7 @@ export default function QnaPosts() {
 
   const { questionId, answerId } = router.query;
 
-  const postQuery = useQuery(["postQuery", `${questionId}`], getQnaPost, {
+  const postQuery = useQuery(["post", `${questionId}`], getQnaPost, {
     retry: false,
     onSuccess: (res) => {
       console.log(res);

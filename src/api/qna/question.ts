@@ -31,6 +31,16 @@ export const getQnaPost = ({
     .then((res) => res.data);
 };
 
+export const getQuestion = ({
+  queryKey,
+}: QueryFunctionContext<GetQnaPostQueryKey>) => {
+  const [category, id] = queryKey;
+
+  if (id === "undefined") return false;
+
+  return apiInstance.get(`qnas/questions/${id}`).then((res) => res.data);
+};
+
 export interface IPostQuestion {
   title: string;
   content: string;
