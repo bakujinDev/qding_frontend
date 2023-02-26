@@ -168,13 +168,13 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
             </span>
           ) : null}
 
-          <button className={styles.historyBtn} onClick={() => {}}>
+          {/* <button className={styles.historyBtn} onClick={() => {}}>
             <HistoryIcon />
           </button>
 
           <button className={styles.flagBtn} onClick={() => {}}>
             <FlagIcon />
-          </button>
+          </button> */}
         </div>
 
         <div className={styles.contCont}>

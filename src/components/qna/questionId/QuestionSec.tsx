@@ -149,13 +149,13 @@ export default function QuestionSec({ questionId, data }: IProps) {
             <ThumbDownAltIcon />
           </button>
 
-          <button className={styles.historyBtn} onClick={() => {}}>
+          {/* <button className={styles.historyBtn} onClick={() => {}}>
             <HistoryIcon />
           </button>
 
           <button className={styles.flagBtn} onClick={() => {}}>
             <FlagIcon />
-          </button>
+          </button> */}
         </div>
 
         <div className={styles.contCont}>

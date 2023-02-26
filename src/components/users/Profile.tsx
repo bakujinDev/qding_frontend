@@ -42,9 +42,9 @@ export default function Profile() {
         </div>
 
         <div className={styles.utilCont}>
-          <button className={styles.msgBtn} onClick={() => {}}>
+          {/* <button className={styles.msgBtn} onClick={() => {}}>
             메세지 보내기
-          </button>
+          </button> */}
 
           <ul className={styles.urlList}>
             {user.data?.blog ? (
