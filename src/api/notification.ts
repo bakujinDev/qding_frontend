@@ -4,7 +4,7 @@ export const getNotification = () =>
   apiInstance.get("users/notification").then((res) => res.data);
 
 export interface ISubscribeNotification {
-  type: string;
+  type: "question" | "answer";
   id: number;
 }
 

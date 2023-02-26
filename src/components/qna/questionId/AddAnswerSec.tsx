@@ -55,7 +55,7 @@ export default function AddAnswerSec({ questionId }: IProps) {
     onSuccess: (res) => {
       console.log(res);
       reset();
-      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+      queryClient.refetchQueries(["post", `${questionId}`]);
     },
   });
 

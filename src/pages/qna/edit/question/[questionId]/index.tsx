@@ -19,11 +19,15 @@ import { base64toFile } from "@/lib/textEditor";
 import { extractContent } from "@/lib/forum";
 import { useRouter } from "next/router";
 import U_spinner from "@/asset/util/U_spinner.svg";
+import { useSelector } from "react-redux";
+import { AppState } from "@/store/store";
+import { toast } from "react-toastify";
 
 export default function EditPost() {
   const router = useRouter();
 
   const { questionId } = router.query;
+  const user = useSelector((state: AppState) => state.common.userInfo);
 
   const [focus, setFocus] = useState<"title" | "content" | "tag">("title");
   const [contentObj, setContentObj] = useState<any>();
@@ -47,6 +51,12 @@ export default function EditPost() {
     retry: false,
     onSuccess: (res) => {
       console.log(res);
+
+      // 작성자만 수정할 수 있는 현재방식에서만 쓰임
+      if (res.creator.id !== user.pk) {
+        toast("작성자만 수정할 수 있습니다");
+        router.push("/");
+      }
 
       setValue("title", res.title);
       setValue("content", res.content);

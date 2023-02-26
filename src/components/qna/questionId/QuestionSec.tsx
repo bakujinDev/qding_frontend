@@ -24,6 +24,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { AppState } from "@/store/store";
 import { toast } from "react-toastify";
+import { subscribeNotification } from "@/api/notification";
 
 interface IProps {
   questionId: string;
@@ -46,17 +47,27 @@ export default function QuestionSec({ questionId, data }: IProps) {
   const voteMutation = useMutation(voteQuestion, {
     onSuccess: (res) => {
       console.log(res.data);
-      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+      queryClient.refetchQueries(["post", `${questionId}`]);
     },
     onError: (err: any) => {
       toast(err.response.data.detail);
     },
   });
 
+  const subscribeNotificationMutation = useMutation(subscribeNotification, {
+    onSuccess: (res) => {
+      console.log(res.message);
+      if (res.message === "create") toast("알림 목록에 추가되었어요");
+      else if (res.message === "remove") toast("알림 목록에 제외되었어요");
+
+      queryClient.refetchQueries(["post", `${questionId}`]);
+    },
+  });
+
   const editCommentMutation = useMutation(editQuestionComment, {
     onSuccess: (res) => {
       commentForm.reset();
-      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+      queryClient.refetchQueries(["post", `${questionId}`]);
     },
   });
 
@@ -69,14 +80,14 @@ export default function QuestionSec({ questionId, data }: IProps) {
 
   const deleteCommentMutation = useMutation(deleteQuestionComment, {
     onSuccess: (res) => {
-      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+      queryClient.refetchQueries(["post", `${questionId}`]);
     },
   });
 
   const postCommentMutation = useMutation(postQuestionComment, {
     onSuccess: (res) => {
       commentForm.reset();
-      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+      queryClient.refetchQueries(["post", `${questionId}`]);
     },
   });
 
@@ -168,16 +179,28 @@ export default function QuestionSec({ questionId, data }: IProps) {
 
             <div className={styles.utilBar}>
               <div className={styles.btnBox}>
+                {data.creator.id === user.pk ? (
+                  <button
+                    className={styles.editBtn}
+                    onClick={() =>
+                      router.push(`/qna/edit/question/${questionId}`)
+                    }
+                  >
+                    수정하기
+                  </button>
+                ) : null}
+
                 <button
-                  className={styles.editBtn}
+                  className={`${styles.followBtn} ${
+                    data.is_question_described ? styles.on : ""
+                  }`}
                   onClick={() =>
-                    router.push(`/qna/edit/question/${questionId}`)
+                    subscribeNotificationMutation.mutate({
+                      type: "question",
+                      id: data.pk,
+                    })
                   }
                 >
-                  수정하기
-                </button>
-
-                <button className={styles.followBtn} onClick={() => {}}>
                   알림받기
                 </button>
 
