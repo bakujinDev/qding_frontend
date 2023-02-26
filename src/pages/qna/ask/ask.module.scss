@@ -140,7 +140,7 @@
       .noticeArea {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 20px;
         padding: 20px;
         background: #fff;
         border-radius: 20px;
@@ -150,7 +150,11 @@
         .keyBox {
           display: flex;
           flex-direction: column;
-          gap: 4px;
+          gap: 8px;
+
+          .key {
+            font-weight: 700;
+          }
 
           .explain {
             font-size: 14px;
@@ -158,13 +162,15 @@
         }
 
         .valueBox {
-          padding: 0 0 0 14px;
-
           .valueList {
             display: flex;
             flex-direction: column;
             gap: 4px;
             font-size: 14px;
+
+            li::before {
+              content: "- ";
+            }
           }
         }
       }

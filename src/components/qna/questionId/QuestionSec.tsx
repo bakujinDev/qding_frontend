@@ -179,7 +179,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
 
             <div className={styles.utilBar}>
               <div className={styles.btnBox}>
-                {data.creator.id === user.pk ? (
+                {data.creator.id === user?.pk ? (
                   <button
                     className={styles.editBtn}
                     onClick={() =>

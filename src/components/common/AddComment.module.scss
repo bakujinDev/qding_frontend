@@ -6,11 +6,11 @@
   .addModeBox {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
 
     &:focus-within {
       .ruleList {
-        display: block;
+        display: flex;
       }
     }
 
@@ -48,6 +48,8 @@
 
     .ruleList {
       display: none;
+      flex-direction: column;
+      gap: 4px;
 
       li {
         font-size: 12px;

@@ -190,12 +190,10 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
           <div className={styles.bottomBar}>
             <div className={styles.utilBar}>
               <div className={styles.btnBox}>
-                {data.creator.id === user.pk ? (
+                {data.creator.id === user?.pk ? (
                   <button
                     className={styles.editBtn}
-                    onClick={() =>
-                      router.push(`/qna/edit/answer/${question.id}`)
-                    }
+                    onClick={() => router.push(`/qna/edit/answer/${data.pk}`)}
                   >
                     수정하기
                   </button>
