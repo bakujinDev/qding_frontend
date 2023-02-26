@@ -17,7 +17,7 @@ import {
 } from "@/api/qna/answer";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddComment from "@/components/common/AddComment";
-import { commentRuleList } from "@/lib/forum";
+import { commentRuleList, extractContent, onClickShareBtn } from "@/lib/forum";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import { useSelector } from "react-redux";
@@ -25,18 +25,20 @@ import { AppState } from "@/store/store";
 import { toast } from "react-toastify";
 import CheckIcon from "@mui/icons-material/Check";
 import { choiceAnswer } from "@/api/qna/question";
+import { subscribeNotification } from "@/api/notification";
+
+interface IQuestion {
+  id: string | string[];
+  title: string;
+}
 
 interface IProps {
-  questionId: string;
+  question: IQuestion;
   data: any;
   canSelectAnswer: boolean | undefined;
 }
 
-export default function AnswerSec({
-  questionId,
-  data,
-  canSelectAnswer,
-}: IProps) {
+export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
   const queryClient = useQueryClient();
   const user = useSelector((state: AppState) => state.common.userInfo);
 
@@ -51,7 +53,7 @@ export default function AnswerSec({
   const voteMutation = useMutation(voteAnswer, {
     onSuccess: (res) => {
       console.log(res.data);
-      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+      queryClient.refetchQueries(["postQuery", `${question.id}`]);
     },
     onError: (err: any) => {
       toast(err.response.data.detail);
@@ -60,16 +62,22 @@ export default function AnswerSec({
 
   const choiceAnswerMutation = useMutation(choiceAnswer, {
     onSuccess: (res) => {
-      console.log(res);
-      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+      toast("답변 선택이 완료 되었어요");
+      queryClient.refetchQueries(["postQuery", `${question.id}`]);
     },
     onError: (err: any) => toast(err?.response?.data),
+  });
+
+  const subscribeNotificationMutation = useMutation(subscribeNotification, {
+    onSuccess: (res) => {
+      console.log(res);
+    },
   });
 
   const editCommentMutation = useMutation(editAnswerComment, {
     onSuccess: (res) => {
       commentForm.reset();
-      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+      queryClient.refetchQueries(["postQuery", `${question.id}`]);
     },
   });
 
@@ -82,14 +90,14 @@ export default function AnswerSec({
 
   const deleteCommentMutation = useMutation(deleteAnswerComment, {
     onSuccess: (res) => {
-      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+      queryClient.refetchQueries(["postQuery", `${question.id}`]);
     },
   });
 
   const postCommentMutation = useMutation(postAnswerComment, {
     onSuccess: (res) => {
       commentForm.reset();
-      queryClient.refetchQueries(["postQuery", `${questionId}`]);
+      queryClient.refetchQueries(["postQuery", `${question.id}`]);
     },
   });
 
@@ -138,7 +146,10 @@ export default function AnswerSec({
             <button
               className={styles.choiceBtn}
               onClick={() =>
-                choiceAnswerMutation.mutate({ questionId, answerId: data.pk })
+                choiceAnswerMutation.mutate({
+                  questionId: question.id,
+                  answerId: data.pk,
+                })
               }
             >
               <CheckIcon />
@@ -177,11 +188,26 @@ export default function AnswerSec({
                   수정하기
                 </button>
 
-                <button className={styles.followBtn} onClick={() => {}}>
+                <button
+                  className={styles.followBtn}
+                  onClick={() =>
+                    subscribeNotificationMutation.mutate({
+                      type: "answer",
+                      id: data.pk,
+                    })
+                  }
+                >
                   알람받기
                 </button>
 
-                <button className={styles.shareBtn} onClick={() => {}}>
+                <button
+                  className={styles.shareBtn}
+                  onClick={() =>
+                    onClickShareBtn(
+                      `${window.location.href}?answerId=${data.pk}`
+                    )
+                  }
+                >
                   공유하기
                 </button>
               </div>

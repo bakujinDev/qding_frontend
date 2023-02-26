@@ -1,6 +1,4 @@
-import useUser from "@/lib/user";
 import axios from "axios";
-import { useRouter } from "next/router";
 
 export const baseURL = "http://127.0.0.1:8000";
 

@@ -52,7 +52,10 @@ export default function QnaPosts() {
               })
               .map((answer: any, i: number) => (
                 <AnswerSec
-                  questionId={`${questionId}`}
+                  question={{
+                    id: questionId || "",
+                    title: postQuery.data?.title,
+                  }}
                   data={answer}
                   canSelectAnswer={
                     postQuery.data?.is_question_owner &&

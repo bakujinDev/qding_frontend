@@ -17,7 +17,7 @@ import {
 } from "@/api/qna/question";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddComment from "@/components/common/AddComment";
-import { commentRuleList } from "@/lib/forum";
+import { commentRuleList, onClickShareBtn } from "@/lib/forum";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import { useRouter } from "next/router";
@@ -179,7 +179,10 @@ export default function QuestionSec({ questionId, data }: IProps) {
                   알람받기
                 </button>
 
-                <button className={styles.shareBtn} onClick={() => {}}>
+                <button
+                  className={styles.shareBtn}
+                  onClick={() => onClickShareBtn(window.location.href)}
+                >
                   공유하기
                 </button>
               </div>

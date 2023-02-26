@@ -86,7 +86,7 @@ export const deleteQuestionComment = ({ commentId }: IDeleteQuestionComment) =>
     .then((res) => res.data);
 
 export interface IChoiceAnswer {
-  questionId: string;
+  questionId: string | string[];
   answerId: string;
 }
 
