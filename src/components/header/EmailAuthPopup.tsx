@@ -60,7 +60,7 @@ export default function EmailAuthPopup({ off }: IProps) {
 
       <article className={styles.contArea}>
         <div className={styles.explainCont}>
-          <h2>이메일 본인인증을 하면 커뮤니티 활동을 하실 수 있어요!</h2>
+          <h2>해당 이메일로 로그인 메일이 전송되었어요</h2>
         </div>
 
         <div className={styles.actionCont}>

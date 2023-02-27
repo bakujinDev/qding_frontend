@@ -2,7 +2,7 @@ import styles from "./loginPopup.module.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import I_kakao from "@/asset/icon/I_kakao.svg";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import { ILoginVar, usernameLogin } from "@/api/auth";
+import { ILogin, usernameLogin } from "@/api/auth";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { onClickSocialBtn } from "@/lib/user";
@@ -19,7 +19,7 @@ export default function LoginPopup({ off }: IProps) {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<ILoginVar>();
+  } = useForm<ILogin>();
 
   const mutation = useMutation(usernameLogin, {
     onSuccess: () => {
@@ -29,7 +29,7 @@ export default function LoginPopup({ off }: IProps) {
     },
   });
 
-  const onSubmit = ({ username, password }: ILoginVar) => {
+  const onSubmit = ({ username, password }: ILogin) => {
     mutation.mutate({
       username,
       password,

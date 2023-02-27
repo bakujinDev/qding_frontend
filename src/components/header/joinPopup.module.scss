@@ -68,6 +68,46 @@
             .inputBox {
               @include inputBox;
             }
+
+            .agree {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+
+              &.on {
+                .chkBox {
+                  svg {
+                    display: block;
+                    color: $Primary1;
+                    background: $HoverRed;
+                    border-color: $HoverRed;
+                  }
+                }
+              }
+
+              .chkBox {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 16px;
+                height: 16px;
+                border: 1px solid $Gray1;
+                border-radius: 2px;
+
+                svg {
+                  display: none;
+                  width: 16px;
+                  height: 16px;
+                  color: #fff;
+                }
+              }
+
+              p {
+                strong {
+                  color: $Primary1;
+                }
+              }
+            }
           }
         }
       }
@@ -89,6 +129,22 @@
           background: $Primary1;
           border-radius: 8px;
         }
+      }
+    }
+
+    .mailSendBox {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 10px;
+      color: $Primary1;
+      border-radius: 8px;
+      background: $HoverRed;
+
+      .linkBtn {
+        font-weight: 700;
+        text-decoration: underline;
       }
     }
 

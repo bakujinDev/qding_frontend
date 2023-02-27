@@ -152,7 +152,7 @@ export default function EditPost() {
 
   return (
     <>
-      <Seo title="질문하기" />
+      <Seo title="질문 수정" />
       <main className={styles.ask}>
         <form className={styles.formBox} onSubmit={handleSubmit(onSubmit)}>
           <section

@@ -2,12 +2,14 @@ import styles from "./joinPopup.module.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import I_kakao from "@/asset/icon/I_kakao.svg";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import { ILoginVar, usernameJoin, usernameLogin } from "@/api/auth";
+import { IJoin, ILogin, usernameJoin } from "@/api/auth";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { emailPattern } from "@/lib/user";
 import { setEmailAuthPopup } from "@/store/reducer/commonReducer";
 import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import CheckIcon from "@mui/icons-material/Check";
 
 interface IProps {
   off: Function;
@@ -20,26 +22,21 @@ export default function JoinPopup({ off }: IProps) {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
-  } = useForm<ILoginVar>();
+    watch,
+    setValue,
+  } = useForm<IJoin>({});
 
-  const queryClient = useQueryClient();
+  const mutation = useMutation(usernameJoin);
 
-  const mutation = useMutation(usernameJoin, {
-    onSuccess: () => {
-      queryClient.refetchQueries(["me"]);
-      reset();
-      dispatch(setEmailAuthPopup(true));
-      off();
-    },
-  });
-
-  const onSubmit = ({ username, password }: ILoginVar) => {
+  const onSubmit = ({ username }: ILogin) => {
     mutation.mutate({
       username,
-      password,
     });
   };
+
+  useEffect(() => {
+    register("termAgree", { required: "이용약관에 동의해주세요" });
+  }, []);
 
   return (
     <section className={`${styles.joinPopup} defaultPopup`}>
@@ -76,20 +73,24 @@ export default function JoinPopup({ off }: IProps) {
               </li>
 
               <li>
-                <p className={styles.key}>비밀번호</p>
-                <div className={styles.inputBox}>
-                  <input
-                    type="password"
-                    {...register("password", {
-                      required: "비밀번호를 입력해주세요",
-                      minLength: { value: 8, message: "8자 이상 입력해주세요" },
-                    })}
-                    placeholder="비밀번호를 입력해주세요"
-                  />
-                </div>
+                <button
+                  type="button"
+                  className={`${styles.agree} ${
+                    watch("termAgree") ? styles.on : ""
+                  }`}
+                  onClick={() => setValue("termAgree", !watch("termAgree"))}
+                >
+                  <span className={styles.chkBox}>
+                    <CheckIcon />
+                  </span>
 
-                {errors.password?.message ? (
-                  <p className={styles.errorText}>{errors.password?.message}</p>
+                  <p>
+                    Qding의 <strong>이용약관</strong>에 동의(필수)
+                  </p>
+                </button>
+
+                {errors.termAgree?.message ? (
+                  <p className={styles.errorText}>{errors.termAgree?.message}</p>
                 ) : null}
               </li>
             </ul>
@@ -97,8 +98,28 @@ export default function JoinPopup({ off }: IProps) {
             <div className={styles.loginBox}>
               {mutation.isError ? (
                 <p className={styles.errorText}>
-                  로그인 계정 정보가 잘못되었습니다
+                  {(mutation.error as any).response?.data?.detail}
                 </p>
+              ) : null}
+
+              {mutation.isSuccess ? (
+                <div className={styles.mailSendBox}>
+                  <p className={styles.sendMsg}>
+                    해당 메일로 로그인 링크가 전송되었어요!
+                  </p>
+
+                  <button
+                    className={styles.linkBtn}
+                    onClick={() =>
+                      window.open(
+                        `http://${watch("username").split("@")[1]}`,
+                        "_blank"
+                      )
+                    }
+                  >
+                    {watch("username").split("@")[1]}로 이동하기
+                  </button>
+                </div>
               ) : null}
 
               <button className={styles.loginBtn} onClick={() => {}}>

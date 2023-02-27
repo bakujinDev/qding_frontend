@@ -1,12 +1,15 @@
 import { apiInstance, tokenInstance } from "./instance";
 
-export interface ILoginVar {
+export interface ILogin {
   username: string;
-  password: string;
 }
 
-export const usernameLogin = ({ username, password }: ILoginVar) =>
-  tokenInstance.post("/", { username, password }).then((res) => {
+export interface IJoin extends ILogin {
+  termAgree: boolean;
+}
+
+export const usernameLogin = ({ username }: ILogin) =>
+  tokenInstance.post("/", { username }).then((res) => {
     const { access, refresh } = res.data;
 
     localStorage.setItem("refresh_token", refresh);
@@ -29,19 +32,19 @@ export const refreshToken = () =>
       return access;
     });
 
-interface ILogoutVar {
+interface ILogout {
   refresh: string;
 }
 
-export const logout = ({ refresh }: ILogoutVar) =>
+export const logout = ({ refresh }: ILogout) =>
   apiInstance
     .post("users/log-out", {
       refresh,
     })
     .then((res) => res.status);
 
-export const usernameJoin = ({ username, password }: ILoginVar) =>
-  apiInstance.post("users/", { username, password }).then((res) => {
+export const usernameJoin = ({ username }: ILogin) =>
+  apiInstance.post("users/", { username }).then((res) => {
     const { access, refresh } = res.data;
 
     localStorage.setItem("refresh_token", refresh);
