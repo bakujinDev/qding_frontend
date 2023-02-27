@@ -9,14 +9,7 @@ export interface IJoin extends ILogin {
 }
 
 export const usernameLogin = ({ username }: ILogin) =>
-  tokenInstance.post("/", { username }).then((res) => {
-    const { access, refresh } = res.data;
-
-    localStorage.setItem("refresh_token", refresh);
-    apiInstance.defaults.headers.common["Authorization"] = `Bearer ${access}`;
-
-    return res.data;
-  });
+  apiInstance.post("users/email-login", { username }).then((res) => res.data);
 
 export const getMe = () => apiInstance.get("users/me").then((res) => res.data);
 
@@ -63,7 +56,7 @@ interface ITurnEmailAuth {
   token: string;
 }
 
-export const turnEmailAuh = ({ token }: ITurnEmailAuth) =>
+export const emailLogin = ({ token }: ITurnEmailAuth) =>
   apiInstance.put("users/email-auth", { token }).then((res) => {
     const { access, refresh } = res.data;
 

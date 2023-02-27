@@ -41,21 +41,15 @@ export default function useUser() {
 
 export const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-const TSocialLogin = {
-  GITHUB: "Github",
-  KAKAO: "Kakao",
-} as const;
-type TSocialLogin = typeof TSocialLogin[keyof typeof TSocialLogin];
-
 interface IOnClickSocialBtn {
-  type: TSocialLogin;
+  type: "github" | "kakao";
   off: Function;
 }
 
 export function onClickSocialBtn({ type, off }: IOnClickSocialBtn) {
   let params;
   switch (type) {
-    case "Kakao":
+    case "kakao":
       const kakaoParams = {
         client_id: "18dba6cfddc30770776200dda585923d",
         redirect_uri: "http://127.0.0.1:3000/auth/kakao",
@@ -69,7 +63,7 @@ export function onClickSocialBtn({ type, off }: IOnClickSocialBtn) {
       off();
       break;
 
-    case "Github":
+    case "github":
       const githubParams = {
         client_id: "95bab3171f91c36f06cc",
         scope: "read:user,user:email",

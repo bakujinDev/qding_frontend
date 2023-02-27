@@ -6,14 +6,19 @@ import U_spinner from "@/asset/util/U_spinner.svg";
 import styles from "./index.module.scss";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
+import { setUserInfo } from "@/store/reducer/commonReducer";
+import { useDispatch } from "react-redux";
 
 export default function Github() {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const { code } = router.query;
+
   const mutationGithubLogin = useMutation(githubLogin, {
-    onSuccess: () => {
-      window.close();
+    onSuccess: (res) => {
+      dispatch(setUserInfo(res.user));
+      router.push("/");
     },
   });
 

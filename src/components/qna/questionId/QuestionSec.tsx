@@ -25,6 +25,7 @@ import { useSelector } from "react-redux";
 import { AppState } from "@/store/store";
 import { toast } from "react-toastify";
 import { subscribeNotification } from "@/api/notification";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 interface IProps {
   questionId: string;
@@ -179,7 +180,7 @@ export default function QuestionSec({ questionId, data }: IProps) {
 
             <div className={styles.utilBar}>
               <div className={styles.btnBox}>
-                {data.creator.id === user?.pk ? (
+                {data.creator?.id === user?.pk ? (
                   <button
                     className={styles.editBtn}
                     onClick={() =>
@@ -213,9 +214,16 @@ export default function QuestionSec({ questionId, data }: IProps) {
               </div>
 
               <div className={styles.profBox}>
-                <img src={data.editor?.avatar || data.creator.avatar} alt="" />
+                {data.editor?.avatar || data.creator?.avatar ? (
+                  <img
+                    src={data.editor?.avatar || data.creator?.avatar}
+                    alt=""
+                  />
+                ) : (
+                  <AccountCircleIcon fontSize="inherit" />
+                )}
                 <p className={styles.name}>
-                  {data.editor?.name || data.creator.name}
+                  {data.editor?.name || data.creator?.name || "비공개 회원"}
                 </p>
               </div>
             </div>
@@ -252,7 +260,9 @@ export default function QuestionSec({ questionId, data }: IProps) {
 
                   <div className={styles.contBox}>
                     <p className={styles.content}>{v.content} -</p>
-                    <p className={styles.name}>{v.creator.name}</p>
+                    <p className={styles.name}>
+                      {v.creator?.name || "비공개 회원"}
+                    </p>
                     <p className={styles.updatedAt}>
                       {timeDifference(v.updated_at)}
                     </p>

@@ -5,7 +5,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import { IJoin, ILogin, usernameJoin } from "@/api/auth";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { emailPattern } from "@/lib/user";
+import { emailPattern, onClickSocialBtn } from "@/lib/user";
 import { useEffect } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import U_spinner from "@/asset/util/U_spinner.svg";
@@ -121,11 +121,7 @@ export default function JoinPopup({ off }: IProps) {
                 </div>
               ) : null}
 
-              <button
-                className={styles.loginBtn}
-                disabled={mutation.isLoading}
-                onClick={() => {}}
-              >
+              <button className={styles.loginBtn} disabled={mutation.isLoading}>
                 <p>회원가입</p>
 
                 {mutation.isLoading ? (
@@ -145,13 +141,25 @@ export default function JoinPopup({ off }: IProps) {
         <div className={styles.socialBox}>
           <ul className={styles.socialList}>
             <li className={styles.kakao}>
-              <I_kakao />
-              카카오 로그인
+              <button
+                onClick={() =>
+                  onClickSocialBtn({ type: "kakao", off: () => off() })
+                }
+              >
+                <I_kakao />
+                <p>카카오 로그인</p>
+              </button>
             </li>
 
             <li className={styles.github}>
-              <GitHubIcon />
-              깃허브 로그인
+              <button
+                onClick={() =>
+                  onClickSocialBtn({ type: "github", off: () => off() })
+                }
+              >
+                <GitHubIcon />
+                <p>깃허브 로그인</p>
+              </button>
             </li>
           </ul>
         </div>

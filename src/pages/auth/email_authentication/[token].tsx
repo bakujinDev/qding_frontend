@@ -1,4 +1,4 @@
-import { getMe, turnEmailAuh } from "@/api/auth";
+import { getMe, emailLogin } from "@/api/auth";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -16,7 +16,7 @@ export default function EmailAuthentication() {
 
   const { token } = router.query;
 
-  const mutationTurnEmailAuth = useMutation(turnEmailAuh, {
+  const mutationTurnEmailAuth = useMutation(emailLogin, {
     onSuccess: (res) => {
       dispatch(setUserInfo(res.user));
       router.push("/");

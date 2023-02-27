@@ -27,6 +27,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import { choiceAnswer } from "@/api/qna/question";
 import { subscribeNotification } from "@/api/notification";
 import { useRouter } from "next/router";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 interface IQuestion {
   id: string | string[];
@@ -55,7 +56,7 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
   const voteMutation = useMutation(voteAnswer, {
     onSuccess: (res) => {
       console.log(res.data);
-      queryClient.refetchQueries(["post", `${question.id}`]);
+      queryClient.refetchQueries(["post", `${question?.id}`]);
     },
     onError: (err: any) => {
       toast(err.response.data.detail);
@@ -65,7 +66,7 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
   const choiceAnswerMutation = useMutation(choiceAnswer, {
     onSuccess: (res) => {
       toast("답변 선택이 완료 되었어요");
-      queryClient.refetchQueries(["post", `${question.id}`]);
+      queryClient.refetchQueries(["post", `${question?.id}`]);
     },
     onError: (err: any) => toast(err?.response?.data),
   });
@@ -76,14 +77,14 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
       if (res.message === "create") toast("알림 목록에 추가되었어요");
       else if (res.message === "remove") toast("알림 목록에 제외되었어요");
 
-      queryClient.refetchQueries(["post", `${question.id}`]);
+      queryClient.refetchQueries(["post", `${question?.id}`]);
     },
   });
 
   const editCommentMutation = useMutation(editAnswerComment, {
     onSuccess: (res) => {
       commentForm.reset();
-      queryClient.refetchQueries(["post", `${question.id}`]);
+      queryClient.refetchQueries(["post", `${question?.id}`]);
     },
   });
 
@@ -96,14 +97,14 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
 
   const deleteCommentMutation = useMutation(deleteAnswerComment, {
     onSuccess: (res) => {
-      queryClient.refetchQueries(["post", `${question.id}`]);
+      queryClient.refetchQueries(["post", `${question?.id}`]);
     },
   });
 
   const postCommentMutation = useMutation(postAnswerComment, {
     onSuccess: (res) => {
       commentForm.reset();
-      queryClient.refetchQueries(["post", `${question.id}`]);
+      queryClient.refetchQueries(["post", `${question?.id}`]);
     },
   });
 
@@ -153,7 +154,7 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
               className={styles.choiceBtn}
               onClick={() =>
                 choiceAnswerMutation.mutate({
-                  questionId: question.id,
+                  questionId: question?.id,
                   answerId: data.pk,
                 })
               }
@@ -190,7 +191,7 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
           <div className={styles.bottomBar}>
             <div className={styles.utilBar}>
               <div className={styles.btnBox}>
-                {data.creator.id === user?.pk ? (
+                {data.creator?.id === user?.pk ? (
                   <button
                     className={styles.editBtn}
                     onClick={() => router.push(`/qna/edit/answer/${data.pk}`)}
@@ -226,9 +227,16 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
               </div>
 
               <div className={styles.profBox}>
-                <img src={data.editor?.avatar || data.creator.avatar} alt="" />
+                {data.editor?.avatar || data.creator?.avatar ? (
+                  <img
+                    src={data.editor?.avatar || data.creator?.avatar}
+                    alt=""
+                  />
+                ) : (
+                  <AccountCircleIcon fontSize="inherit" />
+                )}
                 <p className={styles.name}>
-                  {data.editor?.name || data.creator.name}
+                  {data.editor?.name || data.creator?.name || "비공개 회원"}
                 </p>
               </div>
             </div>
@@ -265,7 +273,9 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
 
                   <div className={styles.contBox}>
                     <p className={styles.content}>{v.content} -</p>
-                    <p className={styles.name}>{v.creator.name}</p>
+                    <p className={styles.name}>
+                      {v.creator?.name || "비공개 회원"}
+                    </p>
                     <p className={styles.updatedAt}>
                       {timeDifference(v.updated_at)}
                     </p>

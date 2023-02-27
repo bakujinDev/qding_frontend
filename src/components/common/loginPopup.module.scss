@@ -81,13 +81,43 @@
         }
 
         .loginBtn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 6px;
           width: 100%;
           height: 40px;
           font-weight: 500;
           color: #fff;
           background: $Primary1;
           border-radius: 8px;
+
+          &:disabled {
+            background: $Primary2;
+          }
+
+          .spinner {
+            width: 24px;
+            height: 24px;
+            color: #fff;
+          }
         }
+      }
+    }
+
+    .mailSendBox {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 10px;
+      color: $Primary1;
+      border-radius: 8px;
+      background: $HoverRed;
+
+      .linkBtn {
+        font-weight: 700;
+        text-decoration: underline;
       }
     }
 

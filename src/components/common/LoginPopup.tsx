@@ -4,35 +4,27 @@ import I_kakao from "@/asset/icon/I_kakao.svg";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { ILogin, usernameLogin } from "@/api/auth";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { onClickSocialBtn } from "@/lib/user";
+import U_spinner from "@/asset/util/U_spinner.svg";
 
 interface IProps {
   off: Function;
 }
 
 export default function LoginPopup({ off }: IProps) {
-  const queryClient = useQueryClient();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+    watch,
   } = useForm<ILogin>();
 
-  const mutation = useMutation(usernameLogin, {
-    onSuccess: () => {
-      queryClient.refetchQueries(["me"]);
-      reset();
-      off();
-    },
-  });
+  const mutation = useMutation(usernameLogin);
 
-  const onSubmit = ({ username, password }: ILogin) => {
+  const onSubmit = ({ username }: ILogin) => {
     mutation.mutate({
       username,
-      password,
     });
   };
 
@@ -66,24 +58,6 @@ export default function LoginPopup({ off }: IProps) {
                   <p className={styles.errorText}>{errors.username?.message}</p>
                 ) : null}
               </li>
-
-              <li>
-                <p className={styles.key}>비밀번호</p>
-                <div className={styles.inputBox}>
-                  <input
-                    type="password"
-                    {...register("password", {
-                      required: "비밀번호를 입력해주세요",
-                      minLength: { value: 8, message: "8자 이상 입력해주세요" },
-                    })}
-                    placeholder="비밀번호를 입력해주세요"
-                  />
-                </div>
-
-                {errors.password?.message ? (
-                  <p className={styles.errorText}>{errors.password?.message}</p>
-                ) : null}
-              </li>
             </ul>
 
             <div className={styles.loginBox}>
@@ -93,8 +67,32 @@ export default function LoginPopup({ off }: IProps) {
                 </p>
               ) : null}
 
-              <button className={styles.loginBtn} type="submit">
-                로그인
+              {mutation.isSuccess ? (
+                <div className={styles.mailSendBox}>
+                  <p className={styles.sendMsg}>
+                    해당 메일로 로그인 링크가 전송되었어요!
+                  </p>
+
+                  <button
+                    className={styles.linkBtn}
+                    onClick={() =>
+                      window.open(
+                        `http://${watch("username").split("@")[1]}`,
+                        "_blank"
+                      )
+                    }
+                  >
+                    {watch("username").split("@")[1]}로 이동하기
+                  </button>
+                </div>
+              ) : null}
+
+              <button className={styles.loginBtn} disabled={mutation.isLoading}>
+                <p>로그인</p>
+
+                {mutation.isLoading ? (
+                  <U_spinner className={styles.spinner} />
+                ) : null}
               </button>
             </div>
           </form>
@@ -111,22 +109,22 @@ export default function LoginPopup({ off }: IProps) {
             <li className={styles.kakao}>
               <button
                 onClick={() =>
-                  onClickSocialBtn({ type: "Kakao", off: () => off() })
+                  onClickSocialBtn({ type: "kakao", off: () => off() })
                 }
               >
                 <I_kakao />
-                카카오 로그인
+                <p>카카오 로그인</p>
               </button>
             </li>
 
             <li className={styles.github}>
               <button
                 onClick={() =>
-                  onClickSocialBtn({ type: "Github", off: () => off() })
+                  onClickSocialBtn({ type: "github", off: () => off() })
                 }
               >
                 <GitHubIcon />
-                깃허브 로그인
+                <p>깃허브 로그인</p>
               </button>
             </li>
           </ul>
