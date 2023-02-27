@@ -4,20 +4,17 @@ import I_kakao from "@/asset/icon/I_kakao.svg";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { IJoin, ILogin, usernameJoin } from "@/api/auth";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { emailPattern } from "@/lib/user";
-import { setEmailAuthPopup } from "@/store/reducer/commonReducer";
-import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import CheckIcon from "@mui/icons-material/Check";
+import U_spinner from "@/asset/util/U_spinner.svg";
 
 interface IProps {
   off: Function;
 }
 
 export default function JoinPopup({ off }: IProps) {
-  const dispatch = useDispatch();
-
   const {
     register,
     handleSubmit,
@@ -90,7 +87,9 @@ export default function JoinPopup({ off }: IProps) {
                 </button>
 
                 {errors.termAgree?.message ? (
-                  <p className={styles.errorText}>{errors.termAgree?.message}</p>
+                  <p className={styles.errorText}>
+                    {errors.termAgree?.message}
+                  </p>
                 ) : null}
               </li>
             </ul>
@@ -122,8 +121,16 @@ export default function JoinPopup({ off }: IProps) {
                 </div>
               ) : null}
 
-              <button className={styles.loginBtn} onClick={() => {}}>
-                회원가입
+              <button
+                className={styles.loginBtn}
+                disabled={mutation.isLoading}
+                onClick={() => {}}
+              >
+                <p>회원가입</p>
+
+                {mutation.isLoading ? (
+                  <U_spinner className={styles.spinner} />
+                ) : null}
               </button>
             </div>
           </form>

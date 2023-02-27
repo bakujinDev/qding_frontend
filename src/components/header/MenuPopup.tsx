@@ -32,6 +32,9 @@ export default function MenuPopup({ off }: IProps) {
           onSuccess: () => {
             router.reload();
           },
+          onError: () => {
+            router.reload();
+          },
         }
       );
   }

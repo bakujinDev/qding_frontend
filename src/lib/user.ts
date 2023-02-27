@@ -15,7 +15,6 @@ export default function useUser() {
       dispatch(setUserInfo(res));
     },
     onError: (err: any) => {
-      dispatch(setUserInfo(null));
       if (err.response?.data?.code === "user_inactive") return;
 
       if (localStorage.getItem("refresh_token")) refreshTokenMutation.mutate();

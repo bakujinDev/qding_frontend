@@ -6,24 +6,18 @@ import PopupBg from "../common/PopupBg";
 import JoinPopup from "./JoinPopup";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuPopup from "./MenuPopup";
-import EmailAuthPopup from "./EmailAuthPopup";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "@/store/store";
-import {
-  setEmailAuthPopup,
-  setLoginPopup,
-} from "@/store/reducer/commonReducer";
+import { setLoginPopup } from "@/store/reducer/commonReducer";
 import useUser from "@/lib/user";
 
 const itim = Itim({ weight: "400", preload: false });
 
 export default function DefaultHeader() {
-  useUser();
   const dispatch = useDispatch();
+
+  useUser();
   const user = useSelector((state: AppState) => state.common.userInfo);
-  const emailAuthPopup = useSelector(
-    (state: AppState) => state.common.emailAuthPopup
-  );
 
   const [joinPopup, setJoinPopup] = useState<Boolean>(false);
   const [menuPopup, setMenuPopup] = useState<Boolean>(false);
@@ -88,13 +82,6 @@ export default function DefaultHeader() {
         <>
           <JoinPopup off={() => setJoinPopup(false)} />
           <PopupBg bg off={() => setJoinPopup(false)} />
-        </>
-      ) : null}
-
-      {emailAuthPopup ? (
-        <>
-          <EmailAuthPopup off={() => dispatch(setEmailAuthPopup(false))} />
-          <PopupBg bg off={() => dispatch(setEmailAuthPopup(false))} />
         </>
       ) : null}
     </>
