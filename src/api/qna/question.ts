@@ -2,15 +2,19 @@ import { getLocalStorage, setViewLocal } from "@/lib/localStorage";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import { apiInstance } from "../instance";
 
-type GetQnaListQueryKey = [string, string?];
+type GetQnaListQueryKey = [string, string, (string | string[])?];
+
+export interface ISearchQnaList {
+  search: string;
+}
 
 export const getQnaList = ({
   queryKey,
 }: QueryFunctionContext<GetQnaListQueryKey>) => {
-  const [category, page] = queryKey;
+  const [category, page, search] = queryKey;
 
   return apiInstance
-    .get("qnas/questions", { params: { page } })
+    .get("qnas/questions", { params: { page, search } })
     .then((res) => res.data);
 };
 

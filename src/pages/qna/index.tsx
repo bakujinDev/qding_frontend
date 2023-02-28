@@ -1,4 +1,4 @@
-import { getQnaList } from "@/api/qna/question";
+import { getQnaList, ISearchQnaList } from "@/api/qna/question";
 import { timeDifference } from "@/lib/time";
 import { setLoginPopup } from "@/store/reducer/commonReducer";
 import styles from "./index.module.scss";
@@ -9,29 +9,50 @@ import { toast } from "react-toastify";
 import { extractContent } from "@/lib/forum";
 import Seo from "@/components/Seo";
 import PageNation from "@/components/common/Pagenation";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import { getLocalStorage } from "@/lib/localStorage";
 import { AppState } from "@/store/store";
 import { deleteNotification, getNotification } from "@/api/notification";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckIcon from "@mui/icons-material/Check";
+import SearchIcon from "@mui/icons-material/Search";
+import { useForm } from "react-hook-form";
 
 export default function Qna() {
   const router = useRouter();
   const dispatch = useDispatch();
   const queryclient = useQueryClient();
+  const searchRef = useRef<HTMLInputElement | null>();
+
   const user = useSelector((state: AppState) => state.common.userInfo);
 
   const [viewHistory, setViewHistory] = useState<Array<any>>();
 
+  const { register, handleSubmit, watch } = useForm<ISearchQnaList>();
+  const { ref, ...rest } = register("search", { required: true });
+
   const qnaList = useQuery(
-    ["qnaList", `${router.query.page || 1}`],
+    ["qnaList", `${router.query.page || 1}`, router.query.search],
     getQnaList,
     { onSuccess: (res) => console.log(res) }
   );
+
   const notificationList = useQuery(["notifications"], getNotification, {
     onSuccess: (res) => console.log(res),
   });
+
+  function onSearchSubmit({ search }: ISearchQnaList) {
+    const reg = new RegExp(/\[(.*?)\]/);
+
+    let _search: RegExpMatchArray | string | null = search.match(reg);
+
+    if (_search?.length) {
+      _search = _search[0].slice(1, -1);
+      console.log(_search);
+    }
+
+    router.push(`/qna?search=${search}`);
+  }
 
   const deleteNotificationMutation = useMutation(deleteNotification, {});
 
@@ -73,9 +94,37 @@ export default function Qna() {
       <main className={styles.qna}>
         <section className={styles.questionSec}>
           <article className={styles.topArea}>
-            <button className={styles.askBtn} onClick={onClickAskBtn}>
-              질문하기
-            </button>
+            <div className={styles.topBar}>
+              <h1 className={styles.listTitle}>
+                {`${router.query.search}` ?? "모든 질문"}
+              </h1>
+
+              <button className={styles.askBtn} onClick={onClickAskBtn}>
+                질문하기
+              </button>
+            </div>
+
+            <form
+              className={styles.searchForm}
+              onSubmit={handleSubmit(onSearchSubmit)}
+            >
+              <div className={styles.inputBox}>
+                <SearchIcon
+                  className={styles.searchIcon}
+                  onClick={() => searchRef.current?.focus()}
+                />
+
+                <input
+                  type="search"
+                  {...register("search")}
+                  ref={(e) => {
+                    ref(e);
+                    searchRef.current = e;
+                  }}
+                  placeholder="검색어를 입력해주세요"
+                />
+              </div>
+            </form>
           </article>
 
           <article className={styles.listArea}>

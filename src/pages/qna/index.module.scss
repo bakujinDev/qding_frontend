@@ -9,6 +9,9 @@
   gap: 20px;
 
   .questionSec {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     width: 100%;
     max-width: 690px;
     padding: 0 20px 10px;
@@ -18,12 +21,52 @@
 
     .topArea {
       display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      height: 54px;
+      flex-direction: column;
 
-      .askBtn {
-        @include askBtn;
+      .topBar {
+        display: flex;
+        align-items: center;
+        height: 54px;
+        gap: 8px;
+
+        .listTitle {
+          flex: 1;
+          font-size: 20px;
+          font-weight: 700;
+        }
+
+        .askBtn {
+          @include askBtn;
+        }
+      }
+
+      .searchForm {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .inputBox {
+          @include inputBox;
+
+          flex: 1;
+          height: 36px;
+          padding: 0 8px;
+
+          &:focus-within {
+            .searchIcon {
+              color: $Black1;
+            }
+          }
+
+          .searchIcon {
+            color: $Gray1;
+          }
+
+          input {
+            padding-left: 0;
+          }
+        }
       }
     }
 
