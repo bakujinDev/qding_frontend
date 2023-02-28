@@ -226,7 +226,12 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
                 </button>
               </div>
 
-              <div className={styles.profBox}>
+              <div
+                className={styles.profBox}
+                onClick={() =>
+                  router.push(`/users/${data.editor?.id || data.creator?.id}`)
+                }
+              >
                 {data.editor?.avatar || data.creator?.avatar ? (
                   <img
                     src={data.editor?.avatar || data.creator?.avatar}
@@ -273,7 +278,10 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
 
                   <div className={styles.contBox}>
                     <p className={styles.content}>{v.content} -</p>
-                    <p className={styles.name}>
+                    <p
+                      className={styles.name}
+                      onClick={() => router.push(`/users/${data.creator?.id}`)}
+                    >
                       {v.creator?.name || "비공개 회원"}
                     </p>
                     <p className={styles.updatedAt}>
