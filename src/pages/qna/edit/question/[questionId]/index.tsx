@@ -53,7 +53,7 @@ export default function EditPost() {
       console.log(res);
 
       // 작성자만 수정할 수 있는 현재방식에서만 쓰임
-      if (res.creator.id !== user.pk) {
+      if (res.creator?.id !== user.pk) {
         toast("작성자만 수정할 수 있습니다");
         router.push("/");
       }

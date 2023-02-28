@@ -29,7 +29,7 @@ export default function Kakao() {
   }, [code]);
 
   return (
-    <main className={styles.emailAuthPage}>
+    <main className={styles.kakaoPage}>
       <section className={styles.contSec}>
         <article className={styles.titleArea}>
           <h1 className={styles.title}>카카오를 통한 로그인 중입니다</h1>

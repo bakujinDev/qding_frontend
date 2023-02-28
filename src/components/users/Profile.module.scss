@@ -32,10 +32,11 @@
       .nickname {
         font-size: 28px;
         font-weight: 500;
+        word-break: break-all;
       }
 
       .profMsg {
-        width: 400px;
+        max-width: 400px;
         height: 80px;
         font-size: 16px;
         color: $Gray2;
@@ -96,6 +97,33 @@
             height: 24px;
           }
         }
+      }
+    }
+  }
+}
+
+@include mobile {
+  .profileArea {
+    .profImgCont {
+      flex-direction: column;
+
+      .profImgBox {
+        // order: 1;
+      }
+
+      .infoBox {
+        overflow: hidden;
+
+        .nickname {
+        }
+
+        .profMsg {
+        }
+        // order: 2;
+      }
+
+      .editBtn {
+        // order: 0;
       }
     }
   }

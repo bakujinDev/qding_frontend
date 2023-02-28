@@ -1,11 +1,11 @@
 @use "../../../styles/variable" as *;
 
 .emailAuthPage {
-  flex: 1;
+  @include defaultMain;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f8faff;
 
   .contSec {
     display: flex;
@@ -45,6 +45,33 @@
       height: 200px;
       font-size: 180px;
       color: $Primary1;
+
+      .spinner {
+        height: 100px;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .emailAuthPage {
+    .contSec {
+      .titleArea {
+        .title {
+          font-size: 20px;
+          line-height: 24px;
+        }
+
+        .explain {
+          font-size: 16px;
+          line-height: 18px;
+        }
+      }
+
+      .contArea {
+        height: 160px;
+        font-size: 140px;
+      }
     }
   }
 }

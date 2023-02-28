@@ -18,7 +18,10 @@ export default function QuestionHistory() {
   const query: any = useQuery(
     ["question_creator", id, orderOpt.value, page],
     getProfileQuestions,
-    { retry: false, onSuccess: (res) => console.log(res) }
+    {
+      retry: false,
+      onSuccess: (res) => console.log(res),
+    }
   );
 
   return (

@@ -1,12 +1,16 @@
 @use "../../../styles/variable" as *;
 
 .qnaPosts {
-  flex: 1;
+  @include defaultMain;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 40px;
-  overflow-y: scroll;
-  padding: 40px;
-  background: #f8faff;
+}
+
+@include mobile {
+  .qnaPosts {
+    gap: 20px;
+  }
 }

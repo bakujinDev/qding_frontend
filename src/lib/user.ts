@@ -16,6 +16,7 @@ export default function useUser() {
     },
     onError: (err: any) => {
       if (err.response?.data?.code === "user_inactive") return;
+      if (err.response?.data?.code === "user_not_found") return;
 
       if (localStorage.getItem("refresh_token")) refreshTokenMutation.mutate();
     },
@@ -40,6 +41,8 @@ export default function useUser() {
 }
 
 export const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+export const urlPattern =
+  /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
 interface IOnClickSocialBtn {
   type: "github" | "kakao";

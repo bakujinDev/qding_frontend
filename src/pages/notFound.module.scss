@@ -1,7 +1,80 @@
 @use "../styles/variable" as *;
 
-.notfound {
-  min-height: 100vh;
-  background: #fff;
-  background: $White2;
+.notFound {
+  @include defaultMain;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .contSec {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 540px;
+    padding: 40px;
+    background: #fff;
+    border-radius: 45px;
+    box-shadow: 0px 4px 13px 2px #e3e5ec;
+
+    .titleArea {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: center;
+      white-space: pre-wrap;
+
+      .title {
+        font-size: 30px;
+        line-height: 34px;
+        font-weight: 600;
+      }
+
+      .explain {
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 500;
+        color: $Gray2;
+
+        strong {
+          font-weight: 700;
+          color: $Primary1;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .contArea {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      font-size: 180px;
+      color: $Primary1;
+    }
+  }
+}
+
+@include mobile {
+  .notFound {
+    .contSec {
+      .titleArea {
+        .title {
+          font-size: 20px;
+          line-height: 24px;
+        }
+
+        .explain {
+          font-size: 16px;
+          line-height: 18px;
+        }
+      }
+
+      .contArea {
+        height: 160px;
+        font-size: 140px;
+      }
+    }
+  }
 }

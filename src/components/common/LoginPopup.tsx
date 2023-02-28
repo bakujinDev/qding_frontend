@@ -5,7 +5,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import { ILogin, usernameLogin } from "@/api/auth";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { onClickSocialBtn } from "@/lib/user";
+import { emailPattern, onClickSocialBtn } from "@/lib/user";
 import U_spinner from "@/asset/util/U_spinner.svg";
 
 interface IProps {
@@ -47,10 +47,13 @@ export default function LoginPopup({ off }: IProps) {
                 <div className={styles.inputBox}>
                   <input
                     {...register("username", {
-                      required: "아이디를 입력해주세요",
-                      minLength: { value: 8, message: "8자 이상 입력해주세요" },
+                      required: "이메일을 입력해주세요",
+                      pattern: {
+                        value: emailPattern,
+                        message: "이메일을 형식을 확인해주세요",
+                      },
                     })}
-                    placeholder="아이디를 입력해주세요"
+                    placeholder="이메일을 입력해주세요"
                   />
                 </div>
 

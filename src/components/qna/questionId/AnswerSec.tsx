@@ -249,7 +249,7 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
           {data.answer_comments
             ? data.answer_comments.map((v: any, i: number) => (
                 <li key={i}>
-                  <div className={styles.utilBox}>
+                  {/* <div className={styles.utilBox}>
                     <button
                       className={`${styles.upBtn} ${styles.voteBtn}`}
                       onClick={() => {}}
@@ -269,7 +269,7 @@ export default function AnswerSec({ question, data, canSelectAnswer }: IProps) {
                     <button className={styles.flagBtn} onClick={() => {}}>
                       <FlagIcon />
                     </button>
-                  </div>
+                  </div> */}
 
                   <div className={styles.contBox}>
                     <p className={styles.content}>{v.content} -</p>

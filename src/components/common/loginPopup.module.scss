@@ -2,6 +2,7 @@
 
 .loginPopup {
   width: 420px;
+  max-width: calc(100vw - 24px);
 
   .topBar {
     display: flex;

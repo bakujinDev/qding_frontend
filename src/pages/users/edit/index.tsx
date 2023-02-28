@@ -17,7 +17,7 @@ import {
   uploadImage,
 } from "@/api/fileUpload";
 import U_spinner from "@/asset/util/U_spinner.svg";
-import useUser from "@/lib/user";
+import useUser, { urlPattern } from "@/lib/user";
 
 export default function Edit() {
   useUser();
@@ -78,6 +78,14 @@ export default function Edit() {
       await getUploadURLMutation.mutateAsync({
         file: avatar,
       });
+    }
+
+    if (blog && !blog.startsWith("http")) {
+      blog = "http://" + blog;
+    }
+
+    if (github && !github.startsWith("http")) {
+      github = "http://" + github;
     }
 
     editMutation.mutate({
@@ -175,10 +183,19 @@ export default function Edit() {
               <div className={styles.valueBox}>
                 <div className={styles.inputBox}>
                   <input
-                    {...register("blog")}
+                    {...register("blog", {
+                      pattern: {
+                        value: urlPattern,
+                        message: "주소를 다시 확인해주세요",
+                      },
+                    })}
                     placeholder={initData.data?.blog}
                   />
                 </div>
+
+                {errors.blog?.message ? (
+                  <p className={styles.errorText}>{errors.blog?.message}</p>
+                ) : null}
               </div>
             </li>
 

@@ -1,4 +1,3 @@
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactElement } from "react";
 import DefaultHeader from "./header/DefaultHeader";
 import styles from "./layout.module.scss";
@@ -18,7 +17,6 @@ export default function Layout({ children }: IProps) {
 
       <CommonComp />
 
-      <ReactQueryDevtools />
       <ToastContainer />
     </div>
   );

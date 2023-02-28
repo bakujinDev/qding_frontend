@@ -1,10 +1,7 @@
 @use "../../../styles/variable" as *;
 
 .editProfile {
-  flex: 1;
-  padding: 40px;
-  overflow-y: scroll;
-  background: #f8faff;
+  @include defaultMain;
 
   .innerSec {
     width: 100%;
@@ -37,9 +34,17 @@
           }
 
           .valueBox {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
             .inputBox {
-              width: 400px;
+              max-width: 400px;
               @include inputBox;
+            }
+
+            .errorText {
+              color: $ErrorColor;
             }
           }
 
@@ -48,10 +53,15 @@
               border-radius: 4px;
               overflow: hidden;
 
-              img {
+              .editProfileBtn {
                 width: 110px;
                 height: 110px;
-                object-fit: cover;
+
+                img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                }
               }
             }
           }
@@ -88,7 +98,6 @@
 
           .spinner {
             display: none;
-
             width: 24px;
             height: 24px;
             color: #fff;

@@ -8,6 +8,17 @@ $breakpoint-desktop: 1024px;
   }
 }
 
+@mixin defaultMain {
+  flex: 1;
+  overflow-y: scroll;
+  padding: 40px;
+  background: #f8faff;
+
+  @include mobile {
+    padding: 12px;
+  }
+}
+
 @mixin askBtn {
   padding: 4px 8px;
   border-radius: 4px;
@@ -25,7 +36,7 @@ $breakpoint-desktop: 1024px;
     border-color: $Blue2;
   }
 
-  &.errorBox{
+  &.errorBox {
     border-color: $ErrorColor;
   }
 

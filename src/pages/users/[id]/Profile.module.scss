@@ -1,10 +1,7 @@
 @use "../../../styles/variable" as *;
 
 .profile {
-  flex: 1;
-  padding: 40px;
-  overflow-y: scroll;
-  background: #f8faff;
+  @include defaultMain;
 
   .innerSec {
     display: flex;
@@ -16,5 +13,15 @@
     background: #fff;
     border-radius: 20px;
     box-shadow: 0px 4px 13px 2px #e3e5ec;
+  }
+}
+
+@include mobile {
+  .profile {
+    padding: 16px;
+
+    .innerSec {
+      gap: 32px;
+    }
   }
 }

@@ -10,11 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "@/store/store";
 import { setLoginPopup } from "@/store/reducer/commonReducer";
 import useUser from "@/lib/user";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 
 const itim = Itim({ weight: "400", preload: false });
 
 export default function DefaultHeader() {
+  const router = useRouter();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   useUser();
   const user = useSelector((state: AppState) => state.common.userInfo);

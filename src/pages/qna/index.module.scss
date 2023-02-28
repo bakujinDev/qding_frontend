@@ -1,14 +1,12 @@
 @use "../../styles/variable" as *;
 
 .qna {
-  flex: 1;
+  @include defaultMain;
+
   display: flex;
   justify-content: center;
   align-items: flex-start;
   gap: 20px;
-  padding: 40px;
-  overflow-y: scroll;
-  background: #f8faff;
 
   .questionSec {
     width: 100%;
@@ -218,8 +216,6 @@
 
 @include mobile {
   .qna {
-    padding: 12px;
-
     .aside {
       display: none;
     }

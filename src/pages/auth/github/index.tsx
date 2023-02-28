@@ -29,7 +29,7 @@ export default function Github() {
   }, [code]);
 
   return (
-    <main className={styles.emailAuthPage}>
+    <main className={styles.githubPage}>
       <section className={styles.contSec}>
         <article className={styles.titleArea}>
           <h1 className={styles.title}>깃허브를 통한 로그인 중입니다</h1>
