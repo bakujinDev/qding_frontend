@@ -5,6 +5,7 @@ import Seo from "../Seo";
 import styles from "./Profile.module.scss";
 import ArticleIcon from "@mui/icons-material/Article";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export default function Profile() {
   const router = useRouter();
@@ -22,7 +23,14 @@ export default function Profile() {
       <article className={styles.profileArea}>
         <div className={styles.profImgCont}>
           <span className={styles.profImgBox}>
-            <img className={styles.profImg} src={user.data?.avatar} alt="" />
+            {0 ? (
+              <img className={styles.profImg} src={user.data?.avatar} alt="" />
+            ) : (
+              <AccountCircleIcon
+                className={styles.defaultImg}
+                fontSize="inherit"
+              />
+            )}
           </span>
 
           <div className={styles.infoBox}>

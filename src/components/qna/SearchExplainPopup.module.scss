@@ -1,0 +1,40 @@
+@use "../../styles/variable" as *;
+
+.explainPopup {
+  display: none;
+  width: 100%;
+  min-height: 100px;
+  background: #fff;
+  border: 2px solid $White2;
+  border-radius: 4px;
+  top: 40px;
+  left: 0;
+  position: absolute;
+
+  .explainList {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    max-height: 100px;
+    overflow-y: scroll;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      padding: 0 12px;
+
+      .value {
+        color: $Gray2;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .explainPopup {
+    .explainList {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+}

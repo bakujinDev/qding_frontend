@@ -52,6 +52,13 @@
           flex: 1;
           height: 36px;
           padding: 0 8px;
+          position: relative;
+
+          &:focus-within {
+            section {
+              display: block;
+            }
+          }
 
           &:focus-within {
             .searchIcon {
@@ -145,29 +152,59 @@
             }
 
             .bottomBar {
-              display: flex;
-              align-items: center;
-              gap: 10px;
+              .tagBar {
+                .tagList {
+                  flex: 1;
+                  display: flex;
+                  gap: 4px;
+                  overflow: hidden;
 
-              .tagList {
-                flex: 1;
-                display: flex;
-                gap: 4px;
-                overflow: hidden;
-
-                li {
-                  padding: 4px;
-                  font-size: 10px;
-                  color: $Blue3;
-                  background: $Blue1;
-                  border-radius: 4px;
+                  li {
+                    padding: 4px;
+                    font-size: 10px;
+                    color: $Blue3;
+                    background: $Blue1;
+                    border-radius: 4px;
+                  }
                 }
               }
 
-              .updatedAt {
-                font-size: 12px;
-                text-align: end;
-                color: $Gray2;
+              .infoBar {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 10px;
+
+                .profBox {
+                  display: flex;
+                  justify-content: flex-end;
+                  align-items: center;
+                  gap: 8px;
+                  padding: 4px;
+                  border-radius: 4px;
+                  cursor: pointer;
+
+                  &:hover {
+                    background: $Blue1;
+                  }
+
+                  img {
+                    width: 20px;
+                    height: 20px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                  }
+
+                  .name {
+                    font-size: 12px;
+                  }
+                }
+
+                .updatedAt {
+                  font-size: 12px;
+                  text-align: end;
+                  color: $Gray2;
+                }
               }
             }
           }

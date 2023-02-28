@@ -17,6 +17,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import CheckIcon from "@mui/icons-material/Check";
 import SearchIcon from "@mui/icons-material/Search";
 import { useForm } from "react-hook-form";
+import SearchExplainPopup from "@/components/qna/SearchExplainPopup";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export default function Qna() {
   const router = useRouter();
@@ -96,7 +98,7 @@ export default function Qna() {
           <article className={styles.topArea}>
             <div className={styles.topBar}>
               <h1 className={styles.listTitle}>
-                {`${router.query.search}` ?? "모든 질문"}
+                {router.query.search ?? "모든 질문"}
               </h1>
 
               <button className={styles.askBtn} onClick={onClickAskBtn}>
@@ -121,8 +123,11 @@ export default function Qna() {
                     ref(e);
                     searchRef.current = e;
                   }}
+                  autoComplete="off"
                   placeholder="검색어를 입력해주세요"
                 />
+
+                <SearchExplainPopup />
               </div>
             </form>
           </article>
@@ -162,15 +167,51 @@ export default function Qna() {
                         </div>
 
                         <div className={styles.bottomBar}>
-                          <ul className={styles.tagList}>
-                            {v.tag.map((v: any, i: number) => (
-                              <li key={i}>{v.name}</li>
-                            ))}
-                          </ul>
+                          <div className={styles.tagBar}>
+                            <ul className={styles.tagList}>
+                              {v.tag.map((v: any, i: number) => (
+                                <li
+                                  key={i}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    router.push(`/qna?search=[${v.name}]`)
+                                  }}
+                                >
+                                  {v.name}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
 
-                          <p className={styles.updatedAt}>
-                            {timeDifference(v.updated_at)}
-                          </p>
+                          <div className={styles.infoBar}>
+                            <div
+                              className={styles.profBox}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                router.push(
+                                  `/users/${v.editor?.id || v.creator?.id}`
+                                );
+                              }}
+                            >
+                              {v.editor?.avatar || v.creator?.avatar ? (
+                                <img
+                                  src={v.editor?.avatar || v.creator?.avatar}
+                                  alt=""
+                                />
+                              ) : (
+                                <AccountCircleIcon fontSize="inherit" />
+                              )}
+                              <p className={styles.name}>
+                                {v.editor?.name ||
+                                  v.creator?.name ||
+                                  "비공개 회원"}
+                              </p>
+                            </div>
+
+                            <p className={styles.updatedAt}>
+                              {timeDifference(v.updated_at)}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </li>
