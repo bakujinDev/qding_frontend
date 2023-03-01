@@ -55,7 +55,7 @@ export function onClickSocialBtn({ type, off }: IOnClickSocialBtn) {
     case "kakao":
       const kakaoParams = {
         client_id: "18dba6cfddc30770776200dda585923d",
-        redirect_uri: "http://127.0.0.1:3000/auth/kakao",
+        redirect_uri: "https://roaring-dodol-d73703.netlify.app/auth/kakao",
         response_type: "code",
       };
       params = new URLSearchParams(kakaoParams).toString();
