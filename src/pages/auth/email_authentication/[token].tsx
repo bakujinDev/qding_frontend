@@ -1,4 +1,4 @@
-import { getMe, emailLogin } from "@/api/auth";
+import { getMe, emailLogin } from "@/api/Auth";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useEffect } from "react";

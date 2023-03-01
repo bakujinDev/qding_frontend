@@ -2,7 +2,7 @@ import { apiInstance } from "@/api/instance";
 import { setUserInfo } from "@/store/reducer/commonReducer";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
-import { getMe, refreshToken } from "../api/auth";
+import { getMe, refreshToken } from "../api/Auth";
 
 export default function useUser() {
   const queryClient = useQueryClient();

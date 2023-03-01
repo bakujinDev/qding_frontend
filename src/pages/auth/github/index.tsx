@@ -1,4 +1,4 @@
-import { githubLogin } from "@/api/auth";
+import { githubLogin } from "@/api/Auth";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useEffect } from "react";

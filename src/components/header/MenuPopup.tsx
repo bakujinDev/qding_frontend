@@ -1,5 +1,5 @@
 import styles from "./menuPopup.module.scss";
-import { logout } from "@/api/auth";
+import { logout } from "@/api/Auth";
 import { apiInstance } from "@/api/instance";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
