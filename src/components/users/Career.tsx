@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import styles from "./Career.module.scss";
 import WorkIcon from "@mui/icons-material/Work";
-import { getUserCareer } from "@/api/career";
+import { getUserCareer } from "@/api/Career";
 import { timeDifferences, timeFormat } from "@/lib/time";
 
 export default function Career() {
