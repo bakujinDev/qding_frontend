@@ -1,12 +1,12 @@
-import { kakaoLogin } from "@/api/auth";
+import { kakaoLogin } from "../../../api/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import U_spinner from "@/asset/util/U_spinner.svg";
+import U_spinner from "../../../asset/util/U_spinner.svg";
 import styles from "./index.module.scss";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
-import { setUserInfo } from "@/store/reducer/commonReducer";
+import { setUserInfo } from "../../../store/reducer/commonReducer";
 import { useDispatch } from "react-redux";
 
 export default function Kakao() {

@@ -1,8 +1,8 @@
 import styles from "./editAnswer.module.scss";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import Seo from "@/components/Seo";
-import TextEditor from "@/components/common/TextEditor";
+import Seo from "../../../../../components/Seo";
+import TextEditor from "../../../../../components/common/TextEditor";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   getUploadURL,
@@ -10,15 +10,15 @@ import {
   IUploadImageVariables,
   IUploadURLResponse,
   uploadImage,
-} from "@/api/fileUpload";
-import { base64toFile } from "@/lib/textEditor";
-import { extractContent } from "@/lib/forum";
+} from "../../../../../api/fileUpload";
+import { base64toFile } from "../../../../../lib/textEditor";
+import { extractContent } from "../../../../../lib/forum";
 import { useRouter } from "next/router";
-import U_spinner from "@/asset/util/U_spinner.svg";
+import U_spinner from "../../../../../asset/util/U_spinner.svg";
 import { useSelector } from "react-redux";
-import { AppState } from "@/store/store";
+import { AppState } from "../../../../../store/store";
 import { toast } from "react-toastify";
-import { editAnswer, getAnswer, IAnswerForm } from "@/api/qna/answer";
+import { editAnswer, getAnswer, IAnswerForm } from "../../../../../api/qna/answer";
 
 export default function EditPost() {
   const router = useRouter();

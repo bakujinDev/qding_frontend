@@ -1,5 +1,5 @@
-import { setLoginPopup } from "@/store/reducer/commonReducer";
-import { AppState } from "@/store/store";
+import { setLoginPopup } from "../store/reducer/commonReducer";
+import { AppState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import LoginPopup from "./common/LoginPopup";
 import PopupBg from "./common/PopupBg";

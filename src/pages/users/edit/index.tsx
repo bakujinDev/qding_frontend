@@ -1,23 +1,23 @@
-import { editProfile, IEditProfileForm } from "@/api/user";
-import { AppState } from "@/store/store";
+import { editProfile, IEditProfileForm } from "../../../api/user";
+import { AppState } from "../../../store/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { getUserProfile } from "@/api/user";
+import { getUserProfile } from "../../../api/user";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import styles from "./Edit.module.scss";
-import { mib2 } from "@/lib/setting";
+import { mib2 } from "../../../lib/setting";
 import {
   getUploadURL,
   IGetUploadURL,
   IUploadImageVariables,
   IUploadURLResponse,
   uploadImage,
-} from "@/api/fileUpload";
-import U_spinner from "@/asset/util/U_spinner.svg";
-import useUser, { urlPattern } from "@/lib/user";
+} from "../../../api/fileUpload";
+import U_spinner from "../../../asset/util/U_spinner.svg";
+import useUser, { urlPattern } from "../../../lib/user";
 
 export default function Edit() {
   useUser();

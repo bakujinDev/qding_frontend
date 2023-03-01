@@ -1,13 +1,13 @@
-import { getQnaPost } from "@/api/qna/question";
-import Seo from "@/components/Seo";
-import useUser from "@/lib/user";
+import { getQnaPost } from "../../../api/qna/question";
+import Seo from "../../../components/Seo";
+import useUser from "../../../lib/user";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import styles from "./qnaPosts.module.scss";
-import QuestionSec from "@/components/qna/questionId/QuestionSec";
-import AddAnswerSec from "@/components/qna/questionId/AddAnswerSec";
-import AnswerSec from "@/components/qna/questionId/AnswerSec";
-import { viewHistory } from "@/lib/localStorage";
+import QuestionSec from "../../../components/qna/questionId/QuestionSec";
+import AddAnswerSec from "../../../components/qna/questionId/AddAnswerSec";
+import AnswerSec from "../../../components/qna/questionId/AnswerSec";
+import { viewHistory } from "../../../lib/localStorage";
 import { useEffect } from "react";
 
 export default function QnaPosts() {

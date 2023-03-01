@@ -1,5 +1,5 @@
 import styles from "./TagLank.module.scss";
-import { getUserTagLank } from "@/api/user";
+import { getUserTagLank } from "../../api/user";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 

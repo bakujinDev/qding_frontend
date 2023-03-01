@@ -2,7 +2,7 @@ import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import FlagIcon from "@mui/icons-material/Flag";
 import HistoryIcon from "@mui/icons-material/History";
-import { chk5MFromNow, timeDifference } from "@/lib/time";
+import { chk5MFromNow, timeDifference } from "../../../lib/time";
 import styles from "./QuestionSec.module.scss";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
@@ -14,17 +14,17 @@ import {
   IPostQuestionComment,
   postQuestionComment,
   voteQuestion,
-} from "@/api/qna/question";
+} from "../../../api/qna/question";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import AddComment from "@/components/common/AddComment";
-import { commentRuleList, onClickShareBtn } from "@/lib/forum";
+import AddComment from "../../../components/common/AddComment";
+import { commentRuleList, onClickShareBtn } from "../../../lib/forum";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { AppState } from "@/store/store";
+import { AppState } from "../../../store/store";
 import { toast } from "react-toastify";
-import { subscribeNotification } from "@/api/notification";
+import { subscribeNotification } from "../../../api/notification";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 interface IProps {

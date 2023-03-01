@@ -1,9 +1,9 @@
-import { IPostQuestion, postQuestion } from "@/api/qna/question";
+import { IPostQuestion, postQuestion } from "../../../api/qna/question";
 import styles from "./ask.module.scss";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import Seo from "@/components/Seo";
-import TextEditor from "@/components/common/TextEditor";
+import Seo from "../../../components/Seo";
+import TextEditor from "../../../components/common/TextEditor";
 import { useMutation } from "@tanstack/react-query";
 import {
   getUploadURL,
@@ -11,14 +11,14 @@ import {
   IUploadImageVariables,
   IUploadURLResponse,
   uploadImage,
-} from "@/api/fileUpload";
+} from "../../../api/fileUpload";
 import CloseIcon from "@mui/icons-material/Close";
-import TagSearchPopup from "@/components/qna/ask/TagSearchPopup";
-import PopupBg from "@/components/common/PopupBg";
-import { base64toFile } from "@/lib/textEditor";
-import { extractContent } from "@/lib/forum";
+import TagSearchPopup from "../../../components/qna/ask/TagSearchPopup";
+import PopupBg from "../../../components/common/PopupBg";
+import { base64toFile } from "../../../lib/textEditor";
+import { extractContent } from "../../../lib/forum";
 import { useRouter } from "next/router";
-import U_spinner from "@/asset/util/U_spinner.svg";
+import U_spinner from "../../../asset/util/U_spinner.svg";
 
 export default function Ask() {
   const router = useRouter();

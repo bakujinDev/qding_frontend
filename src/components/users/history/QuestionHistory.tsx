@@ -1,12 +1,12 @@
-import { timeDifference } from "@/lib/time";
+import { timeDifference } from "../../../lib/time";
 import { useQuery } from "@tanstack/react-query";
 import styles from "./HistoryDetail.module.scss";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import HistoryPageNation from "./HistoryPagenation";
 import PendingIcon from "@mui/icons-material/Pending";
-import { getProfileQuestions } from "@/api/user";
-import { D_orderList } from "@/lib/profile";
+import { getProfileQuestions } from "../../../api/user";
+import { D_orderList } from "../../../lib/profile";
 
 export default function QuestionHistory() {
   const router = useRouter();
