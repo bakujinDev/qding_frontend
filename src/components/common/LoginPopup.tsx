@@ -2,10 +2,10 @@ import styles from "./loginPopup.module.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import I_kakao from "@/asset/icon/I_kakao.svg";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import { ILogin, usernameLogin } from "../../api/auth";
+import { ILogin, usernameLogin } from "@/api/auth";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { emailPattern, onClickSocialBtn } from "../../lib/user";
+import { emailPattern, onClickSocialBtn } from "@/lib/user";
 import U_spinner from "@/asset/util/U_spinner.svg";
 
 interface IProps {

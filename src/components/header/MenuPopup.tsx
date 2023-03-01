@@ -1,9 +1,9 @@
 import styles from "./menuPopup.module.scss";
-import { logout } from "../../api/auth";
-import { apiInstance } from "../../api/instance";
+import { logout } from "@/api/auth";
+import { apiInstance } from "@/api/instance";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
-import { AppState } from "../../store/store";
+import { AppState } from "@/store/store";
 import { useRouter } from "next/router";
 
 interface IProps {

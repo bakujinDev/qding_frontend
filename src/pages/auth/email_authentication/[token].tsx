@@ -1,14 +1,14 @@
-import { getMe, emailLogin } from "../../../api/auth";
+import { getMe, emailLogin } from "@/api/auth";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import U_spinner from "../../../asset/util/U_spinner.svg";
+import U_spinner from "@/asset/util/U_spinner.svg";
 import styles from "./token.module.scss";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import { useDispatch } from "react-redux";
-import { setUserInfo } from "../../../store/reducer/commonReducer";
-import { apiInstance } from "../../../api/instance";
+import { setUserInfo } from "@/store/reducer/commonReducer";
+import { apiInstance } from "@/api/instance";
 
 export default function EmailAuthentication() {
   const router = useRouter();

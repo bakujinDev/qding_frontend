@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
-import { mib2 } from "../../lib/setting";
+import { mib2 } from "@/lib/setting";
 import "react-quill/dist/quill.snow.css";
-import { I_codeFile } from "../../lib/textEditor";
+import { I_codeFile } from "@/lib/textEditor";
 
 interface IProps {
   value: any;

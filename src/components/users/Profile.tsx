@@ -1,4 +1,4 @@
-import { getUserProfile } from "../../api/user";
+import { getUserProfile } from "@/api/user";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import Seo from "../Seo";

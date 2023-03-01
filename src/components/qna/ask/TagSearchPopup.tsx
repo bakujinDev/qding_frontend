@@ -1,4 +1,4 @@
-import { getTagList } from "../../../api/qna/tag";
+import { getTagList } from "@/api/qna/tag";
 import { useQuery } from "@tanstack/react-query";
 import styles from "./tagSearchPopup.module.scss";
 

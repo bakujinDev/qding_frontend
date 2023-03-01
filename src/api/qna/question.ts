@@ -1,4 +1,4 @@
-import { getLocalStorage, setViewLocal } from "../../lib/localStorage";
+import { getLocalStorage, setViewLocal } from "@/lib/localStorage";
 import { QueryFunctionContext } from "@tanstack/react-query";
 import { apiInstance } from "../instance";
 

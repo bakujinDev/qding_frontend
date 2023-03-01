@@ -1,23 +1,23 @@
-import { getQnaList, ISearchQnaList } from "../../api/qna/question";
-import { timeDifference } from "../../lib/time";
-import { setLoginPopup } from "../../store/reducer/commonReducer";
+import { getQnaList, ISearchQnaList } from "@/api/qna/question";
+import { timeDifference } from "@/lib/time";
+import { setLoginPopup } from "@/store/reducer/commonReducer";
 import styles from "./index.module.scss";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { extractContent } from "../../lib/forum";
-import Seo from "../../components/Seo";
-import PageNation from "../../components/common/Pagenation";
+import { extractContent } from "@/lib/forum";
+import Seo from "@/components/Seo";
+import PageNation from "@/components/common/Pagenation";
 import { SyntheticEvent, useEffect, useRef, useState } from "react";
-import { getLocalStorage } from "../../lib/localStorage";
-import { AppState } from "../../store/store";
-import { deleteNotification, getNotification } from "../../api/notification";
+import { getLocalStorage } from "@/lib/localStorage";
+import { AppState } from "@/store/store";
+import { deleteNotification, getNotification } from "@/api/notification";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckIcon from "@mui/icons-material/Check";
 import SearchIcon from "@mui/icons-material/Search";
 import { useForm } from "react-hook-form";
-import SearchExplainPopup from "../../components/qna/SearchExplainPopup";
+import SearchExplainPopup from "@/components/qna/SearchExplainPopup";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export default function Qna() {

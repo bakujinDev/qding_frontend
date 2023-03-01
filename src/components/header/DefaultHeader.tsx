@@ -7,9 +7,9 @@ import JoinPopup from "./JoinPopup";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuPopup from "./MenuPopup";
 import { useDispatch, useSelector } from "react-redux";
-import { AppState } from "../../store/store";
-import { setLoginPopup } from "../../store/reducer/commonReducer";
-import useUser from "../../lib/user";
+import { AppState } from "@/store/store";
+import { setLoginPopup } from "@/store/reducer/commonReducer";
+import useUser from "@/lib/user";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
