@@ -7,6 +7,7 @@ import {
 } from "@/api/fileUpload";
 import { postAnswer } from "@/api/qna/answer";
 import TextEditor from "@/components/common/TextEditor";
+import { extractContent } from "@/lib/forum";
 import { base64toFile } from "@/lib/textEditor";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -86,7 +87,13 @@ export default function AddAnswerSec({ questionId }: IProps) {
   useEffect(() => {
     if (!register) return;
 
-    register("content", { required: true, minLength: 20 });
+    register("content", {
+      required: true,
+      validate: {
+        chkLength: (v) =>
+          extractContent(v).length >= 20 || "20자 이상 입력해주세요",
+      },
+    });
   }, [register]);
 
   return (
@@ -104,6 +111,10 @@ export default function AddAnswerSec({ questionId }: IProps) {
             setContent(editor.getContents());
           }}
         />
+
+        {errors.content?.message ? (
+          <p className={styles.errorText}>{`${errors.content?.message}`}</p>
+        ) : null}
 
         <button type="submit" className={styles.postBtn}>
           답변 남기기

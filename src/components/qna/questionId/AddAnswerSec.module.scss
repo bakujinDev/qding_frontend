@@ -21,6 +21,10 @@
     flex-direction: column;
     gap: 12px;
 
+    .errorText {
+      color: $ErrorColor;
+    }
+
     .postBtn {
       height: 34px;
       border-radius: 4px;
