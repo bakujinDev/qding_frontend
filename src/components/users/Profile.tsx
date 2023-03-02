@@ -23,7 +23,7 @@ export default function Profile() {
       <article className={styles.profileArea}>
         <div className={styles.profImgCont}>
           <span className={styles.profImgBox}>
-            {0 ? (
+            {user.data?.avatar ? (
               <img className={styles.profImg} src={user.data?.avatar} alt="" />
             ) : (
               <AccountCircleIcon

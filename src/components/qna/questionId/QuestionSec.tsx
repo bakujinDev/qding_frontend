@@ -173,7 +173,12 @@ export default function QuestionSec({ questionId, data }: IProps) {
             <div className={styles.tagBar}>
               <ul className={styles.tagList}>
                 {data.tag.map((tag: any, i: number) => (
-                  <li key={i}>{tag.name}</li>
+                  <li
+                    key={i}
+                    onClick={() => router.push(`/qna?search=[${tag.name}]`)}
+                  >
+                    {tag.name}
+                  </li>
                 ))}
               </ul>
             </div>
