@@ -3,6 +3,11 @@
 .profile {
   @include defaultMain;
 
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  
+
   .innerSec {
     display: flex;
     flex-direction: column;
