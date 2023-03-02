@@ -3,6 +3,10 @@
 .editProfile {
   @include defaultMain;
 
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
   .innerSec {
     width: 100%;
     max-width: 960px;
