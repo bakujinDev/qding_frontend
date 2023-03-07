@@ -32,9 +32,9 @@ export default function Github() {
     <main className={styles.githubPage}>
       <section className={styles.contSec}>
         <article className={styles.titleArea}>
-          <h1 className={styles.title}>깃허브를 통한 로그인 중입니다</h1>
+          <h1 className={styles.title}>깃허브를 통한 로그인 중입니다.</h1>
           <h3 className={styles.explain}>
-            {mutationGithubLogin?.isLoading ? "인증이 진행중입니다" : ""}
+            {mutationGithubLogin?.isLoading ? "인증이 진행중입니다." : ""}
             {mutationGithubLogin?.isSuccess ? "인증이 완료되었습니다." : ""}
             {mutationGithubLogin?.isError
               ? `인증에 문제가 발생하였습니다.\n 인증을 다시 요청 해주세요!`

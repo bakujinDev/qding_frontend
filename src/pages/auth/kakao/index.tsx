@@ -32,9 +32,9 @@ export default function Kakao() {
     <main className={styles.kakaoPage}>
       <section className={styles.contSec}>
         <article className={styles.titleArea}>
-          <h1 className={styles.title}>카카오를 통한 로그인 중입니다</h1>
+          <h1 className={styles.title}>카카오를 통한 로그인 중입니다.</h1>
           <h3 className={styles.explain}>
-            {mutationTurnEmailAuth?.isLoading ? "인증이 진행중입니다" : ""}
+            {mutationTurnEmailAuth?.isLoading ? "인증이 진행중입니다." : ""}
             {mutationTurnEmailAuth?.isSuccess ? "인증이 완료되었습니다." : ""}
             {mutationTurnEmailAuth?.isError
               ? `인증에 문제가 발생하였습니다.\n 인증을 다시 요청 해주세요!`
