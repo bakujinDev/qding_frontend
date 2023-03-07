@@ -19,6 +19,7 @@ export default function NotFound() {
 
         <article className={styles.contArea}>
           <SentimentDissatisfiedIcon
+            data-testid="dissatisFiedIcon"
             fontSize="inherit"
             onClick={() => router.push("/qna")}
           />

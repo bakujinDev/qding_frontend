@@ -52,6 +52,10 @@
       height: 200px;
       font-size: 180px;
       color: $Primary1;
+
+      svg {
+        height: 180px;
+      }
     }
   }
 }
@@ -74,6 +78,10 @@
       .contArea {
         height: 160px;
         font-size: 140px;
+
+        svg {
+          height: 140px;
+        }
       }
     }
   }
